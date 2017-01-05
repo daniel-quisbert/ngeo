@@ -103,7 +103,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
   };
 
   // Listen to the feature inner properties change and apply them to the form
-  var uid = ol.getUid(this);
+  const uid = ol.getUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     ol.events.listen(
