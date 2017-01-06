@@ -217,23 +217,23 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.gmfTreeManager_ = gmfTreeManager;
 
   $scope.$watchCollection(
-    function() {
+    () => {
       if (this.gmfTreeManager_.rootCtrl) {
         return this.gmfTreeManager_.rootCtrl.children;
       }
-    }.bind(this),
-    function(value) {
+    },
+    (value) => {
       // Timeout required, because the collection event is fired before the
       // leaf nodes are created and they are the ones we're looking for here.
-      this.timeout_(function() {
+      this.timeout_(() => {
         if (value) {
           this.unregisterAllTreeCtrl_();
           this.gmfTreeManager_.rootCtrl.traverseDepthFirst(
             this.registerTreeCtrl_.bind(this)
           );
         }
-      }.bind(this));
-    }.bind(this)
+      });
+    }
   );
 
   /**
@@ -299,10 +299,8 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.geometryChanges_ = [];
 
   this.scope_.$watchCollection(
-    function() {
-      return this.geometryChanges_;
-    }.bind(this),
-    function(newVal, oldVal) {
+    () => this.geometryChanges_,
+    (newVal, oldVal) => {
       if (newVal.length) {
         if (newVal.length === 1) {
           this.dirty = false;
@@ -310,7 +308,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
           this.dirty = true;
         }
       }
-    }.bind(this)
+    }
   );
 
   const defaultColor = [39, 155, 145];
@@ -357,9 +355,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.dirty = false;
 
   $scope.$watch(
-    function() {
-      return this.dirty;
-    }.bind(this),
+    () => this.dirty,
     this.setFeatureStyle_.bind(this)
   );
 
@@ -648,7 +644,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
 
     this.undoAllChanges_();
 
-    keys.forEach(function(key) {
+    keys.forEach((key) => {
       ol.events.unlistenByKey(key);
     }, this);
 
@@ -990,9 +986,9 @@ gmf.ObjecteditingController.prototype.handleFeatureGeometryChange_ = function() 
     // this.scope_.$apply();
     // For tools that use promises instead, such as the "copy/delete" from,
     // a scope is already in progress so we must not invoke it again.
-    this.timeout_(function() {
+    this.timeout_(() => {
       this.geometryChanges_.push(geom.clone());
-    }.bind(this));
+    });
   }
 };
 
