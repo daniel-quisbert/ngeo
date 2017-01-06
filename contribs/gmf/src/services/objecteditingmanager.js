@@ -61,15 +61,15 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
 
-    var geomType = this.ngeoLocation_.getParam(
+    let geomType = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.GEOM_TYPE);
-    var id = this.ngeoLocation_.getParam(
+    let id = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.ID);
-    var layer = this.ngeoLocation_.getParam(
+    let layer = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.LAYER);
-    var property = this.ngeoLocation_.getParam(
+    let property = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.PROPERTY);
-    var theme = this.ngeoLocation_.getParam(
+    let theme = this.ngeoLocation_.getParam(
       gmf.ObjectEditingManager.Param.THEME);
 
     if (geomType && id && layer && property && theme) {
@@ -126,12 +126,12 @@ gmf.ObjectEditingManager.prototype.handleGetFeatures_ = function(
   key, value, features
 ) {
 
-  var feature;
+  let feature;
 
   if (features.length) {
     feature = features[0];
   } else {
-    var featureProperties = {};
+    let featureProperties = {};
     featureProperties[key] = value;
     featureProperties['geometry'] = null;
     feature = new ol.Feature(featureProperties);

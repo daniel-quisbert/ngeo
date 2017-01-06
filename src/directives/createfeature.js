@@ -120,9 +120,9 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   // Create the draw or measure interaction depending on the geometry type
-  var interaction;
-  var helpMsg;
-  var contMsg;
+  let interaction;
+  let helpMsg;
+  let contMsg;
   if (this.geomType === ngeo.GeometryType.POINT ||
       this.geomType === ngeo.GeometryType.MULTI_POINT
   ) {
@@ -189,7 +189,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
     }.bind(this)
   );
 
-  var uid = ol.getUid(this);
+  let uid = ol.getUid(this);
   if (interaction instanceof ol.interaction.Draw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
@@ -227,7 +227,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
  * @export
  */
 ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
-  var feature = new ol.Feature(event.feature.getGeometry());
+  let feature = new ol.Feature(event.feature.getGeometry());
   if (this.features instanceof ol.Collection) {
     this.features.push(feature);
   } else {
@@ -242,7 +242,7 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
  */
 ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
   this.timeout_(function() {
-    var uid = ol.getUid(this);
+    let uid = ol.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);

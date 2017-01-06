@@ -79,7 +79,7 @@ goog.require('ngeo.SortableOptions');
  */
 gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
-  var viewConfig = {
+  let viewConfig = {
     projection: ol.proj.get('EPSG:' + (config.srid || 21781))
   };
   goog.object.extend(viewConfig, config.mapViewConfig || {});
@@ -143,7 +143,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * Collection of features for the draw interaction
    * @type {ol.Collection.<ol.Feature>}
    */
-  var ngeoFeatures = $injector.get('ngeoFeatures');
+  let ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
    * @type {ngeo.FeatureOverlay}
@@ -153,7 +153,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
       .getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
-  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+  let ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
   /**
    * @type {ol.layer.Vector}
@@ -175,9 +175,9 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
-  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+  let ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  var editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
+  let editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
   /**

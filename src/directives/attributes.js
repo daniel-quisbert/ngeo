@@ -139,7 +139,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper) {
  */
 ngeo.AttributesController.prototype.handleInputChange = function(name) {
   this.updating_ = true;
-  var value = this.properties[name];
+  let value = this.properties[name];
   this.feature.set(name, value);
   this.updating_ = false;
 };
@@ -150,7 +150,7 @@ ngeo.AttributesController.prototype.handleInputChange = function(name) {
  * @private
  */
 ngeo.AttributesController.prototype.handleDestroy_ = function() {
-  var uid = ol.getUid(this);
+  let uid = ol.getUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
 

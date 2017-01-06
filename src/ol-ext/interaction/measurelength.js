@@ -20,7 +20,7 @@ goog.require('ol.interaction.Draw');
  */
 ngeo.interaction.MeasureLength = function(format, opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  let options = opt_options !== undefined ? opt_options : {};
 
   ngeo.interaction.Measure.call(this, options);
 
@@ -65,11 +65,11 @@ ngeo.interaction.MeasureLength.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 ngeo.interaction.MeasureLength.prototype.handleMeasure = function(callback) {
-  var geom = /** @type {ol.geom.LineString} */
+  let geom = /** @type {ol.geom.LineString} */
       (this.sketchFeature.getGeometry());
-  var proj = this.getMap().getView().getProjection();
-  var dec = this.decimals;
-  var output = ngeo.interaction.Measure.getFormattedLength(geom, proj, dec, this.format);
-  var coord = geom.getLastCoordinate();
+  let proj = this.getMap().getView().getProjection();
+  let dec = this.decimals;
+  let output = ngeo.interaction.Measure.getFormattedLength(geom, proj, dec, this.format);
+  let coord = geom.getLastCoordinate();
   callback(output, coord);
 };

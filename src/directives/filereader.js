@@ -39,14 +39,14 @@ ngeo.filereaderDirective = function($window) {
          * @param {angular.Attributes} attrs Attributes.
          */
         function(scope, element, attrs) {
-          var supported = 'FileReader' in $window;
+          let supported = 'FileReader' in $window;
           scope['supported'] = supported;
           if (!supported) {
             return;
           }
           element.bind('change', function(changeEvent) {
             /** @type {!FileReader} */
-            var fileReader = new $window.FileReader();
+            let fileReader = new $window.FileReader();
             fileReader.onload = (
                 /**
                  * @param {!ProgressEvent} evt Event.

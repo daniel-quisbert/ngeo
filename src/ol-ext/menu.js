@@ -56,7 +56,7 @@ ol.inherits(ngeo.MenuEvent, ol.events.Event);
  */
 ngeo.Menu = function(menuOptions, opt_overlayOptions) {
 
-  var options = opt_overlayOptions !== undefined ? opt_overlayOptions : {};
+  let options = opt_overlayOptions !== undefined ? opt_overlayOptions : {};
 
   options.positioning = ol.Overlay.Positioning.TOP_LEFT;
 
@@ -78,7 +78,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
    */
   this.olListenerKeys_ = [];
 
-  var contentEl = $('<div/>', {
+  let contentEl = $('<div/>', {
     'class': 'panel panel-default'
   });
 
@@ -91,7 +91,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
 
   // titleEl
   if (menuOptions.title) {
-    var headerEl = $('<div>', {
+    let headerEl = $('<div>', {
       'class': 'panel-heading'
     }).appendTo(contentEl);
 
@@ -101,7 +101,7 @@ ngeo.Menu = function(menuOptions, opt_overlayOptions) {
   }
 
   // actionsEl
-  var actionsEl = $('<div>', {
+  let actionsEl = $('<div>', {
     'class': 'list-group'
   }).appendTo(contentEl);
 
@@ -142,10 +142,10 @@ ol.inherits(ngeo.Menu, ol.Overlay);
  */
 ngeo.Menu.prototype.setMap = function(map) {
 
-  var keys = this.listenerKeys_;
-  var olKeys = this.olListenerKeys_;
+  let keys = this.listenerKeys_;
+  let olKeys = this.olListenerKeys_;
 
-  var currentMap = this.getMap();
+  let currentMap = this.getMap();
   if (currentMap) {
     keys.forEach(function(key) {
       goog.events.unlistenByKey(key);
@@ -161,7 +161,7 @@ ngeo.Menu.prototype.setMap = function(map) {
 
   if (map) {
     this.actions_.forEach(function(action) {
-      var data = action.data();
+      let data = action.data();
       keys.push(
         goog.events.listen(
           action[0],
@@ -244,7 +244,7 @@ ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
  * @private
  */
 ngeo.Menu.prototype.handleClickOut_ = function(evt) {
-  var element = this.getElement();
+  let element = this.getElement();
   if (element && $(evt.target).closest(element).length === 0) {
     this.close();
   }
@@ -261,10 +261,10 @@ ngeo.Menu.prototype.handleClickOut_ = function(evt) {
  * @private
  */
 ngeo.Menu.prototype.handleMapPointerMove_ = function(evt) {
-  var target = evt.originalEvent.target;
+  let target = evt.originalEvent.target;
   goog.asserts.assertInstanceof(target, Element);
 
-  var element = this.getElement();
+  let element = this.getElement();
   goog.asserts.assertInstanceof(element, Element);
 
   if (goog.dom.contains(element, target)) {

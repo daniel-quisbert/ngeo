@@ -28,11 +28,11 @@ ngeo.measureareaDirective = function($compile, gettext, $filter) {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      var helpMsg = gettext('Click to start drawing polygon');
-      var contMsg = gettext('Click to continue drawing<br/>' +
+      let helpMsg = gettext('Click to start drawing polygon');
+      let contMsg = gettext('Click to continue drawing<br/>' +
           'Double-click or click starting point to finish');
 
-      var measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
+      let measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
         startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
         continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]

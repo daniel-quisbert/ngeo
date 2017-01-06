@@ -9,8 +9,8 @@ goog.require('ol.Collection');
 
 
 describe('DecorateLayerLoading test suite', function() {
-  var decorateLayerLoading;
-  var scope;
+  let decorateLayerLoading;
+  let scope;
 
   beforeEach(inject(function($injector, $rootScope) {
     decorateLayerLoading = $injector.get('ngeoDecorateLayerLoading');
@@ -18,10 +18,10 @@ describe('DecorateLayerLoading test suite', function() {
   }));
 
   it('should increment layerLoadingCount recursively', function() {
-    var imageSource = new ol.source.Image({});
-    var layer = new ol.layer.Image({source: imageSource});
-    var lg_1 = new ol.layer.Group();
-    var lg_2 = new ol.layer.Group();
+    let imageSource = new ol.source.Image({});
+    let layer = new ol.layer.Image({source: imageSource});
+    let lg_1 = new ol.layer.Group();
+    let lg_2 = new ol.layer.Group();
 
     decorateLayerLoading(layer, scope);
     decorateLayerLoading(lg_1, scope);

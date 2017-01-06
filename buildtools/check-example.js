@@ -2,16 +2,17 @@
 // A PhantomJS script used to check that the hosted examples load
 // without errors. This script is executed by the Makefile's
 // check-examples target.
-//
-var args = require('system').args;
+
+
+let args = require('system').args;
 if (args.length != 2) {
   phantom.exit(1);
 }
-var examplePath = args[1];
-var page = require('webpage').create();
-var exitCode = 0;
+let examplePath = args[1];
+let page = require('webpage').create();
+let exitCode = 0;
 page.onError = function(msg, trace) {
-  var msgStack = ['JavaScript ERROR: ' + msg];
+  let msgStack = ['JavaScript ERROR: ' + msg];
   if (trace) {
     msgStack.push('TRACE:');
     trace.forEach(function(t) {
@@ -44,9 +45,9 @@ page.open(examplePath, function(s) {
 
   setTimeout(function() {
 //    page.render(examplePath + '.png')
-    var consoleControl = require('console-control-strings');
+    let consoleControl = require('console-control-strings');
 
-    var color = exitCode == 0 ? 'green' : 'red';
+    let color = exitCode == 0 ? 'green' : 'red';
     console.log(
       consoleControl.color([color, "bold"]) +
       "EXIT with " + exitCode +

@@ -20,7 +20,7 @@ goog.require('ol.interaction.Draw');
  */
 ngeo.interaction.MeasureArea = function(format, opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  let options = opt_options !== undefined ? opt_options : {};
 
   ngeo.interaction.Measure.call(this, options);
 
@@ -65,13 +65,13 @@ ngeo.interaction.MeasureArea.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 ngeo.interaction.MeasureArea.prototype.handleMeasure = function(callback) {
-  var geom = /** @type {ol.geom.Polygon} */
+  let geom = /** @type {ol.geom.Polygon} */
       (this.sketchFeature.getGeometry());
-  var proj = this.getMap().getView().getProjection();
-  var dec = this.decimals;
-  var output = ngeo.interaction.Measure.getFormattedArea(geom, proj, dec, this.format);
-  var verticesCount = geom.getCoordinates()[0].length;
-  var coord = null;
+  let proj = this.getMap().getView().getProjection();
+  let dec = this.decimals;
+  let output = ngeo.interaction.Measure.getFormattedArea(geom, proj, dec, this.format);
+  let verticesCount = geom.getCoordinates()[0].length;
+  let coord = null;
   if (verticesCount > 2) {
     coord = geom.getInteriorPoint().getCoordinates();
   }

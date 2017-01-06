@@ -19,7 +19,7 @@ goog.require('ol.Feature');
  *
  * Example:
  *
- *     var bloodhound = ngeoCreateLocationSearchBloodhound({
+ *     let bloodhound = ngeoCreateLocationSearchBloodhound({
  *       targetProjection: ol.proj.get('EPSG:3857'),
  *       limit: 10
  *     });
@@ -37,18 +37,18 @@ ngeo.search.CreateLocationSearchBloodhound;
  * @return {Bloodhound} The Bloodhound object.
  */
 ngeo.search.createLocationSearchBloodhound = function(opt_options) {
-  var options = opt_options || {};
+  let options = opt_options || {};
 
-  var sourceProjection = ol.proj.get('EPSG:21781');
-  var targetProjection = options.targetProjection;
+  let sourceProjection = ol.proj.get('EPSG:21781');
+  let targetProjection = options.targetProjection;
 
   /**
    * @param {string} bbox Bbox string.
    * @return {?ol.Extent} Parsed extent.
    */
-  var parseBbox = function(bbox) {
-    var regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
-    var match = regex.exec(bbox);
+  let parseBbox = function(bbox) {
+    let regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
+    let match = regex.exec(bbox);
     if (match !== null) {
       return [
         parseFloat(match[1]),
@@ -61,13 +61,13 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
     }
   };
 
-  var removeHtmlTags = function(label) {
+  let removeHtmlTags = function(label) {
     return label.replace(/<\/?[ib]>/g, '');
   };
 
-  var extractName = function(label) {
-    var regex = /<b>(.*?)<\/b>/g;
-    var match = regex.exec(label);
+  let extractName = function(label) {
+    let regex = /<b>(.*?)<\/b>/g;
+    let match = regex.exec(label);
     if (match !== null) {
       return match[1];
     } else {
@@ -75,7 +75,7 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
     }
   };
 
-  var bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
+  let bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
       prepare: function(query, settings) {
@@ -91,12 +91,12 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
             options.prepare(query, settings) : settings;
       },
       transform: function(/** @type{geoAdminx.SearchLocationResponse} */ parsedResponse) {
-        var features = parsedResponse.results.map(function(/** @type{geoAdminx.SearchLocationResult} */ result) {
-          var attrs = result.attrs;
+        let features = parsedResponse.results.map(function(/** @type{geoAdminx.SearchLocationResult} */ result) {
+          let attrs = result.attrs;
 
           // note that x and y are switched!
-          var point = new ol.geom.Point([attrs.y, attrs.x]);
-          var bbox = parseBbox(attrs.geom_st_box2d);
+          let point = new ol.geom.Point([attrs.y, attrs.x]);
+          let bbox = parseBbox(attrs.geom_st_box2d);
           if (targetProjection !== undefined) {
             point.transform(sourceProjection, targetProjection);
             if (bbox !== null) {
@@ -108,11 +108,11 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
           attrs['bbox'] = bbox;
 
           // create a label without HTML tags
-          var label = attrs.label;
+          let label = attrs.label;
           attrs['label_no_html'] = removeHtmlTags(label);
           attrs['label_simple'] = extractName(label);
 
-          var feature = new ol.Feature(attrs);
+          let feature = new ol.Feature(attrs);
           feature.setId(attrs.featureId);
 
           return feature;
@@ -128,8 +128,8 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
   });
 
   // the options objects are cloned to avoid updating the passed object
-  var bhOptions = ol.obj.assign({}, options.options || {});
-  var remoteOptions = ol.obj.assign({}, options.remoteOptions || {});
+  let bhOptions = ol.obj.assign({}, options.options || {});
+  let remoteOptions = ol.obj.assign({}, options.remoteOptions || {});
 
   if (bhOptions.remote) {
     // move the remote options to opt_remoteOptions

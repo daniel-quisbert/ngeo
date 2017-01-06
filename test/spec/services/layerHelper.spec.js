@@ -3,11 +3,11 @@ goog.require('ngeo.LayerHelper');
 goog.require('ngeo.test.data.wmtsCapabilities');
 
 describe('ngeo.LayerHelper', function() {
-  var ngeoLayerHelper;
-  var layer;
-  var wmtsSrc = 'http://fake/wmts/capabilities.xml';
-  var wmtsName = 'layer-7328';
-  var $httpBackend;
+  let ngeoLayerHelper;
+  let layer;
+  let wmtsSrc = 'http://fake/wmts/capabilities.xml';
+  let wmtsName = 'layer-7328';
+  let $httpBackend;
 
   beforeEach(function() {
     inject(function($injector) {
@@ -30,8 +30,8 @@ describe('ngeo.LayerHelper', function() {
 
   it('Create a WMTS layer from capabilitites', function() {
     $httpBackend.expectGET(wmtsSrc);
-    var spy = jasmine.createSpy();
-    var promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
+    let spy = jasmine.createSpy();
+    let promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
             wmtsName);
     promise.then(spy);
     $httpBackend.flush();
@@ -43,39 +43,39 @@ describe('ngeo.LayerHelper', function() {
 
   it('Create a layergroup with layers', function() {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
-    var collection = new ol.Collection();
+    let collection = new ol.Collection();
     collection.push(layer);
-    var group = ngeoLayerHelper.createBasicGroup(collection);
+    let group = ngeoLayerHelper.createBasicGroup(collection);
     expect(group.getLayersArray().length).toBe(1);
   });
 
   it('Get an array of layer from a group', function() {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
-    var collection = new ol.Collection();
+    let collection = new ol.Collection();
     collection.push(layer);
-    var group = new ol.layer.Group();
+    let group = new ol.layer.Group();
     group.setLayers(collection);
     expect(ngeoLayerHelper.getFlatLayers(group).length).toBe(1);
   });
 
   it('Get WMS legend url', function() {
-    var url = 'http://test';
-    var layerName = 'wmsLayer';
-    var scale = 0;
-    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
-    var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
+    let url = 'http://test';
+    let layerName = 'wmsLayer';
+    let scale = 0;
+    let wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
+    let expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
       'WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
       '&SCALE=' + scale;
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
   it('Get WMS legend icon url', function() {
-    var url = 'http://test';
-    var layerName = 'wmsLayer';
-    var legendRule = 'legendRule';
-    var wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined,
+    let url = 'http://test';
+    let layerName = 'wmsLayer';
+    let legendRule = 'legendRule';
+    let wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined,
         legendRule);
-    var expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
+    let expectedResult = url + '?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=' +
       'WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + layerName +
       '&RULE=' + legendRule;
     expect(expectedResult).toBe(wmsLegendURL);
@@ -83,17 +83,17 @@ describe('ngeo.LayerHelper', function() {
 
   it('Get WMTS legend url', function() {
     $httpBackend.expectGET(wmtsSrc);
-    var spy = jasmine.createSpy();
-    var promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
+    let spy = jasmine.createSpy();
+    let promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
             wmtsName);
     promise.then(spy);
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
     layer = spy.calls.mostRecent().args[0];
-    var capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
+    let capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
     layer.set('capabilitiesStyles', capabilitiesStyles);
-    var legend = ngeoLayerHelper.getWMTSLegendURL(layer);
+    let legend = ngeoLayerHelper.getWMTSLegendURL(layer);
     expect(legend).toBe('http://legendURL');
   });
 });

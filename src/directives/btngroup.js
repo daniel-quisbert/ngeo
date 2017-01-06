@@ -50,7 +50,7 @@ ngeo.btngroupDirective = function($parse) {
          * @param {!Object} controller Controller.
          */
         function(scope, element, attrs, controller) {
-          var setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
+          let setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
 
           if (setActive) {
             scope.$watch(function() {
@@ -148,12 +148,12 @@ ngeo.btnDirective = function($parse) {
          * @param {!Array.<!Object>} ctrls Controllers.
          */
         function(scope, element, attrs, ctrls) {
-          var buttonsCtrl = ctrls[0];
-          var ngModelCtrl = ctrls[1];
-          var indexInGroup = -1;
+          let buttonsCtrl = ctrls[0];
+          let ngModelCtrl = ctrls[1];
+          let indexInGroup = -1;
 
-          var ngModelGet = $parse(attrs['ngModel']);
-          var ngModelSet = ngModelGet.assign;
+          let ngModelGet = $parse(attrs['ngModel']);
+          let ngModelSet = ngModelGet.assign;
 
           // Set ng-model value to false if undefined
           if (ngModelGet(scope) === undefined) {

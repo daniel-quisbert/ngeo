@@ -9,7 +9,7 @@
 /**
  * @constructor
  */
-var MapFishPrintSpec = function() {};
+let MapFishPrintSpec = function() {};
 
 
 /**
@@ -28,7 +28,7 @@ MapFishPrintSpec.prototype.layout;
 /**
  * @constructor
  */
-var MapFishPrintAttributes = function() {};
+let MapFishPrintAttributes = function() {};
 
 
 /**
@@ -41,7 +41,7 @@ MapFishPrintAttributes.prototype.map;
 /**
  * @constructor
  */
-var MapFishPrintMap = function() {};
+let MapFishPrintMap = function() {};
 
 
 /**
@@ -90,7 +90,7 @@ MapFishPrintMap.prototype.rotation;
 /**
  * @constructor
  */
-var MapFishPrintLayer = function() {};
+let MapFishPrintLayer = function() {};
 
 
 /**
@@ -110,7 +110,7 @@ MapFishPrintLayer.prototype.opacity;
  * @constructor
  * @extends {MapFishPrintLayer}
  */
-var MapFishPrintVectorLayer = function() {};
+let MapFishPrintVectorLayer = function() {};
 
 
 /**
@@ -129,7 +129,7 @@ MapFishPrintVectorLayer.prototype.style;
 /**
  * @constructor
  */
-var MapFishPrintVectorStyle = function() {};
+let MapFishPrintVectorStyle = function() {};
 
 
 /**
@@ -142,7 +142,7 @@ MapFishPrintVectorStyle.prototype.version;
  * @constructor
  * @extends {MapFishPrintLayer}
  */
-var MapFishPrintWmsLayer = function() {};
+let MapFishPrintWmsLayer = function() {};
 
 
 /**
@@ -185,7 +185,7 @@ MapFishPrintWmsLayer.prototype.version;
 /**
  * @constructor
  */
-var MapFishPrintWmtsMatrix = function() {};
+let MapFishPrintWmtsMatrix = function() {};
 
 
 /**
@@ -222,7 +222,7 @@ MapFishPrintWmtsMatrix.prototype.matrixSize;
  * @constructor
  * @extends {MapFishPrintLayer}
  */
-var MapFishPrintWmtsLayer = function() {};
+let MapFishPrintWmtsLayer = function() {};
 
 
 /**
@@ -289,7 +289,7 @@ MapFishPrintWmtsLayer.prototype.version;
 /**
  * @constructor
  */
-var MapFishPrintReportResponse = function() {};
+let MapFishPrintReportResponse = function() {};
 
 
 /**
@@ -314,7 +314,7 @@ MapFishPrintReportResponse.prototype.downloadURL;
 /**
  * @constructor
  */
-var MapFishPrintStatusResponse = function() {};
+let MapFishPrintStatusResponse = function() {};
 
 
 /**
@@ -345,7 +345,7 @@ MapFishPrintStatusResponse.prototype.downloadURL;
 /**
  * @constructor
  */
-var MapFishPrintSymbolizers = function() {};
+let MapFishPrintSymbolizers = function() {};
 
 
 /**
@@ -357,7 +357,7 @@ MapFishPrintSymbolizers.prototype.symbolizers;
 /**
  * @constructor
  */
-var MapFishPrintSymbolizer = function() {};
+let MapFishPrintSymbolizer = function() {};
 
 
 /**
@@ -371,7 +371,7 @@ MapFishPrintSymbolizer.prototype.type;
  * @constructor
  * @extends {MapFishPrintSymbolizer}
  */
-var MapFishPrintSymbolizerLine = function() {};
+let MapFishPrintSymbolizerLine = function() {};
 
 
 /**
@@ -403,7 +403,7 @@ MapFishPrintSymbolizerLine.prototype.strokeDashstyle;
  * @constructor
  * @extends {MapFishPrintSymbolizer}
  */
-var MapFishPrintSymbolizerPoint = function() {};
+let MapFishPrintSymbolizerPoint = function() {};
 
 
 /**
@@ -489,7 +489,7 @@ MapFishPrintSymbolizerPoint.prototype.graphicName;
  * @constructor
  * @extends {MapFishPrintSymbolizer}
  */
-var MapFishPrintSymbolizerPolygon = function() {};
+let MapFishPrintSymbolizerPolygon = function() {};
 
 
 /**
@@ -533,7 +533,7 @@ MapFishPrintSymbolizerPolygon.prototype.strokeDashstyle;
  * @constructor
  * @extends {MapFishPrintSymbolizer}
  */
-var MapFishPrintSymbolizerText = function() {};
+let MapFishPrintSymbolizerText = function() {};
 
 /**
  * @type {string}

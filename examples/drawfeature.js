@@ -36,7 +36,7 @@ app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
    */
   this.scope_ = $scope;
 
-  var vector = new ol.layer.Vector({
+  let vector = new ol.layer.Vector({
     source: new ol.source.Vector({
       wrapX: false,
       features: ngeoFeatures
@@ -66,7 +66,7 @@ app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
    */
   this.drawActive = false;
 
-  var drawToolActivate = new ngeo.ToolActivate(this, 'drawActive');
+  let drawToolActivate = new ngeo.ToolActivate(this, 'drawActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawToolActivate, false);
 
   /**
@@ -75,7 +75,7 @@ app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
    */
   this.dummyActive = true;
 
-  var dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
+  let dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 };
 

@@ -34,8 +34,8 @@ gmfapp.module.value(
  */
 gmfapp.MainController = function(gmfPermalink) {
 
-  var center = gmfPermalink.getMapCenter() || [537635, 152640];
-  var zoom = gmfPermalink.getMapZoom() || 3;
+  let center = gmfPermalink.getMapCenter() || [537635, 152640];
+  let zoom = gmfPermalink.getMapZoom() || 3;
 
   /**
    * @type {ol.Map}

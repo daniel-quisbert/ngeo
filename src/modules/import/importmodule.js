@@ -1,12 +1,12 @@
 goog.module('ngeo.import.importModule');
 goog.module.declareLegacyNamespace();
 
-var fileService = goog.require('ngeo.fileService');
-var dnd = goog.require('ngeo.importDndDirective');
-var local = goog.require('ngeo.importLocalDirective');
-var online = goog.require('ngeo.importOnlineDirective');
-var wmsGetCap = goog.require('ngeo.wmsGetCapDirective');
-var wmsGetCapItem = goog.require('ngeo.wmsGetCapItemDirective');
+let fileService = goog.require('ngeo.fileService');
+let dnd = goog.require('ngeo.importDndDirective');
+let local = goog.require('ngeo.importLocalDirective');
+let online = goog.require('ngeo.importOnlineDirective');
+let wmsGetCap = goog.require('ngeo.wmsGetCapDirective');
+let wmsGetCapItem = goog.require('ngeo.wmsGetCapItemDirective');
 
 
 exports.module = angular.module('ngeo.import', [

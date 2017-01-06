@@ -34,7 +34,7 @@ app.MainController = function(ngeoDecorateLayer) {
     })
   });
 
-  var wmsLayer = this.layer;
+  let wmsLayer = this.layer;
   ngeoDecorateLayer(wmsLayer);
 
   /**

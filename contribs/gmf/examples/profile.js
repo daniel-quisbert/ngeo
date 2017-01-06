@@ -78,7 +78,7 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
     })
   });
 
-  var lineStyle = new ol.style.Style({
+  let lineStyle = new ol.style.Style({
     stroke: new ol.style.Stroke({
       color: '#ffcc33',
       width: 2
@@ -88,9 +88,9 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {ol.Collection.<ol.Feature>}
    */
-  var features = new ol.Collection();
+  let features = new ol.Collection();
 
-  var overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  let overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(lineStyle);
 

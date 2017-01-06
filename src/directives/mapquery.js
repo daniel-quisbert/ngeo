@@ -37,22 +37,22 @@ ngeo.mapQueryDirective = function(ngeoQuery) {
     restrict: 'A',
     scope: false,
     link: function(scope, elem, attrs) {
-      var map = scope.$eval(attrs['ngeoMapQueryMap']);
-      var clickEventKey_ = null;
+      let map = scope.$eval(attrs['ngeoMapQueryMap']);
+      let clickEventKey_ = null;
 
       /**
        * Called when the map is clicked while this controller is active. Issue
        * a request to the query service using the coordinate that was clicked.
        * @param {ol.MapBrowserEvent} evt The map browser event being fired.
        */
-      var handleMapClick_ = function(evt) {
+      let handleMapClick_ = function(evt) {
         ngeoQuery.issue(map, evt.coordinate);
       };
 
       /**
        * Listen to the map 'click' event.
        */
-      var activate_ = function() {
+      let activate_ = function() {
         clickEventKey_ = ol.events.listen(map,
             ol.events.EventType.CLICK, handleMapClick_);
       };
@@ -61,7 +61,7 @@ ngeo.mapQueryDirective = function(ngeoQuery) {
       /**
        * Unlisten the map 'click' event.
        */
-      var deactivate_ = function() {
+      let deactivate_ = function() {
         if (clickEventKey_ !== null) {
           ol.events.unlistenByKey(clickEventKey_);
           clickEventKey_ = null;

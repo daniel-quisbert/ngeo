@@ -82,15 +82,15 @@ app.MainController = function($scope) {
  * @private
  */
 app.MainController.prototype.importKml_ = function(kml) {
-  var map = this.map;
-  var vectorSource = this.vectorSource_;
-  var features = this.kmlFormat_.readFeatures(kml, {
+  let map = this.map;
+  let vectorSource = this.vectorSource_;
+  let features = this.kmlFormat_.readFeatures(kml, {
     featureProjection: 'EPSG:3857'
   });
   vectorSource.clear(true);
   vectorSource.addFeatures(features);
-  var extent = vectorSource.getExtent();
-  var mapSize = map.getSize();
+  let extent = vectorSource.getExtent();
+  let mapSize = map.getSize();
   if (mapSize && !ol.extent.isEmpty(extent)) {
     map.getView().fit(extent, mapSize);
   }

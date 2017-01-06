@@ -12,7 +12,7 @@ ngeo.module.value('ngeoDatePickerTemplateUrl',
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      var templateUrl = attrs['ngeoDatePickerTemplateUrl'];
+      let templateUrl = attrs['ngeoDatePickerTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseTemplateUrl + '/datepicker.html';
     });
@@ -42,7 +42,7 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
     templateUrl: ngeoDatePickerTemplateUrl,
     link: function(scope, element, attrs, ctrl) {
 
-      var lang =  ctrl.gettextCatalog_.getCurrentLanguage();
+      let lang =  ctrl.gettextCatalog_.getCurrentLanguage();
       $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
@@ -62,7 +62,7 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
       });
 
       angular.element('body').on('hidden.bs.popover', function() {
-        var dp = angular.element('#ui-datepicker-div');
+        let dp = angular.element('#ui-datepicker-div');
         if (dp && dp.css('display') === 'block') {
           $(element[0]).find('input[name$="date"]').datepicker('hide');
         }
@@ -107,7 +107,7 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
   this.time;
 
   //fetch the initial options for the component
-  var initialOptions_ = this.ngeoTime_.getOptions(this.time);
+  let initialOptions_ = this.ngeoTime_.getOptions(this.time);
 
   /**
    * The gettext catalog
@@ -193,8 +193,8 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime) {
   }
 
   $scope.$watchGroup(['datepickerCtrl.sdate', 'datepickerCtrl.edate'], function(newDates, oldDates) {
-    var sDate = newDates[0];
-    var eDate = newDates[1];
+    let sDate = newDates[0];
+    let eDate = newDates[1];
 
     if (angular.isDate(sDate) && (!this.isModeRange || angular.isDate(eDate))) {
       this.onDateSelected({

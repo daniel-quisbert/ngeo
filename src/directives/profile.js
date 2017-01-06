@@ -47,15 +47,15 @@ ngeo.profileDirective = function(ngeoDebounce) {
          */
         function(scope, element, attrs) {
 
-          var optionsAttr = attrs['ngeoProfileOptions'];
+          let optionsAttr = attrs['ngeoProfileOptions'];
           goog.asserts.assert(optionsAttr !== undefined);
 
-          var selection = d3.select(element[0]);
-          var profile, elevationData, poiData;
+          let selection = d3.select(element[0]);
+          let profile, elevationData, poiData;
 
           scope.$watchCollection(optionsAttr, function(newVal) {
 
-            var options = /** @type {ngeox.profile.ProfileOptions} */
+            let options = /** @type {ngeox.profile.ProfileOptions} */
                 (goog.object.clone(newVal));
 
             if (options !== undefined) {
@@ -71,7 +71,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
               // For that reason we use $applyAsync instead of $apply here.
 
               if (options.hoverCallback !== undefined) {
-                var origHoverCallback = options.hoverCallback;
+                let origHoverCallback = options.hoverCallback;
                 options.hoverCallback = function() {
                   origHoverCallback.apply(null, arguments);
                   scope.$applyAsync();
@@ -79,7 +79,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
               }
 
               if (options.outCallback !== undefined) {
-                var origOutCallback = options.outCallback;
+                let origOutCallback = options.outCallback;
                 options.outCallback = function() {
                   origOutCallback();
                   scope.$applyAsync();

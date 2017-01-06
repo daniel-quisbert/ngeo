@@ -78,7 +78,7 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
   this.vectorLayer_ = this.createVectorLayer_();
 
   /** @type {Bloodhound} */
-  var bloodhoundEngine = this.createAndInitBloodhound_(
+  let bloodhoundEngine = this.createAndInitBloodhound_(
       ngeoSearchCreateGeoJSONBloodhound);
 
   /**
@@ -98,7 +98,7 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
     display: function(suggestion) {
-      var feature = /** @type {ol.Feature} */ (suggestion);
+      let feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label');
     },
     templates: {
@@ -106,17 +106,17 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
         return '<div class="ngeo-header">Addresses</div>';
       },
       suggestion: function(suggestion) {
-        var feature = /** @type {ol.Feature} */ (suggestion);
+        let feature = /** @type {ol.Feature} */ (suggestion);
 
         // A scope for the ng-click on the suggestion's « i » button.
-        var scope = $rootScope.$new(true);
+        let scope = $rootScope.$new(true);
         scope['feature'] = feature;
         scope['click'] = function(event) {
           window.alert(feature.get('label'));
           event.stopPropagation();
         };
 
-        var html = '<p>' + feature.get('label') +
+        let html = '<p>' + feature.get('label') +
             '<button ng-click="click($event)">i</button></p>';
         return $compile(html)(scope);
       }
@@ -139,7 +139,7 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
  * @private
  */
 app.SearchController.prototype.createVectorLayer_ = function() {
-  var vectorLayer = new ol.layer.Vector({
+  let vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector()
   });
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
@@ -156,8 +156,8 @@ app.SearchController.prototype.createVectorLayer_ = function() {
  * @private
  */
 app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
-  var url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?query=%QUERY';
-  var bloodhound = ngeoSearchCreateGeoJSONBloodhound(
+  let url = 'https://geomapfish-demo.camptocamp.net/2.1/wsgi/fulltextsearch?query=%QUERY';
+  let bloodhound = ngeoSearchCreateGeoJSONBloodhound(
       url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
   bloodhound.initialize();
   return bloodhound;
@@ -172,12 +172,12 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCre
  * @private
  */
 app.SearchController.select_ = function(event, suggestion, dataset) {
-  var feature = /** @type {ol.Feature} */ (suggestion);
-  var featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+  let feature = /** @type {ol.Feature} */ (suggestion);
+  let featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
-  var mapSize = this.map.getSize();
+  let mapSize = this.map.getSize();
   goog.asserts.assert(mapSize !== undefined);
-  var source = this.vectorLayer_.getSource();
+  let source = this.vectorLayer_.getSource();
   source.clear(true);
   source.addFeature(feature);
   this.map.getView().fit(featureGeometry, mapSize, {maxZoom: 16});

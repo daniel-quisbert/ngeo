@@ -87,7 +87,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Ngeo FeatureHelper service
    * @type {ngeo.FeatureHelper}
    */
-  var ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+  let ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
   ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
   /**
@@ -113,10 +113,10 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Authentication service
    * @type {gmf.Authentication}
    */
-  var gmfAuthentication = $injector.get('gmfAuthentication');
+  let gmfAuthentication = $injector.get('gmfAuthentication');
 
-  var userChange = function(evt) {
-    var roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+  let userChange = function(evt) {
+    let roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
     // Reload theme and background layer when login status changes.
     if (evt.type !== gmf.AuthenticationEventType.READY) {
       this.updateCurrentTheme_();
@@ -149,25 +149,25 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   this.dimensions = {};
 
-  var permalink = $injector.get('gmfPermalink');
+  let permalink = $injector.get('gmfPermalink');
 
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
 
-  var queryManager = $injector.get('gmfQueryManager');
+  let queryManager = $injector.get('gmfQueryManager');
   queryManager.setDimensions(this.dimensions);
 
   if ($injector.has('gmfDefaultDimensions')) {
     // Set defaults
-    var defaultDimensions = $injector.get('gmfDefaultDimensions');
-    for (var dim in defaultDimensions) {
+    let defaultDimensions = $injector.get('gmfDefaultDimensions');
+    for (let dim in defaultDimensions) {
       if (this.dimensions[dim] === undefined) {
         this.dimensions[dim] = defaultDimensions[dim];
       }
     }
   }
 
-  var backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+  let backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
 
   // watch any change on dimensions object to refresh the background layer
   $scope.$watchCollection(function() {
@@ -188,8 +188,8 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   this.rightNavVisible = false;
 
-  var queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  var queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+  let queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  let queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
    * FeatureStyle used by the displayquerywindow directive
@@ -336,45 +336,45 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * The ngeo feature overlay manager service
    * @type {ngeo.FeatureOverlayMgr}
    */
-  var ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
+  let ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
-  var ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+  let ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  var queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  let queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
-  var measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
+  let measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
   ngeoToolActivateMgr.registerTool('mapTools', measurePointActivate, false);
 
-  var measureLengthActivate = new ngeo.ToolActivate(this, 'measureLengthActive');
+  let measureLengthActivate = new ngeo.ToolActivate(this, 'measureLengthActive');
   ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
-  var drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
+  let drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
 
-  var drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
+  let drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
 
-  var printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
+  let printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
 
 
   $scope.$watch(function() {
     return this.gmfThemeManager.themeName;
   }.bind(this), function(name) {
-    var map = this.map;
+    let map = this.map;
     this.gmfThemes_.getThemeObject(name).then(function(theme) {
       if (theme) {
-        var backgrounds = theme['functionalities']['default_basemap'];
+        let backgrounds = theme['functionalities']['default_basemap'];
         if (backgrounds && backgrounds.length > 0) {
-          var background = backgrounds[0];
+          let background = backgrounds[0];
           this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
-            var layer = ol.array.find(layers, function(layer) {
+            let layer = ol.array.find(layers, function(layer) {
               return layer.get('label') === background;
             });
             if (layer) {
@@ -393,18 +393,18 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
     this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
-      var background;
+      let background;
       if (!skipPermalink) {
         // get the background from the permalink
         background = permalink.getBackgroundLayer(layers);
       }
       if (!background) {
         // get the background from the user settings
-        var functionalities = this.gmfUser.functionalities;
+        let functionalities = this.gmfUser.functionalities;
         if (functionalities) {
-          var defaultBasemapArray = functionalities.default_basemap;
+          let defaultBasemapArray = functionalities.default_basemap;
           if (defaultBasemapArray.length > 0) {
-            var defaultBasemapLabel = defaultBasemapArray[0];
+            let defaultBasemapLabel = defaultBasemapArray[0];
             background = ol.array.find(layers, function(layer) {
               return layer.get('label') === defaultBasemapLabel;
             });
@@ -466,9 +466,9 @@ gmf.AbstractController.prototype.initLanguage = function() {
     });
   }.bind(this));
 
-  var browserLanguage = /** @type {string|undefined} */
+  let browserLanguage = /** @type {string|undefined} */
       (this.getBrowserLanguage(Object.keys(this.langUrls)));
-  var urlLanguage = /** @type {string|undefined} */
+  let urlLanguage = /** @type {string|undefined} */
       (this.stateManager.getInitialValue('lang'));
 
   if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
@@ -492,18 +492,18 @@ gmf.AbstractController.prototype.initLanguage = function() {
  */
 gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
   this.gmfThemes_.getThemesObject().then(function(themes) {
-    var themeName;
+    let themeName;
 
     // check if we have a theme in the user functionalities
-    var functionalities = this.gmfUser.functionalities;
+    let functionalities = this.gmfUser.functionalities;
     if (functionalities && 'default_theme' in functionalities) {
-      var defaultTheme = functionalities.default_theme;
+      let defaultTheme = functionalities.default_theme;
       if (defaultTheme.length > 0) {
         themeName = defaultTheme[0];
       }
     }
     if (themeName) {
-      var theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
+      let theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
       if (theme) {
         this.gmfThemeManager.addTheme(theme, true);
       }

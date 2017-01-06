@@ -36,12 +36,12 @@ ngeo.debounceServiceFactory = function($timeout) {
         /**
          * @type {?angular.$q.Promise}
          */
-        var timeout = null;
+        let timeout = null;
         return (
             function() {
-              var context = this;
-              var args = arguments;
-              var later = function() {
+              let context = this;
+              let args = arguments;
+              let later = function() {
                 timeout = null;
                 func.apply(context, args);
               };

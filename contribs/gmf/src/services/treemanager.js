@@ -14,7 +14,7 @@ goog.require('ngeo.LayertreeController');
  * 'add', children will be just pushed in this array. The default state can be
  * changed by setting the value `gmfTreeManagerModeFlush`, e.g.:
  *
- *     var module = angular.module('app');
+ *     let module = angular.module('app');
  *     module.value('gmfTreeManagerModeFlush', false);
  *
  * This service's theme is a GmfTheme with only children and a name.
@@ -155,7 +155,7 @@ gmf.TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  */
 gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
     opt_add, opt_silent) {
-  var groupNotAdded = [];
+  let groupNotAdded = [];
 
   firstLevelGroups.slice().reverse().forEach(function(group) {
     if (!this.addFirstLevelGroup_(group)) {
@@ -176,7 +176,7 @@ gmf.TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
  * @private
  */
 gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
-  var treeGroupsParam = {};
+  let treeGroupsParam = {};
   treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = groups.map(function(node) {
     return node.name;
   }).join(',');
@@ -192,8 +192,8 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
  * @private
  */
 gmf.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
-  var alreadyAdded = false;
-  var groupID = group.id;
+  let alreadyAdded = false;
+  let groupID = group.id;
   this.root.children.some(function(rootChild) {
     if (groupID === rootChild.id) {
       return alreadyAdded = true;
@@ -251,7 +251,7 @@ gmf.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
  */
 gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
-    var group = gmf.Themes.findGroupByName(themes, groupName);
+    let group = gmf.Themes.findGroupByName(themes, groupName);
     if (group) {
       this.addFirstLevelGroups([group], opt_add, false);
     }
@@ -270,16 +270,16 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  */
 gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then(function(themes) {
-    var group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
+    let group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
     if (group) {
-      var groupAdded = this.addFirstLevelGroups([group], opt_add, opt_silent);
+      let groupAdded = this.addFirstLevelGroups([group], opt_add, opt_silent);
       this.$timeout_(function() {
-        var treeCtrl = this.getTreeCtrlByNodeId(group.id);
+        let treeCtrl = this.getTreeCtrlByNodeId(group.id);
         if (!treeCtrl) {
           console.warn('Tree controler not found, unable to add the group');
           return;
         }
-        var treeCtrlToActive;
+        let treeCtrlToActive;
         treeCtrl.traverseDepthFirst(function(treeCtrl) {
           if (treeCtrl.node.name === layerName) {
             treeCtrlToActive = treeCtrl;
@@ -309,8 +309,8 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
  * @export
  */
 gmf.TreeManager.prototype.removeGroup = function(group) {
-  var children = this.root.children;
-  var index = 0, found = false;
+  let children = this.root.children;
+  let index = 0, found = false;
   children.some(function(child) {
     if (child.name === group.name) {
       return found = true;
@@ -345,7 +345,7 @@ gmf.TreeManager.prototype.removeAll = function() {
  * @private
  */
 gmf.TreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  var clone = /** @type {gmfThemes.GmfGroup} */ (goog.object.unsafeClone(group));
+  let clone = /** @type {gmfThemes.GmfGroup} */ (goog.object.unsafeClone(group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -381,12 +381,12 @@ gmf.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
  * @private
  */
 gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
-  var names = [];
-  var gettextCatalog = this.gettextCatalog_;
+  let names = [];
+  let gettextCatalog = this.gettextCatalog_;
   groups.forEach(function(group) {
     names.push(group.name);
   });
-  var msg = (names.length < 2) ?
+  let msg = (names.length < 2) ?
       gettextCatalog.getString('group is already loaded.') :
       gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
@@ -403,7 +403,7 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
  * @public
  */
 gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
-  var correspondingTreeCtrl = null;
+  let correspondingTreeCtrl = null;
   if (this.rootCtrl && this.rootCtrl.traverseDepthFirst) {
     this.rootCtrl.traverseDepthFirst(function(treeCtrl) {
       if (treeCtrl.node.id === id) {
@@ -424,15 +424,15 @@ gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
  */
 gmf.TreeManager.prototype.getOgcServer = function(treeCtrl) {
   if (treeCtrl.parent.node.mixed) {
-    var gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
+    let gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
     goog.asserts.assert(gmfLayerWMS.ogcServer);
     return this.ogcServers_[gmfLayerWMS.ogcServer];
   } else {
-    var firstLevelGroupCtrl = treeCtrl;
+    let firstLevelGroupCtrl = treeCtrl;
     while (!firstLevelGroupCtrl.parent.isRoot) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
-    var gmfGroup = /** @type {gmfThemes.GmfGroup} */ (firstLevelGroupCtrl.node);
+    let gmfGroup = /** @type {gmfThemes.GmfGroup} */ (firstLevelGroupCtrl.node);
     goog.asserts.assert(gmfGroup.ogcServer);
     return this.ogcServers_[gmfGroup.ogcServer];
   }

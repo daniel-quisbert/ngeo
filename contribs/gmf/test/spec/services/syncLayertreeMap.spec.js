@@ -3,13 +3,13 @@ goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.SyncLayertreeMap', function() {
-  var $httpBackend_;
-  var gmfSyncLayertreeMap_;
-  var element;
-  var map;
-  var roottreeCtrl;
-  var group;
-  var getLayer;
+  let $httpBackend_;
+  let gmfSyncLayertreeMap_;
+  let element;
+  let map;
+  let roottreeCtrl;
+  let group;
+  let getLayer;
 
   beforeEach(function() {
     map = new ol.Map({
@@ -33,7 +33,7 @@ describe('gmf.SyncLayertreeMap', function() {
       $httpBackend_ = $httpBackend;
       gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
-      var reGmfTreeUrl = new RegExp('^' + gmfTreeUrl);
+      let reGmfTreeUrl = new RegExp('^' + gmfTreeUrl);
       // Prepare request simulation
       $httpBackend.when('GET', reGmfTreeUrl).respond(themes);
       $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(capabilities.swisstopo);
@@ -45,7 +45,7 @@ describe('gmf.SyncLayertreeMap', function() {
 
       // Prepare layertree
       getLayer = function(treeCtrl) {
-        var layer = gmfSyncLayertreeMap.createLayer(treeCtrl, map, group);
+        let layer = gmfSyncLayertreeMap.createLayer(treeCtrl, map, group);
         return layer;
       };
     });
@@ -64,9 +64,9 @@ describe('gmf.SyncLayertreeMap', function() {
     });
     roottreeCtrl = element.scope().layertreeCtrl;
 
-    var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    var treeLayer = treeGroup.children[0]; // Leaf 'cinema'
-    var layer = gmf.SyncLayertreeMap.getLayer(treeLayer);
+    let treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
+    let treeLayer = treeGroup.children[0]; // Leaf 'cinema'
+    let layer = gmf.SyncLayertreeMap.getLayer(treeLayer);
 
     expect(treeLayer.layer).toBe(null);
     expect(layer.constructor).toBe(ol.layer.Image);
@@ -84,9 +84,9 @@ describe('gmf.SyncLayertreeMap', function() {
       $rootScope.$digest();
     });
     roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
-    var treeLeaf = treeGroup.children[0]; // osm scale;
-    var wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
+    let treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
+    let treeLeaf = treeGroup.children[0]; // osm scale;
+    let wmsParamLayers = treeLeaf.layer.getSource().getParams()['LAYERS'];
 
     expect(treeLeaf.node.name).toEqual(wmsParamLayers);
   });
@@ -101,9 +101,9 @@ describe('gmf.SyncLayertreeMap', function() {
       $rootScope.$digest();
     });
     roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    var wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    var checkedLayers = ['cinema', 'police', 'post_office', 'entertainment',
+    let treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
+    let wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
+    let checkedLayers = ['cinema', 'police', 'post_office', 'entertainment',
       'sustenance', 'hospitals']; // order count !
 
     expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));
@@ -121,8 +121,8 @@ describe('gmf.SyncLayertreeMap', function() {
 
     $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
     roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
-    var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
+    let treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
+    let treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
     expect(treeLeaf.node.name).toBe(treeLeaf.layer.getSource().getLayer());
   });
@@ -139,9 +139,9 @@ describe('gmf.SyncLayertreeMap', function() {
       $rootScope.$digest();
     });
     roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
-    var treeLeaf = treeGroup.children[0]; // osm scale;
-    var wmsParamLayers;
+    let treeGroup = roottreeCtrl.children[0]; // Group 'OSM functions mixed'
+    let treeLeaf = treeGroup.children[0]; // osm scale;
+    let wmsParamLayers;
 
     roottreeCtrl.setState('off');
     gmfSyncLayertreeMap_.sync_(map, treeGroup);
@@ -164,9 +164,9 @@ describe('gmf.SyncLayertreeMap', function() {
       $rootScope.$digest();
     });
     roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
-    var treeLeaf = treeGroup.children[0]; // Leaf 'cinema'
-    var wmsParamLayers;
+    let treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
+    let treeLeaf = treeGroup.children[0]; // Leaf 'cinema'
+    let wmsParamLayers;
 
     roottreeCtrl.setState('off');
     gmfSyncLayertreeMap_.sync_(map, treeGroup);
@@ -196,8 +196,8 @@ describe('gmf.SyncLayertreeMap', function() {
     });
     $httpBackend_.flush(); // To get capabilities (and source) for the WMTS layer.
     roottreeCtrl = element.scope().layertreeCtrl;
-    var treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
-    var treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
+    let treeGroup = roottreeCtrl.children[0]; // Group 'Cadastre'
+    let treeLeaf = treeGroup.children[4]; // Leaf 'ch.are.alpenkonvention'
 
     treeGroup.setState('off');
     gmfSyncLayertreeMap_.sync_(map, treeGroup);

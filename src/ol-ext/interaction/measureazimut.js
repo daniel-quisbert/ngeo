@@ -35,7 +35,7 @@ goog.require('ol.source.Vector');
  */
 ngeo.interaction.MeasureAzimut = function(format, opt_options) {
 
-  var options = opt_options !== undefined ? opt_options : {};
+  let options = opt_options !== undefined ? opt_options : {};
 
   ngeo.interaction.Measure.call(this, options);
 
@@ -76,10 +76,10 @@ ngeo.interaction.MeasureAzimut.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
-  var geom = /** @type {ol.geom.GeometryCollection} */
+  let geom = /** @type {ol.geom.GeometryCollection} */
       (this.sketchFeature.getGeometry());
-  var line = /** @type {ol.geom.LineString} */ (geom.getGeometries()[0]);
-  var output = ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius(line, this.getMap().getView().getProjection(), this.decimals, this.format);
+  let line = /** @type {ol.geom.LineString} */ (geom.getGeometries()[0]);
+  let output = ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius(line, this.getMap().getView().getProjection(), this.decimals, this.format);
   callback(output, line.getLastCoordinate());
 };
 
@@ -95,7 +95,7 @@ ngeo.interaction.MeasureAzimut.prototype.handleMeasure = function(callback) {
 ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
     line, projection, decimals, format) {
 
-  var output = ngeo.interaction.MeasureAzimut.getFormattedAzimut(line);
+  let output = ngeo.interaction.MeasureAzimut.getFormattedAzimut(line);
 
   output += ', ' + ngeo.interaction.Measure.getFormattedLength(
       line, projection, decimals, format);
@@ -110,7 +110,7 @@ ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius = function(
  * @return {string} Formated measure.
  */
 ngeo.interaction.MeasureAzimut.getFormattedAzimut = function(line) {
-  var azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
+  let azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
   return azimut + '°';
 };
 
@@ -121,11 +121,11 @@ ngeo.interaction.MeasureAzimut.getFormattedAzimut = function(line) {
  * @return {number} Azimut value.
  */
 ngeo.interaction.MeasureAzimut.getAzimut = function(line) {
-  var coords = line.getCoordinates();
-  var dx = coords[1][0] - coords[0][0];
-  var dy = coords[1][1] - coords[0][1];
-  var rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
-  var factor = dx > 0 ? 1 : -1;
+  let coords = line.getCoordinates();
+  let dx = coords[1][0] - coords[0][0];
+  let dy = coords[1][1] - coords[0][1];
+  let rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
+  let factor = dx > 0 ? 1 : -1;
   return Math.round(factor * rad * 180 / Math.PI) % 360;
 };
 
@@ -234,12 +234,12 @@ ngeo.interaction.DrawAzimut.handleDownEvent_ = function(event) {
  * @private
  */
 ngeo.interaction.DrawAzimut.handleUpEvent_ = function(event) {
-  var downPx = this.downPx_;
-  var clickPx = event.pixel;
-  var dx = downPx[0] - clickPx[0];
-  var dy = downPx[1] - clickPx[1];
-  var squaredDistance = dx * dx + dy * dy;
-  var pass = true;
+  let downPx = this.downPx_;
+  let clickPx = event.pixel;
+  let dx = downPx[0] - clickPx[0];
+  let dy = downPx[1] - clickPx[1];
+  let squaredDistance = dx * dx + dy * dy;
+  let pass = true;
   if (squaredDistance <= this.squaredClickTolerance_) {
     this.handlePointerMove_(event);
     if (!this.started_) {
@@ -260,7 +260,7 @@ ngeo.interaction.DrawAzimut.handleUpEvent_ = function(event) {
  * @private
  */
 ngeo.interaction.DrawAzimut.handleEvent_ = function(mapBrowserEvent) {
-  var pass = true;
+  let pass = true;
   if (mapBrowserEvent.type === ol.MapBrowserEvent.EventType.POINTERMOVE) {
     pass = this.handlePointerMove_(mapBrowserEvent);
   } else if (mapBrowserEvent.type === ol.MapBrowserEvent.EventType.DBLCLICK) {
@@ -291,12 +291,12 @@ ngeo.interaction.DrawAzimut.prototype.handlePointerMove_ = function(event) {
  * @private
  */
 ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
-  var coordinates = event.coordinate.slice();
+  let coordinates = event.coordinate.slice();
   if (this.sketchPoint_ === null) {
     this.sketchPoint_ = new ol.Feature(new ol.geom.Point(coordinates));
     this.updateSketchFeatures_();
   } else {
-    var sketchPointGeom = this.sketchPoint_.getGeometry();
+    let sketchPointGeom = this.sketchPoint_.getGeometry();
     goog.asserts.assertInstanceof(sketchPointGeom, ol.geom.Point);
     sketchPointGeom.setCoordinates(coordinates);
   }
@@ -308,14 +308,14 @@ ngeo.interaction.DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(even
  * @private
  */
 ngeo.interaction.DrawAzimut.prototype.updateSketchFeatures_ = function() {
-  var sketchFeatures = [];
+  let sketchFeatures = [];
   if (this.sketchFeature_ !== null) {
     sketchFeatures.push(this.sketchFeature_);
   }
   if (this.sketchPoint_ !== null) {
     sketchFeatures.push(this.sketchPoint_);
   }
-  var source = this.sketchLayer_.getSource();
+  let source = this.sketchLayer_.getSource();
   source.clear(true);
   source.addFeatures(sketchFeatures);
 };
@@ -327,11 +327,11 @@ ngeo.interaction.DrawAzimut.prototype.updateSketchFeatures_ = function() {
  * @private
  */
 ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
-  var start = event.coordinate;
+  let start = event.coordinate;
   this.started_ = true;
-  var line = new ol.geom.LineString([start.slice(), start.slice()]);
-  var circle = new ol.geom.Circle(start, 0);
-  var geometry = new ol.geom.GeometryCollection([line, circle]);
+  let line = new ol.geom.LineString([start.slice(), start.slice()]);
+  let circle = new ol.geom.Circle(start, 0);
+  let geometry = new ol.geom.GeometryCollection([line, circle]);
   goog.asserts.assert(geometry !== undefined);
   this.sketchFeature_ = new ol.Feature();
   this.sketchFeature_.setGeometry(geometry);
@@ -347,15 +347,15 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
  * @private
  */
 ngeo.interaction.DrawAzimut.prototype.modifyDrawing_ = function(event) {
-  var coordinate = event.coordinate;
-  var geometry = /** @type {ol.geom.GeometryCollection} */
+  let coordinate = event.coordinate;
+  let geometry = /** @type {ol.geom.GeometryCollection} */
       (this.sketchFeature_.getGeometry());
-  var geometries = geometry.getGeometriesArray();
-  var line = geometries[0];
-  var coordinates, last;
+  let geometries = geometry.getGeometriesArray();
+  let line = geometries[0];
+  let coordinates, last;
   goog.asserts.assertInstanceof(line, ol.geom.LineString);
   coordinates = line.getCoordinates();
-  var sketchPointGeom = this.sketchPoint_.getGeometry();
+  let sketchPointGeom = this.sketchPoint_.getGeometry();
   goog.asserts.assertInstanceof(sketchPointGeom, ol.geom.Point);
   sketchPointGeom.setCoordinates(coordinate);
   last = coordinates[coordinates.length - 1];
@@ -363,7 +363,7 @@ ngeo.interaction.DrawAzimut.prototype.modifyDrawing_ = function(event) {
   last[1] = coordinate[1];
   goog.asserts.assertInstanceof(line, ol.geom.LineString);
   line.setCoordinates(coordinates);
-  var circle = /** @type {ol.geom.Circle} */ (geometries[1]);
+  let circle = /** @type {ol.geom.Circle} */ (geometries[1]);
   circle.setRadius(line.getLength());
   this.updateSketchFeatures_();
 };
@@ -376,7 +376,7 @@ ngeo.interaction.DrawAzimut.prototype.modifyDrawing_ = function(event) {
  */
 ngeo.interaction.DrawAzimut.prototype.abortDrawing_ = function() {
   this.started_ = false;
-  var sketchFeature = this.sketchFeature_;
+  let sketchFeature = this.sketchFeature_;
   if (sketchFeature !== null) {
     this.sketchFeature_ = null;
     this.sketchPoint_ = null;
@@ -396,8 +396,8 @@ ngeo.interaction.DrawAzimut.prototype.shouldStopEvent = ol.functions.FALSE;
  * @private
  */
 ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
-  var map = this.getMap();
-  var active = this.getActive();
+  let map = this.getMap();
+  let active = this.getActive();
   if (map === null || !active) {
     this.abortDrawing_();
   }
@@ -410,7 +410,7 @@ ngeo.interaction.DrawAzimut.prototype.updateState_ = function() {
  * @private
  */
 ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
-  var sketchFeature = this.abortDrawing_();
+  let sketchFeature = this.abortDrawing_();
   goog.asserts.assert(sketchFeature !== null);
 
   if (this.source_ !== null) {

@@ -259,9 +259,9 @@ ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
-  var feature = new ol.Feature(event.feature.getGeometry());
+  let feature = new ol.Feature(event.feature.getGeometry());
 
-  var prop = ngeo.FeatureProperties;
+  let prop = ngeo.FeatureProperties;
 
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
@@ -283,13 +283,13 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   /**
    * @type {string}
    */
-  var name = this.gettextCatalog_.getString(type);
+  let name = this.gettextCatalog_.getString(type);
   feature.set(prop.NAME, name + ' ' + (this.features_.getLength() + 1));
 
   /**
    * @type {string}
    */
-  var color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
+  let color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
   feature.set(prop.COLOR, color);
 
   feature.set(prop.ANGLE, 0);
