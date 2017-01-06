@@ -50,54 +50,52 @@ ngeo.modalDirective = function($parse) {
     restrict: 'E',
     require: 'ngModel',
     transclude: true,
-    link:
-        /**
-         * @param {!angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         * @param {angular.NgModelController} ngModelController The ngModel
-         * controller.
-         */
-        function(scope, element, attrs, ngModelController, transcludeFn) {
-          const modal = element.children();
-          const destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
-          let childScope = scope.$new();
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Atttributes.
+     * @param {angular.NgModelController} ngModelController The ngModel controller.
+     */
+    link(scope, element, attrs, ngModelController, transcludeFn) {
+      const modal = element.children();
+      const destroyContent = attrs['ngeoModalDestroyContentOnHide'] === 'true';
+      let childScope = scope.$new();
 
           // move the modal to document body to ensure that it is on top of
           // other elements even if in a positioned element initially.
-          angular.element(document.body).append(modal);
+      angular.element(document.body).append(modal);
 
-          ngModelController.$render = function() {
-            modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
-          };
+      ngModelController.$render = function() {
+        modal.modal(ngModelController.$viewValue ? 'show' : 'hide');
+      };
 
-          modal.on('shown.bs.modal hidden.bs.modal', function(e) {
-            const type = e.type;
-            goog.asserts.assert(type == 'shown' || type == 'hidden');
-            scope.$apply(function() {
-              ngModelController.$setViewValue(type == 'shown');
-            });
-          });
+      modal.on('shown.bs.modal hidden.bs.modal', function(e) {
+        const type = e.type;
+        goog.asserts.assert(type == 'shown' || type == 'hidden');
+        scope.$apply(function() {
+          ngModelController.$setViewValue(type == 'shown');
+        });
+      });
 
-          if (destroyContent) {
-            modal.on('hide.bs.modal', onHide);
-            modal.on('show.bs.modal', onShow);
-          } else {
-            modal.find('.modal-content').append(transcludeFn());
-          }
+      if (destroyContent) {
+        modal.on('hide.bs.modal', onHide);
+        modal.on('show.bs.modal', onShow);
+      } else {
+        modal.find('.modal-content').append(transcludeFn());
+      }
 
-          function onShow(e) {
-            childScope = scope.$new();
-            transcludeFn(childScope, function(clone) {
-              modal.find('.modal-content').append(clone);
-            });
-          }
+      function onShow(e) {
+        childScope = scope.$new();
+        transcludeFn(childScope, function(clone) {
+          modal.find('.modal-content').append(clone);
+        });
+      }
 
-          function onHide(e) {
-            childScope.$destroy();
-            modal.find('.modal-content').empty();
-          }
-        }
+      function onHide(e) {
+        childScope.$destroy();
+        modal.find('.modal-content').empty();
+      }
+    }
   };
 };
 
