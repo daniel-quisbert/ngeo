@@ -104,7 +104,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
 
   /**
    * A reference to the OGC servers loaded by the theme service.
-   * @type {gmfThemes.GmfOgcServers}
+   * @type {gmfThemes.GmfOgcServers|null}
    * @private
    */
   this.ogcServers_ = null;
