@@ -12,9 +12,9 @@ describe('ngeo.Debounce', function() {
   });
 
   it('debounces the function', function() {
-    let spy = jasmine.createSpy('debounced');
-    let func = ngeoDebounce(spy, 200, false);
-    let args = [1, 'foo'];
+    const spy = jasmine.createSpy('debounced');
+    const func = ngeoDebounce(spy, 200, false);
+    const args = [1, 'foo'];
     func.apply(null, args);
     expect(spy).not.toHaveBeenCalled();
     func.apply(null, args);

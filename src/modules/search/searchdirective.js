@@ -36,28 +36,28 @@ ngeo.search.searchDirective = function() {
          */
         function(scope, element, attrs) {
 
-          let typeaheadOptionsExpr = attrs['ngeoSearch'];
-          let typeaheadOptions = /** @type {TypeaheadOptions} */
+          const typeaheadOptionsExpr = attrs['ngeoSearch'];
+          const typeaheadOptions = /** @type {TypeaheadOptions} */
               (scope.$eval(typeaheadOptionsExpr));
 
-          let typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
-          let typeaheadDatasets = /** @type {Array.<TypeaheadDataset>} */
+          const typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
+          const typeaheadDatasets = /** @type {Array.<TypeaheadDataset>} */
               (scope.$eval(typeaheadDatasetsExpr));
 
-          let args = typeaheadDatasets.slice();
+          const args = typeaheadDatasets.slice();
           args.unshift(typeaheadOptions);
 
           element.typeahead.apply(element, args);
 
-          let typeaheadListenersExpr = attrs['ngeoSearchListeners'];
-          let typeaheadListeners_ =
+          const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
+          const typeaheadListeners_ =
               /** @type {ngeox.SearchDirectiveListeners} */
               (scope.$eval(typeaheadListenersExpr));
 
           /**
            * @type {ngeox.SearchDirectiveListeners}
            */
-          let typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
+          const typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
               typeaheadListeners_);
 
           element.on('typeahead:open', function() {

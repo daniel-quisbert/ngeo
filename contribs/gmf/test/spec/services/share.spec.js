@@ -4,7 +4,7 @@ describe('gmf.ShareService', function() {
   let gmfShareService;
   let $httpBackend;
   let shortenerUrl;
-  let successResponse = {
+  const successResponse = {
     short_url: 'http://fake/gmf'
   };
 
@@ -21,8 +21,8 @@ describe('gmf.ShareService', function() {
       shortenerUrl = $injector.get('gmfShortenerCreateUrl');
     });
 
-    let permalink = 'htpp://fake/c2c/permalink';
-    let params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+    const permalink = 'htpp://fake/c2c/permalink';
+    const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
       url: permalink
     });
 

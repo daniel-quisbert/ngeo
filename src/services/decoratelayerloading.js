@@ -43,19 +43,19 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
    * @function
    * @private
    */
-  let incrementLoadCount_ = increment_;
+  const incrementLoadCount_ = increment_;
 
   /**
    * @function
    * @private
    */
-  let decrementLoadCount_ = decrement_;
+  const decrementLoadCount_ = decrement_;
 
   layer.set('load_count', 0, true);
 
   if (layer instanceof ol.layer.Group) {
     layer.getLayers().on('add', function(olEvent) {
-      let newLayer = olEvent.element;
+      const newLayer = olEvent.element;
       newLayer.set('parent_group', layer);
     });
   }
@@ -103,7 +103,7 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
    */
   function increment_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
-    let parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    const parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
     layer.set('load_count', ++load_count, true);
     if (parent) {
       increment_(parent);
@@ -117,7 +117,7 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
    */
   function decrement_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
-    let parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    const parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
     layer.set('load_count', --load_count, true);
     if (parent) {
       decrement_(parent);

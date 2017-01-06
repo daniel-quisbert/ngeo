@@ -23,7 +23,7 @@ ngeo.drawpointDirective = function() {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      let drawPoint = new ol.interaction.Draw({
+      const drawPoint = new ol.interaction.Draw({
         type: ol.geom.GeometryType.POINT
       });
 

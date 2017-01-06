@@ -33,10 +33,10 @@ ngeo.mapDirective = function() {
          * @param {angular.Attributes} attrs Attributes.
          */
         function(scope, element, attrs) {
-          let attr = 'ngeoMap';
-          let prop = attrs[attr];
+          const attr = 'ngeoMap';
+          const prop = attrs[attr];
 
-          let map = /** @type {ol.Map} */ (scope.$eval(prop));
+          const map = /** @type {ol.Map} */ (scope.$eval(prop));
           goog.asserts.assertInstanceof(map, ol.Map);
 
           map.setTarget(element[0]);

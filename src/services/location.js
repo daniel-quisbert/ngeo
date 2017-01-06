@@ -133,7 +133,7 @@ ngeo.Location.prototype.getParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.getFragmentParam = function(key) {
-  let val = /** @type {string} */ (this.getFragmentUri_().getQueryData().get(key));
+  const val = /** @type {string} */ (this.getFragmentUri_().getQueryData().get(key));
   return val !== undefined ? ngeo.string.urlDecode(val) : undefined;
 };
 
@@ -146,11 +146,11 @@ ngeo.Location.prototype.getFragmentParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.getParamAsInt = function(key) {
-  let value = /** @type {string} */ (this.getParam(key));
+  const value = /** @type {string} */ (this.getParam(key));
   if (value === undefined) {
     return undefined;
   }
-  let valueAsInt = parseInt(value, 10);
+  const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };
 
@@ -163,11 +163,11 @@ ngeo.Location.prototype.getParamAsInt = function(key) {
  * @export
  */
 ngeo.Location.prototype.getFragmentParamAsInt = function(key) {
-  let value = /** @type {string} */ (this.getFragmentParam(key));
+  const value = /** @type {string} */ (this.getFragmentParam(key));
   if (value === undefined) {
     return undefined;
   }
-  let valueAsInt = parseInt(value, 10);
+  const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };
 
@@ -226,7 +226,7 @@ ngeo.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
  * @export
  */
 ngeo.Location.prototype.updateParams = function(params) {
-  let qd = this.uri_.getQueryData();
+  const qd = this.uri_.getQueryData();
   goog.object.forEach(params, function(val, key) {
     qd.set(key, val);
   });
@@ -239,8 +239,8 @@ ngeo.Location.prototype.updateParams = function(params) {
  * @export
  */
 ngeo.Location.prototype.updateFragmentParams = function(params) {
-  let fragmentUri = this.getFragmentUri_();
-  let qd = fragmentUri.getQueryData();
+  const fragmentUri = this.getFragmentUri_();
+  const qd = fragmentUri.getQueryData();
   goog.object.forEach(params, function(val, key) {
     val = val !== undefined ? ngeo.string.urlEncode(val) : undefined;
     qd.set(key, val);
@@ -265,7 +265,7 @@ ngeo.Location.prototype.deleteParam = function(key) {
  * @export
  */
 ngeo.Location.prototype.deleteFragmentParam = function(key) {
-  let fragmentUri = this.getFragmentUri_();
+  const fragmentUri = this.getFragmentUri_();
   fragmentUri.getQueryData().remove(key);
   this.updateFragmentFromUri_(fragmentUri);
 };
@@ -297,8 +297,8 @@ ngeo.Location.prototype.setPath = function(path) {
  * @private
  */
 ngeo.Location.prototype.getFragmentUri_ = function() {
-  let fragment = this.uri_.getFragment();
-  let uri = new goog.Uri(null);
+  const fragment = this.uri_.getFragment();
+  const uri = new goog.Uri(null);
   uri.setQueryData(fragment);
   return uri;
 };
@@ -311,7 +311,7 @@ ngeo.Location.prototype.getFragmentUri_ = function() {
  * @private
  */
 ngeo.Location.prototype.updateFragmentFromUri_ = function(fragmentUri) {
-  let fragment = fragmentUri.getQueryData().toDecodedString();
+  const fragment = fragmentUri.getQueryData().toDecodedString();
   this.uri_.setFragment(fragment);
 };
 
@@ -325,12 +325,12 @@ ngeo.Location.prototype.updateFragmentFromUri_ = function(fragmentUri) {
  * @ngInject
  */
 ngeo.LocationFactory = function($rootScope, $window) {
-  let history = $window.history;
-  let service = new ngeo.Location($window.location, $window.history);
+  const history = $window.history;
+  const service = new ngeo.Location($window.location, $window.history);
 
   let lastUri = service.getUriString();
   $rootScope.$watch(function() {
-    let newUri = service.getUriString();
+    const newUri = service.getUriString();
     if (lastUri !== newUri) {
       $rootScope.$evalAsync(function() {
         lastUri = newUri;
@@ -365,7 +365,7 @@ ngeo.mockLocationProvider = function($locationProvider) {
    * @return {angular.$location} Mock object for Angular location service.
    */
   $locationProvider['$get'] = function() {
-    let locationMock = /** @type {angular.$location} */ ({
+    const locationMock = /** @type {angular.$location} */ ({
       /**
        * @return {string} Absolute URL.
        */

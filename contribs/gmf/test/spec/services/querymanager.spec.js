@@ -16,7 +16,7 @@ describe('gmf.QueryManager', function() {
       queryManager = $injector.get('gmfQueryManager');
       queryManager.sources_.length = 0;
       gmfThemes = $injector.get('gmfThemes');
-      let treeUrl = $injector.get('gmfTreeUrl');
+      const treeUrl = $injector.get('gmfTreeUrl');
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', treeUrl + '?cache_version=0').respond(themes);
     });
@@ -27,8 +27,8 @@ describe('gmf.QueryManager', function() {
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  let getSourceById = function(sources, id) {
-    let results = $.grep(sources, function(source) {
+  const getSourceById = function(sources, id) {
+    const results = $.grep(sources, function(source) {
       return source.id === id;
     });
     return (results.length > 0) ? results[0] : null;
@@ -41,11 +41,11 @@ describe('gmf.QueryManager', function() {
       expect(queryManager.sources_.length).toBeGreaterThan(0);
 
       // overlay layer
-      let osmSource = getSourceById(queryManager.sources_, 109);
+      const osmSource = getSourceById(queryManager.sources_, 109);
       expect(osmSource).not.toBeNull();
 
       // background layer
-      let bgLayerSource = getSourceById(queryManager.sources_, 115);
+      const bgLayerSource = getSourceById(queryManager.sources_, 115);
       expect(bgLayerSource).not.toBeNull();
       expect(bgLayerSource.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
       expect(bgLayerSource.url).toBe('https://wms.geo.admin.ch?lang=fr');
@@ -54,8 +54,8 @@ describe('gmf.QueryManager', function() {
 
   describe('#createSources_', function() {
     it('Creates sources on queryable layers with WFS support', function() {
-      let osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
-      let firstLevelGroup = osmTheme.children[3]; // OSM Function
+      const osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
+      const firstLevelGroup = osmTheme.children[3]; // OSM Function
       queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
       let children, osmSource;
 
@@ -73,32 +73,32 @@ describe('gmf.QueryManager', function() {
     });
 
     it('Creates sources on queryable layer without WFS support', function() {
-      let osmTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
-      let firstLevelGroup = osmTheme.children[0]; // 'Cadastre'
+      const osmTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
+      const firstLevelGroup = osmTheme.children[0]; // 'Cadastre'
       queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
-      let osmSource = getSourceById(queryManager.sources_, 115);
+      const osmSource = getSourceById(queryManager.sources_, 115);
       expect(osmSource.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
       expect(osmSource.wfsQuery).toBe(false);
     });
 
     it('Creates a source for queryable WMTS overlay layers', function() {
-      let cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
+      const cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
       cadasterTheme.children.forEach(function(group) {
         queryManager.createSources_(group, group, themes.ogcServers);
       });
 
       // layer 'non-queryable-wmts-layer' without `wmsUrl`
-      let sourceNonQueryable = getSourceById(queryManager.sources_, 91346);
+      const sourceNonQueryable = getSourceById(queryManager.sources_, 91346);
       expect(sourceNonQueryable).toBeNull();
 
       // layer with `wmsUrl` and `wmsLayers` and 'ch.astra.ausnahmetransportrouten.queryLayers'
       // `queryLayers`. (`queryLayers` takes precedence over `wmsLayers`)
-      let sourceAlpConvention = getSourceById(queryManager.sources_, 115);
+      const sourceAlpConvention = getSourceById(queryManager.sources_, 115);
       expect(sourceAlpConvention).not.toBeNull();
       expect(sourceAlpConvention.params.LAYERS).toBe('ch.swisstopo.dreiecksvermaschung');
 
       // layer 'ch.astra.ausnahmetransportrouten' with `wmsUrl` and `queryLayers`
-      let sourceRoutes = getSourceById(queryManager.sources_, 116);
+      const sourceRoutes = getSourceById(queryManager.sources_, 116);
       expect(sourceRoutes).not.toBeNull();
       expect(sourceRoutes.params.LAYERS).toBe('ch.swisstopo.geologie-gravimetrischer_atlas');
     });

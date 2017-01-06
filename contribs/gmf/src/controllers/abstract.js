@@ -87,7 +87,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Ngeo FeatureHelper service
    * @type {ngeo.FeatureHelper}
    */
-  let ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+  const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
   ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
   /**
@@ -113,10 +113,10 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * Authentication service
    * @type {gmf.Authentication}
    */
-  let gmfAuthentication = $injector.get('gmfAuthentication');
+  const gmfAuthentication = $injector.get('gmfAuthentication');
 
-  let userChange = function(evt) {
-    let roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
+  const userChange = function(evt) {
+    const roleId = (evt.user.username !== null) ? evt.user.role_id : undefined;
     // Reload theme and background layer when login status changes.
     if (evt.type !== gmf.AuthenticationEventType.READY) {
       this.updateCurrentTheme_();
@@ -149,25 +149,25 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   this.dimensions = {};
 
-  let permalink = $injector.get('gmfPermalink');
+  const permalink = $injector.get('gmfPermalink');
 
   // watch any change on dimensions object to refresh the url
   permalink.setDimensions(this.dimensions);
 
-  let queryManager = $injector.get('gmfQueryManager');
+  const queryManager = $injector.get('gmfQueryManager');
   queryManager.setDimensions(this.dimensions);
 
   if ($injector.has('gmfDefaultDimensions')) {
     // Set defaults
-    let defaultDimensions = $injector.get('gmfDefaultDimensions');
-    for (let dim in defaultDimensions) {
+    const defaultDimensions = $injector.get('gmfDefaultDimensions');
+    for (const dim in defaultDimensions) {
       if (this.dimensions[dim] === undefined) {
         this.dimensions[dim] = defaultDimensions[dim];
       }
     }
   }
 
-  let backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+  const backgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
 
   // watch any change on dimensions object to refresh the background layer
   $scope.$watchCollection(function() {
@@ -188,8 +188,8 @@ gmf.AbstractController = function(config, $scope, $injector) {
    */
   this.rightNavVisible = false;
 
-  let queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  let queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+  const queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
+  const queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
    * FeatureStyle used by the displayquerywindow directive
@@ -336,45 +336,45 @@ gmf.AbstractController = function(config, $scope, $injector) {
    * The ngeo feature overlay manager service
    * @type {ngeo.FeatureOverlayMgr}
    */
-  let ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
+  const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
    * The ngeo ToolActivate manager service.
    * @type {ngeo.ToolActivateMgr}
    */
-  let ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  let queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
-  let measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
+  const measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
   ngeoToolActivateMgr.registerTool('mapTools', measurePointActivate, false);
 
-  let measureLengthActivate = new ngeo.ToolActivate(this, 'measureLengthActive');
+  const measureLengthActivate = new ngeo.ToolActivate(this, 'measureLengthActive');
   ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
-  let drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
+  const drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
 
-  let drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
+  const drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
 
-  let printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
+  const printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
 
 
   $scope.$watch(function() {
     return this.gmfThemeManager.themeName;
   }.bind(this), function(name) {
-    let map = this.map;
+    const map = this.map;
     this.gmfThemes_.getThemeObject(name).then(function(theme) {
       if (theme) {
-        let backgrounds = theme['functionalities']['default_basemap'];
+        const backgrounds = theme['functionalities']['default_basemap'];
         if (backgrounds && backgrounds.length > 0) {
-          let background = backgrounds[0];
+          const background = backgrounds[0];
           this.gmfThemes_.getBgLayers(this.dimensions).then(function(layers) {
-            let layer = ol.array.find(layers, function(layer) {
+            const layer = ol.array.find(layers, function(layer) {
               return layer.get('label') === background;
             });
             if (layer) {
@@ -400,11 +400,11 @@ gmf.AbstractController = function(config, $scope, $injector) {
       }
       if (!background) {
         // get the background from the user settings
-        let functionalities = this.gmfUser.functionalities;
+        const functionalities = this.gmfUser.functionalities;
         if (functionalities) {
-          let defaultBasemapArray = functionalities.default_basemap;
+          const defaultBasemapArray = functionalities.default_basemap;
           if (defaultBasemapArray.length > 0) {
-            let defaultBasemapLabel = defaultBasemapArray[0];
+            const defaultBasemapLabel = defaultBasemapArray[0];
             background = ol.array.find(layers, function(layer) {
               return layer.get('label') === defaultBasemapLabel;
             });
@@ -466,9 +466,9 @@ gmf.AbstractController.prototype.initLanguage = function() {
     });
   }.bind(this));
 
-  let browserLanguage = /** @type {string|undefined} */
+  const browserLanguage = /** @type {string|undefined} */
       (this.getBrowserLanguage(Object.keys(this.langUrls)));
-  let urlLanguage = /** @type {string|undefined} */
+  const urlLanguage = /** @type {string|undefined} */
       (this.stateManager.getInitialValue('lang'));
 
   if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
@@ -495,15 +495,15 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function() {
     let themeName;
 
     // check if we have a theme in the user functionalities
-    let functionalities = this.gmfUser.functionalities;
+    const functionalities = this.gmfUser.functionalities;
     if (functionalities && 'default_theme' in functionalities) {
-      let defaultTheme = functionalities.default_theme;
+      const defaultTheme = functionalities.default_theme;
       if (defaultTheme.length > 0) {
         themeName = defaultTheme[0];
       }
     }
     if (themeName) {
-      let theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
+      const theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
       if (theme) {
         this.gmfThemeManager.addTheme(theme, true);
       }

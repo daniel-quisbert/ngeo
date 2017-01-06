@@ -139,7 +139,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.editFeatureSelectorActive = true;
 
-  let editFeatureSelectorToolActivate = new ngeo.ToolActivate(
+  const editFeatureSelectorToolActivate = new ngeo.ToolActivate(
       this, 'editFeatureSelectorActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', editFeatureSelectorToolActivate, true);
@@ -150,7 +150,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.dummyActive = false;
 
-  let dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeo.ToolActivate(
       this, 'dummyActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', dummyToolActivate, false);

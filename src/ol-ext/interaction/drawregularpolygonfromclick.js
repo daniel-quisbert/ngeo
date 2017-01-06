@@ -80,9 +80,9 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.setActive = function(
  */
 ngeo.interaction.DrawRegularPolygonFromClick.prototype.setMap = function(map) {
 
-  let active = this.getActive();
+  const active = this.getActive();
 
-  let currentMap = this.getMap();
+  const currentMap = this.getMap();
   if (currentMap && active) {
     this.disable_();
   }
@@ -101,7 +101,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.setMap = function(map) {
  * @private
  */
 ngeo.interaction.DrawRegularPolygonFromClick.prototype.enable_ = function() {
-  let map = this.getMap();
+  const map = this.getMap();
   goog.asserts.assert(map, 'Map should be set.');
   this.listenerKeys_.push(
     ol.events.listen(
@@ -119,7 +119,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.enable_ = function() {
  * @private
  */
 ngeo.interaction.DrawRegularPolygonFromClick.prototype.disable_ = function() {
-  let map = this.getMap();
+  const map = this.getMap();
   goog.asserts.assert(map, 'Map should be set.');
   this.listenerKeys_.forEach(ol.events.unlistenByKey, this);
   this.listenerKeys_.length = 0;
@@ -136,8 +136,8 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.handleMapClick_ = functio
   evt
 ) {
 
-  let center = evt.coordinate;
-  let geometry = ol.geom.Polygon.fromCircle(
+  const center = evt.coordinate;
+  const geometry = ol.geom.Polygon.fromCircle(
     new ol.geom.Circle(center), this.sides_
   );
 

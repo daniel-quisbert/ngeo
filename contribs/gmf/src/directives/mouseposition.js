@@ -71,11 +71,11 @@ gmf.MousepositionController = function($element, $filter, gettext) {
   this.projection;
 
   // function that apply the filter.
-  let formatFn = function(coordinates) {
-    let filterAndArgs = this.projection.filter.split(':');
-    let filter = $filter(filterAndArgs.shift());
+  const formatFn = function(coordinates) {
+    const filterAndArgs = this.projection.filter.split(':');
+    const filter = $filter(filterAndArgs.shift());
     goog.asserts.assertFunction(filter);
-    let args = filterAndArgs;
+    const args = filterAndArgs;
     args.unshift(coordinates);
     return filter.apply(this, args);
   };

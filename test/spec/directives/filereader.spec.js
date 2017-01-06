@@ -8,9 +8,9 @@ describe('ngeo.filereaderDirective', function() {
       '<input type="file" ngeo-filereader="fileContent" />');
 
     module(function($provide) {
-      let FileReader = function() {};
+      const FileReader = function() {};
       FileReader.prototype.readAsText = function(file) {
-        let progressEvent = {
+        const progressEvent = {
           target: {
             result: '<kml></kml>'
           }
@@ -27,8 +27,8 @@ describe('ngeo.filereaderDirective', function() {
   });
 
   it('sets the file content onto the scope', function() {
-    let input = element[0];
-    let customEvent = document.createEvent('CustomEvent');
+    const input = element[0];
+    const customEvent = document.createEvent('CustomEvent');
     customEvent.initCustomEvent('change', true, true, {});
     input.dispatchEvent(customEvent);
     expect(rootScope.fileContent).toBe('<kml></kml>');

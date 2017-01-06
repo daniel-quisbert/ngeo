@@ -33,7 +33,7 @@ ngeo.popoverDirective = function() {
         /**
          * @type {{inState : Object}}
          */
-        let popover = ngeoPopoverCtrl.anchorElm.data('bs.popover');
+        const popover = ngeoPopoverCtrl.anchorElm.data('bs.popover');
         popover['inState'].click = false;
       });
 

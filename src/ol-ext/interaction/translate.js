@@ -117,7 +117,7 @@ ngeo.interaction.Translate.prototype.setActive = function(active) {
  */
 ngeo.interaction.Translate.prototype.setMap = function(map) {
 
-  let currentMap = this.getMap();
+  const currentMap = this.getMap();
   if (currentMap) {
     this.vectorLayer_.setMap(null);
   }
@@ -136,10 +136,10 @@ ngeo.interaction.Translate.prototype.setMap = function(map) {
  * @private
  */
 ngeo.interaction.Translate.prototype.setState_ = function() {
-  let map = this.getMap();
-  let active = this.getActive();
-  let features = this.myFeatures_;
-  let keys = this.listenerKeys_;
+  const map = this.getMap();
+  const active = this.getActive();
+  const features = this.myFeatures_;
+  const keys = this.listenerKeys_;
 
   if (map && active && features) {
     features.forEach(this.addFeature_, this);
@@ -150,7 +150,7 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
   } else {
 
     if (map) {
-      let elem = map.getTargetElement();
+      const elem = map.getTargetElement();
       elem.style.cursor = 'default';
     }
 
@@ -167,7 +167,7 @@ ngeo.interaction.Translate.prototype.setState_ = function() {
  * @private
  */
 ngeo.interaction.Translate.prototype.handleFeaturesAdd_ = function(evt) {
-  let feature = evt.element;
+  const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
       'feature should be an ol.Feature');
   this.addFeature_(feature);
@@ -179,7 +179,7 @@ ngeo.interaction.Translate.prototype.handleFeaturesAdd_ = function(evt) {
  * @private
  */
 ngeo.interaction.Translate.prototype.handleFeaturesRemove_ = function(evt) {
-  let feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {ol.Feature} */ (evt.element);
   this.removeFeature_(feature);
 };
 
@@ -189,8 +189,8 @@ ngeo.interaction.Translate.prototype.handleFeaturesRemove_ = function(evt) {
  * @private
  */
 ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
-  let uid = ol.getUid(feature);
-  let geometry = feature.getGeometry();
+  const uid = ol.getUid(feature);
+  const geometry = feature.getGeometry();
   goog.asserts.assertInstanceof(geometry, ol.geom.Geometry);
 
   this.featureListenerKeys_[uid] = ol.events.listen(
@@ -200,8 +200,8 @@ ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
       this
   );
 
-  let point = this.getGeometryCenterPoint_(geometry);
-  let centerFeature = new ol.Feature(point);
+  const point = this.getGeometryCenterPoint_(geometry);
+  const centerFeature = new ol.Feature(point);
   this.centerFeatures_[uid] = centerFeature;
   this.vectorSource_.addFeature(centerFeature);
 };
@@ -212,7 +212,7 @@ ngeo.interaction.Translate.prototype.addFeature_ = function(feature) {
  * @private
  */
 ngeo.interaction.Translate.prototype.removeFeature_ = function(feature) {
-  let uid = ol.getUid(feature);
+  const uid = ol.getUid(feature);
   if (this.featureListenerKeys_[uid]) {
     ol.events.unlistenByKey(this.featureListenerKeys_[uid]);
     delete this.featureListenerKeys_[uid];
@@ -230,11 +230,11 @@ ngeo.interaction.Translate.prototype.removeFeature_ = function(feature) {
  */
 ngeo.interaction.Translate.prototype.handleGeometryChange_ = function(feature,
     evt) {
-  let geometry = evt.target;
+  const geometry = evt.target;
   goog.asserts.assertInstanceof(geometry, ol.geom.Geometry);
 
-  let point = this.getGeometryCenterPoint_(geometry);
-  let uid = ol.getUid(feature);
+  const point = this.getGeometryCenterPoint_(geometry);
+  const uid = ol.getUid(feature);
   this.centerFeatures_[uid].setGeometry(point);
 };
 
@@ -255,7 +255,7 @@ ngeo.interaction.Translate.prototype.getGeometryCenterPoint_ = function(
   } else if (geometry instanceof ol.geom.LineString) {
     center = geometry.getCoordinateAt(0.5);
   } else {
-    let extent = geometry.getExtent();
+    const extent = geometry.getExtent();
     center = ol.extent.getCenter(extent);
   }
 

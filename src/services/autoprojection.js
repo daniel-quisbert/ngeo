@@ -20,10 +20,10 @@ ngeo.AutoProjection = function() {};
  * @export
  */
 ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
-  let coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
+  const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
   if (coords) {
-    let x = parseFloat(coords[1].replace('\'', ''));
-    let y = parseFloat(coords[2].replace('\'', ''));
+    const x = parseFloat(coords[1].replace('\'', ''));
+    const y = parseFloat(coords[2].replace('\'', ''));
     if (!isNaN(x) && !isNaN(y)) {
       return [x, y];
     }
@@ -42,7 +42,7 @@ ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
  */
 ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
   let code, proj;
-  let projections = [];
+  const projections = [];
   projectionsCodes.forEach(function(projection) {
     code = projection.toUpperCase();
     if (code.substr(0, 5) != 'EPSG:') {

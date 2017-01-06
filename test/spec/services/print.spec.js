@@ -31,7 +31,7 @@ describe('ngeo.CreatePrint', function() {
   });
 
   it('creates an ngeo.Print instance', function() {
-    let print = ngeoCreatePrint('http://example.com/print');
+    const print = ngeoCreatePrint('http://example.com/print');
     expect(print instanceof ngeo.Print).toBe(true);
   });
 
@@ -53,18 +53,18 @@ describe('ngeo.CreatePrint', function() {
     describe('rotation', function() {
 
       beforeEach(function() {
-        let view = map.getView();
+        const view = map.getView();
         view.rotate(Math.PI);
       });
 
       it('rotation angle is correct', function() {
-        let scale = 500;
-        let dpi = 72;
-        let layout = 'foo layout';
-        let format = 'pdf';
-        let customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        let spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
         expect(spec.attributes.map.rotation).toEqual(180);
       });
@@ -86,13 +86,13 @@ describe('ngeo.CreatePrint', function() {
 
       it('creates a valid spec object', function() {
 
-        let scale = 500;
-        let dpi = 72;
-        let layout = 'foo layout';
-        let format = 'pdf';
-        let customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        let spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
         expect(spec).toEqual({
@@ -144,13 +144,13 @@ describe('ngeo.CreatePrint', function() {
 
       it('creates a valid spec object', function() {
 
-        let scale = 500;
-        let dpi = 72;
-        let layout = 'foo layout';
-        let format = 'pdf';
-        let customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        let spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
         expect(spec).toEqual({
           attributes: {
@@ -187,8 +187,8 @@ describe('ngeo.CreatePrint', function() {
     describe('WMTS', function() {
 
       beforeEach(function() {
-        let projection = ol.proj.get('EPSG:3857');
-        let extent = projection.getExtent();
+        const projection = ol.proj.get('EPSG:3857');
+        const extent = projection.getExtent();
         map.addLayer(new ol.layer.Tile({
           opacity: 0.5,
           source: new ol.source.WMTS({
@@ -215,13 +215,13 @@ describe('ngeo.CreatePrint', function() {
 
       it('creates a valid spec object', function() {
 
-        let scale = 500;
-        let dpi = 72;
-        let layout = 'foo layout';
-        let format = 'pdf';
-        let customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        let spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
         expect(spec).toEqual({
@@ -285,22 +285,22 @@ describe('ngeo.CreatePrint', function() {
 
       beforeEach(function() {
 
-        let feature0 = new ol.Feature({
+        const feature0 = new ol.Feature({
           geometry: new ol.geom.Point([0, 0]),
           foo: '0'
         });
 
-        let feature1 = new ol.Feature({
+        const feature1 = new ol.Feature({
           geometry: new ol.geom.LineString([[0, 0], [1, 1]]),
           foo: '1'
         });
 
-        let feature2 = new ol.Feature({
+        const feature2 = new ol.Feature({
           geometry: new ol.geom.Polygon([[[0, 0], [1, 1], [1, 0], [0, 0]]]),
           foo: '2'
         });
 
-        let feature3 = new ol.Feature({
+        const feature3 = new ol.Feature({
           geometry: new ol.geom.Point([0, 0]),
           foo: '3'
         });
@@ -323,7 +323,7 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for feature0
-        let styles0 = [style0];
+        const styles0 = [style0];
 
         style1 = new ol.style.Style({
           stroke: new ol.style.Stroke({
@@ -333,7 +333,7 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for feature1
-        let styles1 = [style0, style1];
+        const styles1 = [style0, style1];
 
         style2 = new ol.style.Style({
           fill: new ol.style.Fill({
@@ -346,7 +346,7 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for features2
-        let styles2 = [style2];
+        const styles2 = [style2];
 
         style3 = new ol.style.Style({
           text: new ol.style.Text({
@@ -375,10 +375,10 @@ describe('ngeo.CreatePrint', function() {
         });
 
         // styles for features3
-        let styles3 = [style3, style4];
+        const styles3 = [style3, style4];
 
-        let styleFunction = function(feature, resolution) {
-          let v = feature.get('foo');
+        const styleFunction = function(feature, resolution) {
+          const v = feature.get('foo');
           if (v == '0') {
             return styles0;
           } else if (v == '1') {
@@ -401,22 +401,22 @@ describe('ngeo.CreatePrint', function() {
 
       it('creates a valid spec object', function() {
 
-        let scale = 500;
-        let dpi = 72;
-        let layout = 'foo layout';
-        let format = 'pdf';
-        let customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        let spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
-        let styleId0 = ol.getUid(style0).toString();
-        let styleId1 = ol.getUid(style1).toString();
-        let styleId2 = ol.getUid(style2).toString();
-        let styleId3 = ol.getUid(style3).toString();
-        let styleId4 = ol.getUid(style4).toString();
+        const styleId0 = ol.getUid(style0).toString();
+        const styleId1 = ol.getUid(style1).toString();
+        const styleId2 = ol.getUid(style2).toString();
+        const styleId3 = ol.getUid(style3).toString();
+        const styleId4 = ol.getUid(style4).toString();
 
-        let expectedStyle = {
+        const expectedStyle = {
           version: 2
         };
         expectedStyle['[_ngeo_style_0 = \'' + styleId0 + '\']'] = {
@@ -471,26 +471,26 @@ describe('ngeo.CreatePrint', function() {
         };
 
         // the expected properties of feature0
-        let properties0 = {
+        const properties0 = {
           foo: '0',
           '_ngeo_style_0': styleId0
         };
 
         // the expected properties of feature1
-        let properties1 = {
+        const properties1 = {
           foo: '1',
           '_ngeo_style_0': styleId0,
           '_ngeo_style_1': styleId1
         };
 
         // the expected properties of feature2
-        let properties2 = {
+        const properties2 = {
           foo: '2',
           '_ngeo_style_0': styleId2
         };
 
         // the expected properties of feature3
-        let properties3 = {
+        const properties3 = {
           foo: '3',
           '_ngeo_style_0': styleId3,
           '_ngeo_style_1': styleId4
@@ -579,16 +579,16 @@ describe('ngeo.CreatePrint', function() {
 
       it('reverses the layer order', function() {
 
-        let scale = 500;
-        let dpi = 72;
-        let layout = 'foo layout';
-        let format = 'pdf';
-        let customAttributes = {'foo': 'fooval', 'bar': 'barval'};
+        const scale = 500;
+        const dpi = 72;
+        const layout = 'foo layout';
+        const format = 'pdf';
+        const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        let spec = print.createSpec(map, scale, dpi, layout, format,
+        const spec = print.createSpec(map, scale, dpi, layout, format,
             customAttributes);
 
-        let layers = spec.attributes.map.layers;
+        const layers = spec.attributes.map.layers;
         expect(layers.length).toBe(2);
         expect(layers[0].baseURL).toBe('http://example.com/wms/top');
         expect(layers[1].baseURL).toBe('http://example.com/wms/bottom');
@@ -645,9 +645,9 @@ describe('ngeo.CreatePrint', function() {
 
     it('triggers the report request and resolves the promise', function() {
       $httpBackend.expectPOST('http://example.com/print/report.pdf');
-      let promise = print.createReport(spec);
+      const promise = print.createReport(spec);
 
-      let spy = jasmine.createSpy();
+      const spy = jasmine.createSpy();
       promise.then(spy);
 
       $httpBackend.flush();
@@ -665,7 +665,7 @@ describe('ngeo.CreatePrint', function() {
       it('cancels the request', inject(function($q) {
         $httpBackend.expectPOST('http://example.com/print/report.pdf');
 
-        let canceler = $q.defer();
+        const canceler = $q.defer();
         print.createReport(spec, {
           timeout: canceler.promise
         });
@@ -704,9 +704,9 @@ describe('ngeo.CreatePrint', function() {
 
     it('triggers the status request and resolves the promise', function() {
       $httpBackend.expectGET('http://example.com/print/status/deadbeef.json');
-      let promise = print.getStatus('deadbeef');
+      const promise = print.getStatus('deadbeef');
 
-      let spy = jasmine.createSpy();
+      const spy = jasmine.createSpy();
       promise.then(spy);
 
       $httpBackend.flush();
@@ -728,7 +728,7 @@ describe('ngeo.CreatePrint', function() {
     });
 
     it('returns the report URL', function() {
-      let url = print.getReportUrl('deadbeef');
+      const url = print.getReportUrl('deadbeef');
       expect(url).toBe('http://example.com/print/report/deadbeef');
     });
   });
@@ -783,9 +783,9 @@ describe('ngeo.CreatePrint', function() {
 
     it('triggers the cancel request and resolves the promise', function() {
       $httpBackend.expectDELETE('http://example.com/print/cancel/deadbeef');
-      let promise = print.cancel('deadbeef');
+      const promise = print.cancel('deadbeef');
 
-      let spy = jasmine.createSpy();
+      const spy = jasmine.createSpy();
       promise.then(spy);
 
       $httpBackend.flush();

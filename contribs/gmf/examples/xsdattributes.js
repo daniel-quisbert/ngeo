@@ -60,7 +60,7 @@ gmfapp.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
 
   // TMP - The list of layer names to use. We'll keep this until we can use
   //       those that are editable.
-  let layerNames = ['line', 'point', 'polygon'];
+  const layerNames = ['line', 'point', 'polygon'];
 
   gmfThemes.loadThemes();
 
@@ -69,7 +69,7 @@ gmfapp.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
       return;
     }
     // Get an array with all nodes entities existing in "themes".
-    let flatNodes = [];
+    const flatNodes = [];
     themes.forEach(function(theme) {
       theme.children.forEach(function(group) {
         this.getDistinctFlatNodes_(group, flatNodes);
@@ -125,7 +125,7 @@ gmfapp.MainController.prototype.setAttributes_ = function(attributes) {
 gmfapp.MainController.prototype.getGeomType = function() {
   let type = 'N/A';
   if (this.attributes) {
-    let geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
+    const geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
       this.attributes
     );
     if (geomAttr && geomAttr.geomType) {
@@ -144,7 +144,7 @@ gmfapp.MainController.prototype.getGeomType = function() {
  */
 gmfapp.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let i;
-  let children = node.children;
+  const children = node.children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
       this.getDistinctFlatNodes_(children[i], nodes);

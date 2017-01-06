@@ -24,10 +24,10 @@ ngeo.downloadFactory_ = function() {
    */
   function download(content, fileName, opt_fileType) {
     /** @type{string} */
-    let fileType = (opt_fileType !== undefined) ? opt_fileType :
+    const fileType = (opt_fileType !== undefined) ? opt_fileType :
         'text/plain;charset=utf-8';
 
-    let blob = new Blob([content], {type: fileType});
+    const blob = new Blob([content], {type: fileType});
     saveAs(blob, fileName);
   }
 

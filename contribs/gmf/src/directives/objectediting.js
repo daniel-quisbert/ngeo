@@ -281,7 +281,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
    */
   this.jstsOL3Parser_ = new jsts.io.OL3Parser();
 
-  let geometry = this.feature.getGeometry();
+  const geometry = this.feature.getGeometry();
 
   /**
    * The state of the feature determines whether the next 'save' request
@@ -313,8 +313,8 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
     }.bind(this)
   );
 
-  let defaultColor = [39, 155, 145];
-  let dirtyColor = [153, 51, 51];
+  const defaultColor = [39, 155, 145];
+  const dirtyColor = [153, 51, 51];
 
   /**
    * @type {gmf.ObjecteditingController.Styles}
@@ -429,7 +429,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
  * @export
  */
 gmf.ObjecteditingController.prototype.delete = function() {
-  let msg = this.gettextCatalog_.getString(
+  const msg = this.gettextCatalog_.getString(
       'Do you really want to delete the feature?');
   // Confirm deletion first
   if (confirm(msg)) {
@@ -486,7 +486,7 @@ gmf.ObjecteditingController.prototype.undo = function() {
   this.skipGeometryChange_ = true;
 
   this.geometryChanges_.pop();
-  let clone = gmf.ObjecteditingController.cloneGeometry_(
+  const clone = gmf.ObjecteditingController.cloneGeometry_(
     this.geometryChanges_[this.geometryChanges_.length - 1]);
 
   this.feature.setGeometry(clone);
@@ -529,7 +529,7 @@ gmf.ObjecteditingController.prototype.handleDeleteFeature_ = function(resp) {
  */
 gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
   // (1) Update the id
-  let features = new ol.format.GeoJSON().readFeatures(resp.data);
+  const features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
   }
@@ -589,9 +589,9 @@ gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
  */
 gmf.ObjecteditingController.prototype.toggle_ = function(active) {
 
-  let keys = this.listenerKeys_;
-  let uid = gmf.ObjecteditingController.NAMESPACE_ + '-' + ol.getUid(this);
-  let toolMgr = this.ngeoToolActivateMgr_;
+  const keys = this.listenerKeys_;
+  const uid = gmf.ObjecteditingController.NAMESPACE_ + '-' + ol.getUid(this);
+  const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
 
@@ -666,7 +666,7 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
  * @private
  */
 gmf.ObjecteditingController.prototype.undoAllChanges_ = function() {
-  let clone = gmf.ObjecteditingController.cloneGeometry_(
+  const clone = gmf.ObjecteditingController.cloneGeometry_(
     this.geometryChanges_[0]);
   this.feature.setGeometry(clone);
 
@@ -687,8 +687,8 @@ gmf.ObjecteditingController.prototype.resetGeometryChanges_ = function() {
     this.geometryChanges_.length = 0;
   }
   if (this.geometryChanges_.length === 0) {
-    let geometry = this.feature.getGeometry();
-    let clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+    const geometry = this.feature.getGeometry();
+    const clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
     this.geometryChanges_.push(clone);
   }
 };
@@ -710,8 +710,8 @@ gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = functi
   let geometry = this.feature.getGeometry();
 
   if (geometry instanceof ol.geom.MultiPolygon) {
-    let jstsGeom = this.jstsOL3Parser_.read(geometry);
-    let jstsBuffered = jstsGeom.buffer(0);
+    const jstsGeom = this.jstsOL3Parser_.read(geometry);
+    const jstsBuffered = jstsGeom.buffer(0);
     geometry = gmf.ObjecteditingController.toMultiGeometry_(
       this.jstsOL3Parser_.write(jstsBuffered)
     );
@@ -720,7 +720,7 @@ gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = functi
     this.skipGeometryChange_ = false;
   }
 
-  let clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+  const clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
 };
@@ -737,11 +737,11 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
   styles, color, opt_incVertice
 ) {
 
-  let incVertice = opt_incVertice !== false;
-  let rgbaColor = color.slice();
+  const incVertice = opt_incVertice !== false;
+  const rgbaColor = color.slice();
   rgbaColor.push(0.3);
 
-  let image = new ol.style.Circle({
+  const image = new ol.style.Circle({
     radius: 8,
     stroke: new ol.style.Stroke({color: color, width: 1}),
     fill: new ol.style.Fill({color: rgbaColor})
@@ -826,10 +826,10 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
  * @private
  */
 gmf.ObjecteditingController.prototype.setFeatureStyle_ = function() {
-  let geometry = this.feature.getGeometry();
+  const geometry = this.feature.getGeometry();
   if (geometry) {
-    let geomType = geometry.getType();
-    let modifyActive = this.modify_.getActive();
+    const geomType = geometry.getType();
+    const modifyActive = this.modify_.getActive();
     let style;
     if (this.dirty) {
       if (modifyActive) {
@@ -863,7 +863,7 @@ gmf.ObjecteditingController.prototype.setFeatureStyle_ = function() {
 gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  let node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
+  const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
     treeCtrl.node);
   if (node.children && node.children.length) {
     return;
@@ -871,7 +871,7 @@ gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Set editable WMS layer for refresh purpose
   if (node.id === this.layerNodeId) {
-    let layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
+    const layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
     goog.asserts.assert(
       layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
     this.editableWMSLayer_ = layer;
@@ -913,7 +913,7 @@ gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
  */
 gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
   if (this.dirty) {
-    let msg = this.gettextCatalog_.getString('There are unsaved changes.');
+    const msg = this.gettextCatalog_.getString('There are unsaved changes.');
     (e || window.event).returnValue = msg;
     return msg;
   }
@@ -930,15 +930,15 @@ gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
  * @private
  */
 gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
-  let sketchFeature = /** @type {ol.Feature} */ (evt.element);
-  let sketchGeom = /** @type {ol.geom.Geometry} */ (
+  const sketchFeature = /** @type {ol.Feature} */ (evt.element);
+  const sketchGeom = /** @type {ol.geom.Geometry} */ (
     sketchFeature.getGeometry());
 
-  let geom = this.feature.getGeometry();
+  const geom = this.feature.getGeometry();
 
   if (geom) {
-    let jstsGeom = this.jstsOL3Parser_.read(geom);
-    let jstsSketchGeom = this.jstsOL3Parser_.read(sketchGeom);
+    const jstsGeom = this.jstsOL3Parser_.read(geom);
+    const jstsSketchGeom = this.jstsOL3Parser_.read(sketchGeom);
     let jstsProcessedGeom;
 
     if (this.process === gmf.ObjecteditingtoolsController.ProcessType.ADD) {
@@ -950,8 +950,8 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
     }
 
     if (jstsProcessedGeom) {
-      let processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
-      let multiGeom = gmf.ObjecteditingController.toMultiGeometry_(
+      const processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
+      const multiGeom = gmf.ObjecteditingController.toMultiGeometry_(
         processedGeom);
       this.feature.setGeometry(multiGeom.clone());
     }
@@ -982,7 +982,7 @@ gmf.ObjecteditingController.prototype.handleFeatureGeometryChange_ = function() 
     return;
   }
 
-  let geom = this.feature.getGeometry();
+  const geom = this.feature.getGeometry();
   if (geom) {
     // Use a timeout here, because there can be a scope digest already in
     // progress. For example, with tools that requires the user to draw

@@ -28,7 +28,7 @@ ngeo.Notification = function($timeout) {
    */
   this.timeout_ = $timeout;
 
-  let container = angular.element('<div class="ngeo-notification"></div>');
+  const container = angular.element('<div class="ngeo-notification"></div>');
   angular.element(document.body).append(container);
 
   /**
@@ -75,7 +75,7 @@ ngeo.Notification.prototype.notify = function(object) {
  * @export
  */
 ngeo.Notification.prototype.clear = function() {
-  for (let uid in this.cache_) {
+  for (const uid in this.cache_) {
     this.clearMessageByCacheItem_(this.cache_[parseInt(uid, 10)]);
   }
 };
@@ -87,10 +87,10 @@ ngeo.Notification.prototype.clear = function() {
  * @protected
  */
 ngeo.Notification.prototype.showMessage = function(message) {
-  let type = message.type;
+  const type = message.type;
   goog.asserts.assertString(type, 'Type should be set.');
 
-  let classNames = ['alert', 'fade'];
+  const classNames = ['alert', 'fade'];
   switch (type) {
     case ngeo.MessageType.ERROR:
       classNames.push('alert-danger');
@@ -108,7 +108,7 @@ ngeo.Notification.prototype.showMessage = function(message) {
       break;
   }
 
-  let el = angular.element('<div class="' + classNames.join(' ') + '"></div>');
+  const el = angular.element('<div class="' + classNames.join(' ') + '"></div>');
   let container;
 
   if (message.target) {
@@ -120,16 +120,16 @@ ngeo.Notification.prototype.showMessage = function(message) {
   container.append(el);
   el.html(message.msg).addClass('in');
 
-  let delay = message.delay !== undefined ? message.delay :
+  const delay = message.delay !== undefined ? message.delay :
       ngeo.Notification.DEFAULT_DELAY_;
 
-  let item = /** @type {ngeo.Notification.CacheItem} */ ({
+  const item = /** @type {ngeo.Notification.CacheItem} */ ({
     el: el
   });
 
   // Keep a reference to the promise, in case we want to manually cancel it
   // before the delay
-  let uid = ol.getUid(el);
+  const uid = ol.getUid(el);
   item.promise = this.timeout_(function() {
     el.alert('close');
     delete this.cache_[uid];
@@ -145,9 +145,9 @@ ngeo.Notification.prototype.showMessage = function(message) {
  * @private
  */
 ngeo.Notification.prototype.clearMessageByCacheItem_ = function(item) {
-  let el = item.el;
-  let promise = item.promise;
-  let uid = ol.getUid(el);
+  const el = item.el;
+  const promise = item.promise;
+  const uid = ol.getUid(el);
 
   // Close the message
   el.alert('close');

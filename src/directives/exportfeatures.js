@@ -68,8 +68,8 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
    */
   this.element_ = $element;
 
-  let uid = ol.getUid(this);
-  let id = ['ngeo-exportfeature', uid].join('-');
+  const uid = ol.getUid(this);
+  const id = ['ngeo-exportfeature', uid].join('-');
 
   /**
    * @type {string}
@@ -105,7 +105,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
   // build the drop-down menu and items if there's more than one format
   if (formats.length > 1) {
     $element.attr('id', id);
-    let $menu = $('<ul />', {
+    const $menu = $('<ul />', {
       'class': 'dropdown-menu',
       'aria-labelledby': id
     }).appendTo($element.parent()[0]);
@@ -154,13 +154,13 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
  */
 ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
 
-  let features = this.features.getArray();
+  const features = this.features.getArray();
 
   if (this.formats_.length === 1) {
     this.featureHelper_.export(features, this.formats_[0]);
   } else if (features.length === 1) {
-    let feature = features[0];
-    let geom = feature.getGeometry();
+    const feature = features[0];
+    const geom = feature.getGeometry();
     let $item;
     this.formats_.forEach(function(format, i) {
       $item = this.items_[i];
@@ -186,7 +186,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
  */
 ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(format, event) {
   if (!$(event.target.parentElement).hasClass('disabled')) {
-    let features = this.features.getArray();
+    const features = this.features.getArray();
     this.featureHelper_.export(features, format);
   }
 };
@@ -197,7 +197,7 @@ ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(format, 
  * @private
  */
 ngeo.ExportfeaturesController.prototype.handleDestroy_ = function() {
-  let id = this.id_;
+  const id = this.id_;
 
   this.element_.off(['click', id].join('.'));
 

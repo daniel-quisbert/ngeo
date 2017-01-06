@@ -135,12 +135,12 @@ gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
 gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
 
   // (1) Launch query to fetch new features
-  let coordinate = evt.coordinate;
-  let map = this.map;
-  let view = map.getView();
-  let resolution = view.getResolution();
-  let buffer = resolution * this.pixelBuffer_;
-  let extent = ol.extent.buffer(
+  const coordinate = evt.coordinate;
+  const map = this.map;
+  const view = map.getView();
+  const resolution = view.getResolution();
+  const buffer = resolution * this.pixelBuffer_;
+  const extent = ol.extent.buffer(
     [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
     buffer
   );
@@ -180,29 +180,29 @@ gmfapp.MainController.prototype.insertFeature = function() {
   this.pending = true;
 
   // (1) Create a randomly located feature
-  let map = this.map;
-  let view = map.getView();
-  let resolution = view.getResolution();
-  let buffer = resolution * -50; // 50 pixel buffer inside the extent
-  let size = /** @type {!Array.<number>} */ (map.getSize());
-  let extent = ol.extent.buffer(
+  const map = this.map;
+  const view = map.getView();
+  const resolution = view.getResolution();
+  const buffer = resolution * -50; // 50 pixel buffer inside the extent
+  const size = /** @type {!Array.<number>} */ (map.getSize());
+  const extent = ol.extent.buffer(
     view.calculateExtent(size),
     buffer
   );
-  let bottomLeft = ol.extent.getBottomLeft(extent);
-  let topRight = ol.extent.getTopRight(extent);
-  let left = bottomLeft[0];
-  let bottom = bottomLeft[1];
-  let right = topRight[0];
-  let top = topRight[1];
-  let deltaX = right - left;
-  let deltaY = top - bottom;
-  let coordinate = [
+  const bottomLeft = ol.extent.getBottomLeft(extent);
+  const topRight = ol.extent.getTopRight(extent);
+  const left = bottomLeft[0];
+  const bottom = bottomLeft[1];
+  const right = topRight[0];
+  const top = topRight[1];
+  const deltaX = right - left;
+  const deltaY = top - bottom;
+  const coordinate = [
     left + Math.random() * deltaX,
     right + Math.random() * deltaY
   ];
 
-  let feature = new ol.Feature({
+  const feature = new ol.Feature({
     'geometry': new ol.geom.Point(coordinate),
     'name': 'New point'
   });

@@ -22,7 +22,7 @@ gmf.module.value('gmfLayertreeTemplate',
      * @return {string} Template.
      */
     function(element, attrs) {
-      let subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
+      const subTemplateUrl = gmf.baseTemplateUrl + '/layertree.html';
       return '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
@@ -270,7 +270,7 @@ gmf.LayertreeController = function($http, $sce, $scope, ngeoCreatePopup,
 gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
   treeCtrl.traverseDepthFirst(function(ctrl) {
     if (ctrl.node.dimensions) {
-      let layer = ctrl.layer;
+      const layer = ctrl.layer;
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
       this.updateLayerDimensions_(layer, ctrl.node);
     }
@@ -285,15 +285,15 @@ gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
  */
 gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node) {
   if (this.dimensions && node.dimensions) {
-    let dimensions = {};
-    for (let key in node.dimensions) {
-      let value = this.dimensions[key];
+    const dimensions = {};
+    for (const key in node.dimensions) {
+      const value = this.dimensions[key];
       if (value !== undefined) {
         dimensions[key] = value;
       }
     }
     if (!ol.obj.isEmpty(dimensions)) {
-      let source = layer.getSource();
+      const source = layer.getSource();
       if (source instanceof ol.source.WMTS) {
         source.updateDimensions(dimensions);
       } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
@@ -329,11 +329,11 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
         this.gmfTreeManager_.numberOfGroupsToAddInThisDigestLoop || 0;
   }
 
-  let layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
+  const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
           this.dataLayerGroup_, opt_position);
 
   if (layer instanceof ol.layer.Layer) {
-    let node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
+    const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
     this.updateLayerDimensions_(layer, node);
   }
 
@@ -350,7 +350,7 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
-  let dataLayerGroup = this.dataLayerGroup_;
+  const dataLayerGroup = this.dataLayerGroup_;
   scope.$on('$destroy', function() {
     // Remove the layer from the map.
     dataLayerGroup.getLayers().remove(treeCtrl.layer);
@@ -367,9 +367,9 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
  */
 gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
   let style;
-  let resolution = this.map.getView().getResolution();
-  let maxExtent = gmfLayerWMS.maxResolutionHint;
-  let minExtent = gmfLayerWMS.minResolutionHint;
+  const resolution = this.map.getView().getResolution();
+  const maxExtent = gmfLayerWMS.maxResolutionHint;
+  const minExtent = gmfLayerWMS.minResolutionHint;
   if (minExtent !== undefined && resolution < minExtent ||
       maxExtent !== undefined && resolution > maxExtent) {
     style = 'out-of-resolution';
@@ -416,13 +416,13 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
   if (!time) {
     return;
   }
-  let layer = /** @type {ol.layer.Image} */ (
+  const layer = /** @type {ol.layer.Image} */ (
       gmf.SyncLayertreeMap.getLayer(layertreeCtrl));
   if (layer) {
-    let node = /** @type {gmfThemes.GmfGroup} */ (layertreeCtrl.node);
-    let wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
-    let source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
-    let timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
+    const node = /** @type {gmfThemes.GmfGroup} */ (layertreeCtrl.node);
+    const wmsTime = /** @type {ngeox.TimeProperty} */ (node.time);
+    const source = /** @type {ol.source.ImageWMS} */ (layer.getSource());
+    const timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, time);
     this.layerHelper_.updateWMSLayerState(layer, source.getParams()['LAYERS'], timeParam);
   }
 };
@@ -437,7 +437,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
  * @export
  */
 gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
-  let iconUrl = treeCtrl.node.metadata.iconUrl;
+  const iconUrl = treeCtrl.node.metadata.iconUrl;
 
   if (iconUrl !== undefined) {
     return iconUrl;
@@ -447,14 +447,14 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
     return undefined;
   }
 
-  let gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== 'WMS') {
     return undefined;
   }
 
-  let gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
 
-  let legendRule = gmfLayerWMS.metadata.legendRule;
+  const legendRule = gmfLayerWMS.metadata.legendRule;
 
   if (legendRule === undefined) {
     return undefined;
@@ -462,8 +462,8 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
 
   //In case of multiple layers for a gmfLayerWMS, always take the first layer
   //name to get the icon
-  let layerName = gmfLayerWMS.layers.split(',')[0];
-  let gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
+  const layerName = gmfLayerWMS.layers.split(',')[0];
+  const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
   return this.layerHelper_.getWMSLegendURL(
     gmfOgcServer.url, layerName, undefined, legendRule
   );
@@ -482,25 +482,25 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
     return undefined;
   }
 
-  let gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   let layersNames;
 
   if (gmfLayer.metadata.legendImage) {
     return gmfLayer.metadata.legendImage;
   }
 
-  let layer = treeCtrl.layer;
+  const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS' && layer) {
     goog.asserts.assertInstanceof(layer, ol.layer.Tile);
     return this.layerHelper_.getWMTSLegendURL(layer);
   } else {
-    let gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+    const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
     layersNames = gmfLayerWMS.layers.split(',');
     if (layersNames.length > 1) {
       // not supported, the administrator should give a legendImage metadata
       return undefined;
     }
-    let gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
+    const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     return this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layersNames[0], this.getScale_());
   }
 };
@@ -512,10 +512,10 @@ gmf.LayertreeController.prototype.getLegendURL = function(treeCtrl) {
  * @private
  */
 gmf.LayertreeController.prototype.getScale_ = function() {
-  let view = this.map.getView();
-  let resolution = view.getResolution();
-  let mpu = view.getProjection().getMetersPerUnit();
-  let dpi = 25.4 / 0.28;
+  const view = this.map.getView();
+  const resolution = view.getResolution();
+  const mpu = view.getProjection().getMetersPerUnit();
+  const dpi = 25.4 / 0.28;
   return resolution * mpu * 39.37 * dpi;
 };
 
@@ -527,18 +527,18 @@ gmf.LayertreeController.prototype.getScale_ = function() {
  * @export
  */
 gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
-  let treeUid = treeCtrl.uid.toString();
-  let node = treeCtrl.node;
-  let metadataURL = node.metadata['metadataUrl'];
+  const treeUid = treeCtrl.uid.toString();
+  const node = treeCtrl.node;
+  const metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {
     if (!(treeUid in this.promises_)) {
       this.promises_[treeUid] = this.$http_.get(metadataURL).then(
           function(resp) {
-            let html = this.$sce_.trustAsHtml(resp.data);
+            const html = this.$sce_.trustAsHtml(resp.data);
             return html;
           }.bind(this));
     }
-    let infoPopup = this.infoPopup_;
+    const infoPopup = this.infoPopup_;
     this.promises_[treeUid].then(function(html) {
       infoPopup.setTitle(node.name);
       infoPopup.setContent(html);
@@ -554,9 +554,9 @@ gmf.LayertreeController.prototype.displayMetadata = function(treeCtrl) {
  * @export
  */
 gmf.LayertreeController.prototype.afterReorder = function() {
-  let groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
-  let currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
-  let treeCtrls = [];
+  const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
+  const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
+  const treeCtrls = [];
 
   // Get order of first-level groups for treectrl and layers;
   groupNodes.forEach(function(node) {
@@ -598,9 +598,9 @@ gmf.LayertreeController.prototype.removeNode = function(node) {
  * @export
  */
 gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
-  let gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
-  let view = this.map.getView();
-  let resolution = gmfLayer.minResolutionHint || gmfLayer.maxResolutionHint;
+  const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
+  const view = this.map.getView();
+  const resolution = gmfLayer.minResolutionHint || gmfLayer.maxResolutionHint;
   if (resolution !== undefined) {
     view.setResolution(view.constrainResolution(resolution, 0, 1));
   }
@@ -627,8 +627,8 @@ gmf.LayertreeController.prototype.toggleNodeLegend = function(legendNodeId) {
  * @export
  */
 gmf.LayertreeController.getSnappingConfig = function(treeCtrl) {
-  let node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  let config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
+  const node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
       node.metadata.snappingConfig : null;
   return config;
 };

@@ -16,7 +16,7 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
      * @return {string} Template URL.
      */
     function(element, attrs) {
-      let templateUrl = attrs['ngeoScaleselectorTemplateurl'];
+      const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseTemplateUrl + '/scaleselector.html';
     });
@@ -97,7 +97,7 @@ ngeo.module.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
  */
 ngeo.ScaleselectorController = function($scope, $element, $attrs) {
 
-  let scalesExpr = $attrs['ngeoScaleselector'];
+  const scalesExpr = $attrs['ngeoScaleselector'];
 
   /**
    * The zoom level/scale map object.
@@ -121,7 +121,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
     this.zoomLevels.sort(ol.array.numberSafeCompareFunction);
   }.bind(this));
 
-  let mapExpr = $attrs['ngeoScaleselectorMap'];
+  const mapExpr = $attrs['ngeoScaleselectorMap'];
 
   /**
    * @type {ol.Map}
@@ -130,8 +130,8 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
   this.map_ = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
   goog.asserts.assertInstanceof(this.map_, ol.Map);
 
-  let optionsExpr = $attrs['ngeoScaleselectorOptions'];
-  let options = $scope.$eval(optionsExpr);
+  const optionsExpr = $attrs['ngeoScaleselectorOptions'];
+  const options = $scope.$eval(optionsExpr);
 
   /**
    * @type {!ngeo.ScaleselectorOptions}
@@ -157,9 +157,9 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
    */
   this.currentScale = undefined;
 
-  let view = this.map_.getView();
+  const view = this.map_.getView();
   if (view !== null) {
-    let currentZoom = this.map_.getView().getZoom();
+    const currentZoom = this.map_.getView().getZoom();
     if (currentZoom !== undefined) {
       this.currentScale = this.getScale(currentZoom);
     }
@@ -218,8 +218,8 @@ ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
  * @private
  */
 ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
-  let view = this.map_.getView();
-  let currentScale = this.scales[/** @type {number} */ (view.getZoom())];
+  const view = this.map_.getView();
+  const currentScale = this.scales[/** @type {number} */ (view.getZoom())];
 
   // handleResolutionChange_ is a change:resolution listener. The listener
   // may be executed outside the Angular context, for example when the user
@@ -255,7 +255,7 @@ ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = funct
   if (this.resolutionChangeKey_ !== null) {
     ol.events.unlistenByKey(this.resolutionChangeKey_);
   }
-  let view = this.map_.getView();
+  const view = this.map_.getView();
   this.resolutionChangeKey_ = ol.events.listen(view,
       ol.Object.getChangeEventType('resolution'), this.handleResolutionChange_,
       this);

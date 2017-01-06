@@ -29,10 +29,10 @@ describe('ngeo.PrintUtils', function() {
     });
 
     it('returns the optimal resolution', function() {
-      let mapSize = [2, 1];  // px
-      let printMapSize = [640, 320];  // dots
-      let printScale = 10;  // scale denominator
-      let optimalResolution = ngeoPrintUtils.getOptimalResolution(
+      const mapSize = [2, 1];  // px
+      const printMapSize = [640, 320];  // dots
+      const printScale = 10;  // scale denominator
+      const optimalResolution = ngeoPrintUtils.getOptimalResolution(
           mapSize, printMapSize, printScale);
       expect(optimalResolution).toBe(1);
     });

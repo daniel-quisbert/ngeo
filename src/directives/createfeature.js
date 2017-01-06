@@ -189,7 +189,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
     }.bind(this)
   );
 
-  let uid = ol.getUid(this);
+  const uid = ol.getUid(this);
   if (interaction instanceof ol.interaction.Draw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
@@ -227,7 +227,7 @@ ngeo.CreatefeatureController = function(gettext, $compile, $filter, $scope,
  * @export
  */
 ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
-  let feature = new ol.Feature(event.feature.getGeometry());
+  const feature = new ol.Feature(event.feature.getGeometry());
   if (this.features instanceof ol.Collection) {
     this.features.push(feature);
   } else {
@@ -242,7 +242,7 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
  */
 ngeo.CreatefeatureController.prototype.handleDestroy_ = function() {
   this.timeout_(function() {
-    let uid = ol.getUid(this);
+    const uid = ol.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);

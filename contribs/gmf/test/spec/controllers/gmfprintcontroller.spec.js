@@ -35,7 +35,7 @@ describe('GmfPrintController', function() {
   });
 
   it('Set layout and test depending fields changes', function() {
-    let title = 'title';
+    const title = 'title';
     gmfPrintCtrl.fields.title = title;
 
     gmfPrintCtrl.setLayout(gmfPrintCtrl.fields.layouts[1]);
@@ -45,21 +45,21 @@ describe('GmfPrintController', function() {
   });
 
   it('Set scale and test map resolution change', function() {
-    let baseScale = gmfPrintCtrl.fields.scales[1];
-    let biggerScale = gmfPrintCtrl.fields.scales[2] > baseScale ?
+    const baseScale = gmfPrintCtrl.fields.scales[1];
+    const biggerScale = gmfPrintCtrl.fields.scales[2] > baseScale ?
       gmfPrintCtrl.fields.scales[2] : gmfPrintCtrl.fields.scales[0];
 
     gmfPrintCtrl.setScale(baseScale);
     expect(gmfPrintCtrl.fields.scale).toBe(baseScale);
 
-    let view = gmfPrintCtrl.map.getView();
-    let resolution = view.getResolution();
+    const view = gmfPrintCtrl.map.getView();
+    const resolution = view.getResolution();
     gmfPrintCtrl.setScale(biggerScale);
     expect(resolution).toBeLessThan(view.getResolution());
   });
 
   it('Set dpi', function() {
-    let dpi = 10;
+    const dpi = 10;
     gmfPrintCtrl.setDpi(10);
     expect(gmfPrintCtrl.fields.dpi).toBe(dpi);
   });

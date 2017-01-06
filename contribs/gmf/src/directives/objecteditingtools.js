@@ -230,7 +230,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
    */
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
-  let oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
+  const oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
       $injector.get('gmfObjectEditingToolsOptions'));
 
   /**
@@ -276,7 +276,7 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
   toolActiveName, process, opt_requiresLayer
 ) {
 
-  let requiresLayer = opt_requiresLayer === true;
+  const requiresLayer = opt_requiresLayer === true;
 
   this.scope_.$watch(
     function() {
@@ -285,8 +285,8 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  let group = gmf.ObjecteditingtoolsController.NAMESPACE_ + '-' + ol.getUid(this);
-  let toolActivate = new ngeo.ToolActivate(this, toolActiveName);
+  const group = gmf.ObjecteditingtoolsController.NAMESPACE_ + '-' + ol.getUid(this);
+  const toolActivate = new ngeo.ToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 
   this.toolActiveNames_.push(toolActiveName);

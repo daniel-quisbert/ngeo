@@ -16,30 +16,30 @@ goog.require('ol.format.WMSCapabilities');
 exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
   // Get the layer extent defines in the GetCapabilities
-  let getLayerExtentFromGetCap = function(getCapLayer, proj) {
-    let wgs84 = 'EPSG:4326';
-    let layer = getCapLayer;
-    let projCode = proj.getCode();
+  const getLayerExtentFromGetCap = function(getCapLayer, proj) {
+    const wgs84 = 'EPSG:4326';
+    const layer = getCapLayer;
+    const projCode = proj.getCode();
 
     if (layer['BoundingBox']) {
       for (let i = 0, ii = layer['BoundingBox'].length; i < ii; i++) {
-        let bbox = layer['BoundingBox'][i];
-        let code = bbox['crs'] || bbox['srs'];
+        const bbox = layer['BoundingBox'][i];
+        const code = bbox['crs'] || bbox['srs'];
         if (code && code.toUpperCase() == projCode.toUpperCase()) {
           return bbox['extent'];
         }
       }
     }
 
-    let wgs84Extent = layer['EX_GeographicBoundingBox'] || layer['LatLonBoundingBox'];
+    const wgs84Extent = layer['EX_GeographicBoundingBox'] || layer['LatLonBoundingBox'];
     if (wgs84Extent) {
       // If only an extent in wgs 84 is available, we use the
       // intersection between proj extent and layer extent as the new
       // layer extent. We compare extients in wgs 84 to avoid
       // transformations errors of large wgs 84 extent like
       // (-180,-90,180,90)
-      let projWgs84Extent = ol.proj.transformExtent(proj.getExtent(), projCode, wgs84);
-      let layerWgs84Extent = ol.extent.getIntersection(projWgs84Extent, wgs84Extent);
+      const projWgs84Extent = ol.proj.transformExtent(proj.getExtent(), projCode, wgs84);
+      const layerWgs84Extent = ol.extent.getIntersection(projWgs84Extent, wgs84Extent);
       if (layerWgs84Extent) {
         return ol.proj.transformExtent(layerWgs84Extent, wgs84, projCode);
       }
@@ -47,8 +47,8 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
   };
 
   // Test if the layer can be displayed with a specific projection
-  let canUseProj = function(layer, projCode) {
-    let projCodeList = layer['CRS'] || layer['SRS'] || [];
+  const canUseProj = function(layer, projCode) {
+    const projCodeList = layer['CRS'] || layer['SRS'] || [];
     return (projCodeList.indexOf(projCode.toUpperCase()) != -1 ||
         projCodeList.indexOf(projCode.toLowerCase()) != -1);
   };
@@ -56,7 +56,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
   // Go through all layers, assign needed properties,
   // and remove useless layers (no name or bad crs without children
   // or no intersection between map extent and layer extent)
-  let getChildLayers = function(getCap, layer, proj) {
+  const getChildLayers = function(getCap, layer, proj) {
 
     // If the WMS layer has no name, it can't be displayed
     if (!layer['Name']) {
@@ -74,7 +74,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
       // We don't have proj codes list for wms 1.1.1 so we assume the
       // layer can be displayed (wait for
       // https://github.com/openlayers/ol3/pull/2944)
-      let projCode = proj.getCode();
+      const projCode = proj.getCode();
       if (getCap['version'] == '1.3.0' && !canUseProj(layer, projCode)) {
         layer['useReprojection'] = true;
 
@@ -89,7 +89,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
     if (layer.Layer) {
 
       for (let i = 0; i < layer.Layer.length; i++) {
-        let l = getChildLayers(getCap, layer.Layer[i], proj);
+        const l = getChildLayers(getCap, layer.Layer[i], proj);
         if (!l) {
           layer.Layer.splice(i, 1);
           i--;
@@ -151,7 +151,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
           }
 
           if (val['Capability']['Layer']) {
-            let root = getChildLayers(val, val['Capability']['Layer'],
+            const root = getChildLayers(val, val['Capability']['Layer'],
                 scope['map'].getView().getProjection());
             if (root) {
               scope['layers'] = root['Layer'] || [root];
@@ -162,11 +162,11 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
       // Add the selected layer to the map
       scope['addLayerSelected'] = function() {
-        let getCapLay = scope['options'].layerSelected;
+        const getCapLay = scope['options'].layerSelected;
         if (getCapLay && scope['options']['getOlLayerFromGetCapLayer']) {
           let msg = gettextCatalog.getString('WMS layer added succesfully');
           try {
-            let olLayer = scope['options']['getOlLayerFromGetCapLayer'](getCapLay);
+            const olLayer = scope['options']['getOlLayerFromGetCapLayer'](getCapLay);
             if (olLayer) {
               scope['map'].addLayer(olLayer);
             }
@@ -181,7 +181,7 @@ exports = function($window, gettext, gettextCatalog, ngeoWmsGetCapTemplateUrl) {
 
       // Get the abstract to display in the text area
       scope['getAbstract'] = function() {
-        let l = scope['options'].layerSelected || scope['options'].layerHovered || {};
+        const l = scope['options'].layerSelected || scope['options'].layerHovered || {};
         return gettextCatalog.getString(l.Abstract) || '';
       };
     }
@@ -199,7 +199,7 @@ exports.module.value('ngeoWmsGetCapTemplateUrl',
      * @return {boolean} Template URL.
      */
     function(element, attrs) {
-      let templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
+      const templateUrl = attrs['ngeoWmsGetCapTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseModuleTemplateUrl + '/import/partials/wms-get-cap.html';
     });

@@ -13,7 +13,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-let module = angular.module('app', ['ngeo']);
+const module = angular.module('app', ['ngeo']);
 
 
 /**
@@ -40,9 +40,9 @@ app.MainController = function(ngeoDecorateInteraction) {
     })
   });
 
-  let map = this.map;
+  const map = this.map;
 
-  let vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector()
   });
 
@@ -60,7 +60,7 @@ app.MainController = function(ngeoDecorateInteraction) {
         source: vectorLayer.getSource()
       }));
 
-  let interaction = this.interaction;
+  const interaction = this.interaction;
   interaction.setActive(false);
   map.addInteraction(interaction);
   ngeoDecorateInteraction(interaction);

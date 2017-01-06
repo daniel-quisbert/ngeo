@@ -39,14 +39,14 @@ describe('ngeo.scaleselectorDirective', function() {
   });
 
   it('creates an element with expected number of li elements', function() {
-    let lis = element.find('li');
+    const lis = element.find('li');
     expect(lis.length).toBe(5);
   });
 
   describe('calling setZoom in Angular context', function() {
 
     it('does not throw', function() {
-      let scope = element.scope();
+      const scope = element.scope();
 
       function test() {
         scope.$apply(function() {

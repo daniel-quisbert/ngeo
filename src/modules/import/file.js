@@ -34,7 +34,7 @@ ngeo.File = function($q, $http, $window, gettext) {
    * @return {angular.$q.Promise<string>} .
    */
   this.read = function(file) {
-    let defer = $q.defer();
+    const defer = $q.defer();
     if (fileReader) {
       fileReader.abort();
     }
@@ -43,7 +43,7 @@ ngeo.File = function($q, $http, $window, gettext) {
       defer.resolve(evt.target.result);
     };
     fileReader.onerror = function(evt) {
-      let err = evt.target.error;
+      const err = evt.target.error;
       $window.console.error('Reading file failed: ', err);
       defer.reject({
         'message': err.code == 20 ? gettext('Operation canceled') : gettext('Read failed'),
@@ -71,7 +71,7 @@ ngeo.File = function($q, $http, $window, gettext) {
     canceler = opt_cancelP || $q.defer();
 
     // Angularjs doesn't handle onprogress event
-    let defer = $q.defer();
+    const defer = $q.defer();
     $http.get(url, {
       timeout: canceler.promise
     }).then(function(response) {

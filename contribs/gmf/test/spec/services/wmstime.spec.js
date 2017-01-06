@@ -5,7 +5,7 @@ goog.require('gmf.WMSTime');
 describe('gmfWMSTime service', function() {
   let gmfWMSTime;
 
-  let wmsTime = {
+  const wmsTime = {
     widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('slider'),
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
@@ -23,7 +23,7 @@ describe('gmfWMSTime service', function() {
   });
 
   it('should format the time regarding the resolution and with a mode set on value', function() {
-    let timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
+    const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
     let timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues
     });
@@ -52,7 +52,7 @@ describe('gmfWMSTime service', function() {
   it('should format the time regarding the resolution and with a mode set on range', function() {
     wmsTime.mode = 'range';
     wmsTime.resolution = 'year';
-    let timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
+    const timeValues = gmfWMSTime.getOptions(wmsTime)['values'];
     let timeParam = gmfWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues[0],
       end: timeValues[1]

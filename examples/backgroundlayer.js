@@ -96,8 +96,8 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  * @export
  */
 app.BackgroundlayerController.prototype.change = function() {
-  let layerSpec = this.bgLayer;
-  let layer = this.getLayer_(layerSpec['name']);
+  const layerSpec = this.bgLayer;
+  const layer = this.getLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this.map, layer);
 };
 
@@ -146,7 +146,7 @@ app.MainController = function($scope) {
    * An overlay layer.
    * @type {ol.layer.Image}
    */
-  let overlay = new ol.layer.Image({
+  const overlay = new ol.layer.Image({
     source: new ol.source.ImageWMS({
       url: 'http://demo.boundlessgeo.com/geoserver/wms',
       params: {'LAYERS': 'topp:states'},

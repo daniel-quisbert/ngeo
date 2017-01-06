@@ -238,7 +238,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
    */
   this.sourceProjections_ = null;
   if (gmfPermalinkOptions.projectionCodes !== undefined) {
-    let projections = ngeoAutoProjection.getProjectionList(gmfPermalinkOptions.projectionCodes);
+    const projections = ngeoAutoProjection.getProjectionList(gmfPermalinkOptions.projectionCodes);
     if (projections.length > 0) {
       this.sourceProjections_ = projections;
     }
@@ -312,19 +312,19 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
 
   // visibility
   this.rootScope_.$on('ngeo-layertree-state', function(event, treeCtrl, firstParent) {
-    let newState = {};
+    const newState = {};
     if (firstParent.node.mixed) {
-      let state = treeCtrl.getState();
+      const state = treeCtrl.getState();
       goog.asserts.assert(state === 'on' || state === 'off');
-      let visible = state === 'on';
+      const visible = state === 'on';
       treeCtrl.traverseDepthFirst(function(ctrl) {
         if (ctrl.node.children === undefined) {
-          let param = gmf.PermalinkParamPrefix.TREE_ENABLE + ctrl.node.name;
+          const param = gmf.PermalinkParamPrefix.TREE_ENABLE + ctrl.node.name;
           newState[param] = visible;
         }
       });
     } else {
-      let gmfLayerNames = [];
+      const gmfLayerNames = [];
       firstParent.traverseDepthFirst(function(ctrl) {
         if (ctrl.node.children === undefined && ctrl.getState() === 'on') {
           gmfLayerNames.push(ctrl.node.name);
@@ -335,9 +335,9 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
     this.ngeoStateManager_.updateState(newState);
   }.bind(this));
   this.rootScope_.$on('ngeo-layertree-opacity', function(event, treeCtrl) {
-    let newState = {};
-    let opacity = treeCtrl.layer.opacity;
-    let stateName = (treeCtrl.parent.node.mixed ?
+    const newState = {};
+    const opacity = treeCtrl.layer.opacity;
+    const stateName = (treeCtrl.parent.node.mixed ?
         gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY
     ) + treeCtrl.node.name;
     newState[stateName] = opacity;
@@ -347,7 +347,7 @@ gmf.Permalink = function($timeout, ngeoBackgroundLayerMgr, ngeoDebounce,
   // ngeoFeatures
   //   (1) read from features from the state manager first, add them
   //   (2) listen for further features added/removed
-  let features = this.getFeatures();
+  const features = this.getFeatures();
   features.forEach(function(feature) {
     this.featureHelper_.setStyle(feature);
     this.addNgeoFeature_(feature);
@@ -422,7 +422,7 @@ gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
     this.initListenerKey_(uid);
   }
 
-  let isol = opt_isol !== undefined ? opt_isol : true;
+  const isol = opt_isol !== undefined ? opt_isol : true;
   if (isol) {
     this.listenerKeys_[uid].ol.push(/** @type {ol.EventsKey} */ (key));
   } else {
@@ -441,16 +441,16 @@ gmf.Permalink.prototype.addListenerKey_ = function(uid, key, opt_isol) {
  */
 gmf.Permalink.prototype.getMapCenter = function() {
   let center = null;
-  let x = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
+  const x = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.MAP_X));
-  let y = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
+  const y = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.MAP_Y));
 
   if (x !== undefined && y !== undefined) {
     center = [x, y];
     if (this.sourceProjections_ !== null) {
-      let targetProjection = this.map_.getView().getProjection();
-      let reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(
+      const targetProjection = this.map_.getView().getProjection();
+      const reprojectedCenter = this.ngeoAutoProjection_.tryProjectionsWithInversion(
           center, targetProjection.getExtent(), targetProjection,
           this.sourceProjections_);
       if (reprojectedCenter !== null) {
@@ -469,7 +469,7 @@ gmf.Permalink.prototype.getMapCenter = function() {
  */
 gmf.Permalink.prototype.getMapZoom = function() {
   let zoom = null;
-  let z = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
+  const z = /** @type {number} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.MAP_Z));
   if (z !== undefined) {
     zoom = z;
@@ -518,7 +518,7 @@ gmf.Permalink.prototype.getMapTooltip = function() {
  */
 gmf.Permalink.prototype.getFeatures = function() {
   let features = [];
-  let f = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+  const f = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
     gmf.PermalinkParam.FEATURES));
   if (f !== undefined && f !== '') {
     features = this.featureHashFormat_.readFeatures(f);
@@ -533,18 +533,18 @@ gmf.Permalink.prototype.getFeatures = function() {
  */
 gmf.Permalink.prototype.setDimensions = function(dimensions) {
   // apply initial state
-  let keys = this.ngeoLocation_.getParamKeysWithPrefix(gmf.PermalinkParamPrefix.DIMENSIONS);
+  const keys = this.ngeoLocation_.getParamKeysWithPrefix(gmf.PermalinkParamPrefix.DIMENSIONS);
   for (let i = 0; i < keys.length; i++) {
-    let key = keys[i];
-    let value = this.ngeoLocation_.getParam(key);
+    const key = keys[i];
+    const value = this.ngeoLocation_.getParam(key);
     dimensions[key.slice(gmf.PermalinkParamPrefix.DIMENSIONS.length)] = value;
   }
 
   this.rootScope_.$watchCollection(function() {
     return dimensions;
   }.bind(this), function(dimensions) {
-    let params = {};
-    for (let key in dimensions) {
+    const params = {};
+    for (const key in dimensions) {
       params[gmf.PermalinkParamPrefix.DIMENSIONS + key] = dimensions[key];
     }
     this.ngeoLocation_.updateParams(params);
@@ -595,7 +595,7 @@ gmf.Permalink.prototype.setMap = function(map) {
  */
 gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
-  let view = map.getView();
+  const view = map.getView();
   let center;
   let zoom;
 
@@ -603,7 +603,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   //     a) the given ObjectEditing feature
   //     b) the X, Y and Z available within the permalink service, if available
   if (oeFeature && oeFeature.getGeometry()) {
-    let size = map.getSize();
+    const size = map.getSize();
     goog.asserts.assert(size);
     view.fit(oeFeature.getGeometry().getExtent(), size);
   } else {
@@ -624,9 +624,9 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
       view,
       'propertychange',
       this.ngeoDebounce_(function() {
-        let center = view.getCenter();
-        let zoom = view.getZoom();
-        let object = {};
+        const center = view.getCenter();
+        const zoom = view.getZoom();
+        const object = {};
         object[gmf.PermalinkParam.MAP_X] = Math.round(center[0]);
         object[gmf.PermalinkParam.MAP_Y] = Math.round(center[1]);
         object[gmf.PermalinkParam.MAP_Z] = zoom;
@@ -644,14 +644,14 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
     }
     goog.asserts.assertArray(crosshairCoordinate);
 
-    let crosshairFeature = new ol.Feature(
+    const crosshairFeature = new ol.Feature(
         new ol.geom.Point(crosshairCoordinate));
     crosshairFeature.setStyle(this.crosshairStyle_);
     this.featureOverlay_.addFeature(crosshairFeature);
   }
 
   // (4) Add map tooltip, if set
-  let tooltipText = this.getMapTooltip();
+  const tooltipText = this.getMapTooltip();
   if (tooltipText) {
     let tooltipPosition;
     if (center !== null) {
@@ -661,12 +661,12 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
     }
     goog.asserts.assertArray(tooltipPosition);
 
-    let div = $('<div/>', {
+    const div = $('<div/>', {
       'class': 'gmf-permalink-tooltip',
       'text': tooltipText
     })[0];
 
-    let popover = new ngeo.Popover({
+    const popover = new ngeo.Popover({
       element: div,
       position: tooltipPosition
     });
@@ -674,7 +674,7 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   }
 
   // (6) check for a wfs permalink
-  let wfsPermalinkData = this.getWfsPermalinkData_();
+  const wfsPermalinkData = this.getWfsPermalinkData_();
   if (wfsPermalinkData !== null) {
     this.ngeoWfsPermalink_.issue(wfsPermalinkData, map);
   }
@@ -705,7 +705,7 @@ gmf.Permalink.prototype.unregisterMap_ = function() {
  */
 gmf.Permalink.prototype.getBackgroundLayer = function(layers) {
   let layer = null;
-  let layerName = this.ngeoStateManager_.getInitialValue(
+  const layerName = this.ngeoStateManager_.getInitialValue(
       gmf.PermalinkParam.BG_LAYER);
   if (layerName !== undefined) {
     for (let i = 0, len = layers.length; i < len; i++) {
@@ -730,12 +730,12 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
   }
 
   // get layer label, i.e its name
-  let layer = this.ngeoBackgroundLayerMgr_.get(this.map_);
-  let layerName = layer.get('label');
+  const layer = this.ngeoBackgroundLayerMgr_.get(this.map_);
+  const layerName = layer.get('label');
   goog.asserts.assertString(layerName);
 
   // set it in state
-  let object = {};
+  const object = {};
   object[gmf.PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
 };
@@ -751,13 +751,13 @@ gmf.Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
  */
 gmf.Permalink.prototype.refreshFirstLevelGroups = function() {
   // Get first-level-groups order
-  let groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
-  let orderedNames = groupNodes.map(function(node) {
+  const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
+  const orderedNames = groupNodes.map(function(node) {
     return node.name;
   });
 
   // set it in state
-  let object = {};
+  const object = {};
   object[gmf.PermalinkParam.TREE_GROUPS] = orderedNames.join(',');
   this.ngeoStateManager_.updateState(object);
 };
@@ -770,7 +770,7 @@ gmf.Permalink.prototype.refreshFirstLevelGroups = function() {
  * @return {boolean} theme in path.
  */
 gmf.Permalink.prototype.themeInUrl_ = function(pathElements) {
-  let indexOfTheme = pathElements.indexOf('theme');
+  const indexOfTheme = pathElements.indexOf('theme');
   return indexOfTheme != -1 && indexOfTheme == pathElements.length - 2;
 };
 
@@ -780,7 +780,7 @@ gmf.Permalink.prototype.themeInUrl_ = function(pathElements) {
  */
 gmf.Permalink.prototype.setThemeInUrl_ = function() {
   if (this.gmfThemeManager_ && this.gmfThemeManager_.themeName) {
-    let pathElements = this.ngeoLocation_.getPath().split('/');
+    const pathElements = this.ngeoLocation_.getPath().split('/');
     goog.asserts.assert(pathElements.length > 1);
     if (pathElements[pathElements.length - 1] === '') {
       // case where the path is just "/"
@@ -805,7 +805,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
      * @type {string}
      */
     let themeName;
-    let pathElements = this.ngeoLocation_.getPath().split('/');
+    const pathElements = this.ngeoLocation_.getPath().split('/');
     if (this.themeInUrl_(pathElements)) {
       themeName = pathElements[pathElements.length - 1];
     }
@@ -829,7 +829,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     let firstLevelGroups = [];
     let theme;
     // check if we have the groups in the permalink
-    let groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
+    const groupsNames = this.ngeoStateManager_.getInitialValue(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
       theme = gmf.Themes.findThemeByName(
         themes, /** @type {string} */ (themeName)
@@ -839,7 +839,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
       }
     } else {
       groupsNames.split(',').forEach(function(groupName) {
-        let group = gmf.Themes.findGroupByName(themes, groupName);
+        const group = gmf.Themes.findGroupByName(themes, groupName);
         if (group) {
           firstLevelGroups.push(group);
         }
@@ -859,7 +859,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
           return;
         }
 
-        let opacity = this.ngeoStateManager_.getInitialValue(
+        const opacity = this.ngeoStateManager_.getInitialValue(
           (treeCtrl.parent.node.mixed ? gmf.PermalinkParamPrefix.TREE_OPACITY : gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY)
           + treeCtrl.node.name
         );
@@ -868,7 +868,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
         }
         if (treeCtrl.parent.node && treeCtrl.parent.node.mixed && treeCtrl.node.children == undefined) {
           // Layer of a mixed group
-          let enable = this.ngeoStateManager_.getInitialValue(
+          const enable = this.ngeoStateManager_.getInitialValue(
             gmf.PermalinkParamPrefix.TREE_ENABLE + treeCtrl.node.name
           );
           if (enable !== undefined) {
@@ -876,14 +876,14 @@ gmf.Permalink.prototype.initLayers_ = function() {
           }
         } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
-          let groupLayers = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
+          const groupLayers = /** @type {string} */ (this.ngeoStateManager_.getInitialValue(
             gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
           ));
           if (groupLayers !== undefined) {
-            let groupLayersArray = groupLayers.split(',');
+            const groupLayersArray = groupLayers.split(',');
             treeCtrl.traverseDepthFirst(function(treeCtrl) {
               if (treeCtrl.node.children === undefined) {
-                let enable = ol.array.includes(groupLayersArray, treeCtrl.node.name);
+                const enable = ol.array.includes(groupLayersArray, treeCtrl.node.name);
                 treeCtrl.setState(enable ? 'on' : 'off', false);
               }
             });
@@ -891,7 +891,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
           }
         }
       }.bind(this));
-      let firstParents = this.gmfTreeManager_.rootCtrl.children;
+      const firstParents = this.gmfTreeManager_.rootCtrl.children;
       firstParents.forEach(function(firstParent) {
         firstParent.traverseDepthFirst(function(treeCtrl) {
           if (treeCtrl.getState() !== 'indeterminate') {
@@ -913,7 +913,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
-  let feature = event.element;
+  const feature = event.element;
   goog.asserts.assertInstanceof(feature, ol.Feature);
   this.addNgeoFeature_(feature);
 };
@@ -924,7 +924,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
-  let feature = event.element;
+  const feature = event.element;
   goog.asserts.assertInstanceof(feature, ol.Feature);
   this.removeNgeoFeature_(feature);
 };
@@ -937,7 +937,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
  * @private
  */
 gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
-  let uid = ol.getUid(feature);
+  const uid = ol.getUid(feature);
   this.addListenerKey_(
     uid,
     ol.events.listen(feature, ol.events.EventType.CHANGE,
@@ -953,7 +953,7 @@ gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
  * @private
  */
 gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
-  let uid = ol.getUid(feature);
+  const uid = ol.getUid(feature);
   this.initListenerKey_(uid); // clear event listeners
   this.handleNgeoFeaturesChange_();
 };
@@ -966,10 +966,10 @@ gmf.Permalink.prototype.removeNgeoFeature_ = function(feature) {
  * @private
  */
 gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
-  let features = this.ngeoFeatures_.getArray();
-  let data = this.featureHashFormat_.writeFeatures(features);
+  const features = this.ngeoFeatures_.getArray();
+  const data = this.featureHashFormat_.writeFeatures(features);
 
-  let object = {};
+  const object = {};
   object[gmf.PermalinkParam.FEATURES] = data;
   this.ngeoStateManager_.updateState(object);
 };
@@ -981,15 +981,15 @@ gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
  * @private
  */
 gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
-  let wfsLayer = this.ngeoLocation_.getParam(gmf.PermalinkParam.WFS_LAYER);
+  const wfsLayer = this.ngeoLocation_.getParam(gmf.PermalinkParam.WFS_LAYER);
   if (!wfsLayer) {
     return null;
   }
 
-  let numGroups = this.ngeoLocation_.getParamAsInt(gmf.PermalinkParam.WFS_NGROUPS);
-  let paramKeys = this.ngeoLocation_.getParamKeysWithPrefix(gmf.PermalinkParamPrefix.WFS);
+  const numGroups = this.ngeoLocation_.getParamAsInt(gmf.PermalinkParam.WFS_NGROUPS);
+  const paramKeys = this.ngeoLocation_.getParamKeysWithPrefix(gmf.PermalinkParamPrefix.WFS);
 
-  let filterGroups = [];
+  const filterGroups = [];
   let filterGroup;
   if (numGroups === undefined) {
     // no groups are used, e.g. '?wfs_layer=fuel&wfs_osm_id=123
@@ -1012,8 +1012,8 @@ gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
     return null;
   }
 
-  let showFeaturesParam = this.ngeoLocation_.getParam(gmf.PermalinkParam.WFS_SHOW_FEATURES);
-  let showFeatures = !(showFeaturesParam === '0' || showFeaturesParam === 'false');
+  const showFeaturesParam = this.ngeoLocation_.getParam(gmf.PermalinkParam.WFS_SHOW_FEATURES);
+  const showFeatures = !(showFeaturesParam === '0' || showFeaturesParam === 'false');
 
   return {
     wfsType: wfsLayer,
@@ -1034,14 +1034,14 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
    * @type {Array.<ngeo.WfsPermalinkFilter>}
    */
-  let filters = [];
+  const filters = [];
 
   paramKeys.forEach(function(paramKey) {
     if (paramKey == gmf.PermalinkParam.WFS_LAYER || paramKey == gmf.PermalinkParam.WFS_SHOW_FEATURES ||
         paramKey == gmf.PermalinkParam.WFS_NGROUPS || paramKey.indexOf(prefix) != 0) {
       return;
     }
-    let value = this.ngeoLocation_.getParam(paramKey);
+    const value = this.ngeoLocation_.getParam(paramKey);
     if (!value) {
       return;
     }
@@ -1051,7 +1051,7 @@ gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
       condition = value.split(',');
     }
 
-    let filter = {
+    const filter = {
       property: paramKey.replace(prefix, ''),
       condition: condition
     };

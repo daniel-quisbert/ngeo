@@ -59,7 +59,7 @@ ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
   if (!elements.length) {
     elements = node.getElementsByTagName('xsd:element');
   }
-  let attributes = [];
+  const attributes = [];
 
   let attribute;
   for (let i = 0, ii = elements.length; i < ii; i++) {
@@ -80,20 +80,20 @@ ngeo.format.XSDAttribute.prototype.readFromNode = function(node) {
  */
 ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
-  let name = node.getAttribute('name');
+  const name = node.getAttribute('name');
   goog.asserts.assert(name, 'name should be defined in element node.');
 
-  let nillable = node.getAttribute('nillable');
-  let required = !(nillable === true || nillable === 'true');
+  const nillable = node.getAttribute('nillable');
+  const required = !(nillable === true || nillable === 'true');
 
-  let attribute = {
+  const attribute = {
     name: name,
     required: required
   };
 
-  let type = node.getAttribute('type');
+  const type = node.getAttribute('type');
   if (type) {
-    let geomRegex =
+    const geomRegex =
       /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
     if (geomRegex.exec(type)) {
       attribute.type = ngeo.format.XSDAttributeType.GEOMETRY;
@@ -126,7 +126,7 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
     }
     if (enumerations.length) {
       attribute.type = ngeo.format.XSDAttributeType.SELECT;
-      let choices = [];
+      const choices = [];
       for (let i = 0, ii = enumerations.length; i < ii; i++) {
         choices.push(enumerations[i].getAttribute('value'));
       }

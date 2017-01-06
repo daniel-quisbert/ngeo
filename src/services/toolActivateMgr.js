@@ -115,7 +115,7 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
     entries = this.groups_[groupName] = [];
   }
 
-  let unlisten = this.scope_.$watch(
+  const unlisten = this.scope_.$watch(
       tool.getActive,
       (function(newVal, oldVal) {
         if (newVal === oldVal) {
@@ -155,7 +155,7 @@ ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
  * @export
  */
 ngeo.ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
-  let entries = this.groups_[groupName];
+  const entries = this.groups_[groupName];
   if (entries) {
     for (let i = 0; i < entries.length; i++) {
       if (entries[i].tool == tool) {
@@ -174,7 +174,7 @@ ngeo.ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
  * @export
  */
 ngeo.ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
-  let entries = this.groups_[groupName];
+  const entries = this.groups_[groupName];
   if (entries) {
     for (let i = 0; i < entries.length; i++) {
       entries[i].unlisten();
@@ -212,7 +212,7 @@ ngeo.ToolActivateMgr.prototype.deactivateTool = function(tool) {
  * @private
  */
 ngeo.ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool) {
-  let entries = this.groups_[groupName];
+  const entries = this.groups_[groupName];
   for (let i = 0; i < entries.length; i++) {
     if (tool != entries[i].tool) {
       entries[i].tool.setActive(false);
@@ -228,7 +228,7 @@ ngeo.ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool) {
  * @private
  */
 ngeo.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
-  let entries = this.groups_[groupName];
+  const entries = this.groups_[groupName];
   let defaultTool = null;
   let hasActiveTool = false;
 

@@ -42,16 +42,16 @@ ngeo.StateManager = function(ngeoLocation) {
   // state is read from the location URL, or from the local storage if there
   // is no state in the location URL.
 
-  let paramKeys = ngeoLocation.getParamKeys();
+  const paramKeys = ngeoLocation.getParamKeys();
   let i, key, theme;
-  let themeRegex = new RegExp(/\/theme\/([^\?\/]*)/);
-  let urlPath = ngeoLocation.getPath();
-  let locationInitState = {};
+  const themeRegex = new RegExp(/\/theme\/([^\?\/]*)/);
+  const urlPath = ngeoLocation.getPath();
+  const locationInitState = {};
 
   if (paramKeys.length === 0 ||
       (paramKeys.length === 1 && paramKeys[0] == 'debug')) {
     if (this.localStorage.isAvailable()) {
-      let count = this.localStorage.getCount();
+      const count = this.localStorage.getCount();
       for (i = 0; i < count; ++i) {
         key = this.localStorage.key(i);
         goog.asserts.assert(key !== null);
@@ -87,7 +87,7 @@ ngeo.StateManager = function(ngeoLocation) {
  * @private
  */
 ngeo.StateManager.prototype.getItemFromLocalStorage_ = function(key) {
-  let value = this.localStorage.get(key);
+  const value = this.localStorage.get(key);
   try {
     return angular.fromJson(value);
   } catch (e) {
@@ -105,7 +105,7 @@ ngeo.StateManager.prototype.getItemFromLocalStorage_ = function(key) {
  * @private
  */
 ngeo.StateManager.prototype.getItemFromLocation_ = function(key) {
-  let value = this.ngeoLocation.getParam(key);
+  const value = this.ngeoLocation.getParam(key);
   try {
     return angular.fromJson(value);
   } catch (e) {
@@ -129,7 +129,7 @@ ngeo.StateManager.prototype.getInitialValue = function(key) {
  * @param {!Object.<string, string>} object Object.
  */
 ngeo.StateManager.prototype.updateState = function(object) {
-  let locationObject = {};
+  const locationObject = {};
   Object.keys(object).forEach(copyWithoutExcludedKeys, this);
   this.ngeoLocation.updateParams(locationObject);
   if (this.localStorage.isAvailable()) {

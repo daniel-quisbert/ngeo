@@ -84,17 +84,17 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
   this.ngeoQuery_.removeAllSources();
 
   this.gmfThemes_.getOgcServersObject().then(function(ogcServers) {
-    let promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
+    const promiseThemes = this.gmfThemes_.getThemesObject().then(function(themes) {
       // create sources for each themes
       for (let i = 0, leni = themes.length; i < leni; i++) {
-        let theme = themes[i];
+        const theme = themes[i];
         for (let j = 0, lenj = theme.children.length; j < lenj; j++) {
           this.createSources_(theme.children[j], theme.children[j], ogcServers);
         }
       }
     }.bind(this));
 
-    let promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
+    const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then(function(backgroundLayers) {
       // create a source for each background layer
       for (let i = 0, len = backgroundLayers.length; i < len; i++) {
         this.createSources_(backgroundLayers[i], backgroundLayers[i], ogcServers);
@@ -119,7 +119,7 @@ gmf.QueryManager.prototype.handleThemesChange_ = function() {
  * @private
  */
 gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcServers) {
-  let children = node.children;
+  const children = node.children;
 
   // First we handle the groups
   if (children) {
@@ -132,13 +132,13 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
   // We are now on a leaf so we can cast node.metadata to the typed
   // (and non minified) version.
 
-  let id = node.id;
-  let meta = /** @type {gmfThemes.GmfMetaData} */ (node.metadata);
-  let identifierAttributeField = meta.identifierAttributeField;
+  const id = node.id;
+  const meta = /** @type {gmfThemes.GmfMetaData} */ (node.metadata);
+  const identifierAttributeField = meta.identifierAttributeField;
   let layers;
-  let name = node.name;
+  const name = node.name;
   let validateLayerParams = false;
-  let gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
+  const gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
   let ogcServer;
 
   // Don't create sources for WMTS layers without wmsUrl and ogcServer,
@@ -176,14 +176,14 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
       // the original one.
       if (gmfLayerWMS.childLayers && gmfLayerWMS.childLayers.length) {
         // skip layers with no queryable childLayer
-        let isQueryable = function(item) {
+        const isQueryable = function(item) {
           return item.queryable;
         };
         if (!gmfLayerWMS.childLayers.some(isQueryable)) {
           return;
         }
 
-        let childLayerNames = [];
+        const childLayerNames = [];
         gmfLayerWMS.childLayers.forEach(function(childLayer) {
           if (childLayer.queryable) {
             childLayerNames.push(childLayer.name);
@@ -197,7 +197,7 @@ gmf.QueryManager.prototype.createSources_ = function(firstLevelGroup, node, ogcS
     goog.asserts.assert(childLayers);
     goog.asserts.assert(layers);
 
-    let source = {
+    const source = {
       'id': id,
       'identifierAttributeField': identifierAttributeField,
       'label': name,

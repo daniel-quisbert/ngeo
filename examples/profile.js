@@ -37,7 +37,7 @@ app.MainController = function($http, $scope) {
    */
   this.scope_ = $scope;
 
-  let source = new ol.source.Vector();
+  const source = new ol.source.Vector();
 
   /**
    * @type {ol.Map}
@@ -74,9 +74,9 @@ app.MainController = function($http, $scope) {
     })
   });
 
-  let map = this.map;
+  const map = this.map;
 
-  let vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector()
   });
 
@@ -103,15 +103,15 @@ app.MainController = function($http, $scope) {
   this.profileData = undefined;
 
   $http.get('data/profile.json').then(function(resp) {
-    let data = resp.data['profile'];
+    const data = resp.data['profile'];
     this.profileData = data;
 
     let i;
-    let len = data.length;
-    let lineString = new ol.geom.LineString([],
+    const len = data.length;
+    const lineString = new ol.geom.LineString([],
         /** @type {ol.geom.GeometryLayout} */ ('XYM'));
     for (i = 0; i < len; i++) {
-      let p = data[i];
+      const p = data[i];
       lineString.appendCoordinate([p.x, p.y, p.dist]);
     }
     source.addFeature(new ol.Feature(lineString));
@@ -125,7 +125,7 @@ app.MainController = function($http, $scope) {
     if (evt.dragging) {
       return;
     }
-    let coordinate = map.getEventCoordinate(evt.originalEvent);
+    const coordinate = map.getEventCoordinate(evt.originalEvent);
     this.snapToGeometry(coordinate, source.getFeatures()[0].getGeometry());
   }.bind(this));
 
@@ -140,7 +140,7 @@ app.MainController = function($http, $scope) {
    * @template T
    * @return {function(Object): T} Getter function.
    */
-  let typedFunctionsFactory = function(type, key, opt_childKey) {
+  const typedFunctionsFactory = function(type, key, opt_childKey) {
     return (
         /**
          * @param {Object} item
@@ -155,16 +155,16 @@ app.MainController = function($http, $scope) {
         });
   };
 
-  let types = {
+  const types = {
     number: 1,
     string: ''
   };
 
 
-  let distanceExtractor = typedFunctionsFactory(types.number, 'dist');
+  const distanceExtractor = typedFunctionsFactory(types.number, 'dist');
 
 
-  let linesConfiguration = {
+  const linesConfiguration = {
     'line1': {
       style: {},
       zExtractor: typedFunctionsFactory(types.number, 'mnt', 'values')
@@ -175,7 +175,7 @@ app.MainController = function($http, $scope) {
   /**
    * @type {ngeox.profile.PoiExtractor}
    */
-  let poiExtractor = {
+  const poiExtractor = {
     sort: typedFunctionsFactory(types.number, 'sort'),
     id: typedFunctionsFactory(types.string, 'id'),
     dist: typedFunctionsFactory(types.number, 'dist'),
@@ -196,13 +196,13 @@ app.MainController = function($http, $scope) {
   /**
    * @param {Object} point Point.
    */
-  let hoverCallback = function(point) {
+  const hoverCallback = function(point) {
     // An item in the list of points given to the profile.
     this.point = point;
     this.snappedPoint_.setGeometry(new ol.geom.Point([point.x, point.y]));
   }.bind(this);
 
-  let outCallback = function() {
+  const outCallback = function() {
     this.point = null;
     this.snappedPoint_.setGeometry(null);
   }.bind(this);
@@ -239,12 +239,12 @@ app.MainController = function($http, $scope) {
  * @param {ol.geom.Geometry|undefined} geometry The geometry to snap to.
  */
 app.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
-  let closestPoint = geometry.getClosestPoint(coordinate);
+  const closestPoint = geometry.getClosestPoint(coordinate);
   // compute distance to line in pixels
-  let dx = closestPoint[0] - coordinate[0];
-  let dy = closestPoint[1] - coordinate[1];
-  let dist = Math.sqrt(dx * dx + dy * dy);
-  let pixelDist = dist / this.map.getView().getResolution();
+  const dx = closestPoint[0] - coordinate[0];
+  const dy = closestPoint[1] - coordinate[1];
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const pixelDist = dist / this.map.getView().getResolution();
 
   if (pixelDist < 8) {
     this.profileHighlight = closestPoint[2];

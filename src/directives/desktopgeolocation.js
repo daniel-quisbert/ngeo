@@ -79,7 +79,7 @@ ngeo.DesktopGeolocationController = function($scope, $element,
 
   $element.on('click', this.toggle.bind(this));
 
-  let map = $scope['getDesktopMapFn']();
+  const map = $scope['getDesktopMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
 
   /**
@@ -88,7 +88,7 @@ ngeo.DesktopGeolocationController = function($scope, $element,
    */
   this.map_ = map;
 
-  let options = $scope['getDesktopGeolocationOptionsFn']() || {};
+  const options = $scope['getDesktopGeolocationOptionsFn']() || {};
   goog.asserts.assertObject(options);
 
   /**
@@ -215,8 +215,8 @@ ngeo.DesktopGeolocationController.prototype.deactivate_ = function() {
  * @private
  */
 ngeo.DesktopGeolocationController.prototype.setPosition_ = function(event) {
-  let position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
-  let point = new ol.geom.Point(position);
+  const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
+  const point = new ol.geom.Point(position);
 
   this.positionFeature_.setGeometry(point);
   this.map_.getView().setCenter(position);

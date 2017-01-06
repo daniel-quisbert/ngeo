@@ -13,16 +13,16 @@ describe('ngeo.search.createLocationSearchBloodhound', function() {
   });
 
   it('Parses the features correctly', function() {
-    let bloodhound = ngeoCreateLocationSearchBloodhound({
+    const bloodhound = ngeoCreateLocationSearchBloodhound({
       targetProjection: ol.proj.get('EPSG:3857'),
       limit: 5
     });
-    let transform = bloodhound.remote.transform;
+    const transform = bloodhound.remote.transform;
 
-    let features = transform(geoAdminLocationSearch);
+    const features = transform(geoAdminLocationSearch);
     expect(features.length).toBe(5);
 
-    let feature = features[0];
+    const feature = features[0];
     expect(feature.getId(), '5586');
     expect(feature.get('label')).toBe('<i>Populated Place</i> <b>Lausanne</b> (VD) - Lausanne');
     expect(feature.get('label_no_html')).toBe('Populated Place Lausanne (VD) - Lausanne');

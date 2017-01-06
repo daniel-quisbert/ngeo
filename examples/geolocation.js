@@ -25,7 +25,7 @@ app.module = angular.module('app', ['ngeo']);
  * @ngInject
  */
 app.MainController = function(ngeoDecorateGeolocation) {
-  let view = new ol.View({
+  const view = new ol.View({
     center: [647019, 6239641],
     zoom: 4
   });
@@ -43,7 +43,7 @@ app.MainController = function(ngeoDecorateGeolocation) {
     view: view
   });
 
-  let map = this.map;
+  const map = this.map;
 
   /**
    * @type {ol.Geolocation}
@@ -53,17 +53,17 @@ app.MainController = function(ngeoDecorateGeolocation) {
     projection: view.getProjection()
   });
 
-  let geolocation = this.geolocation;
+  const geolocation = this.geolocation;
 
-  let positionPoint = new ol.geom.Point([0, 0]);
-  let positionFeature = new ol.Feature(positionPoint);
+  const positionPoint = new ol.geom.Point([0, 0]);
+  const positionFeature = new ol.Feature(positionPoint);
 
-  let accuracyFeature = new ol.Feature();
+  const accuracyFeature = new ol.Feature();
   geolocation.on('change:accuracyGeometry', function() {
     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   });
 
-  let vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector({
       features: [positionFeature, accuracyFeature]
     })
@@ -74,7 +74,7 @@ app.MainController = function(ngeoDecorateGeolocation) {
   vectorLayer.setMap(map);
 
   geolocation.on('change:position', function(e) {
-    let position = /** @type {ol.Coordinate} */ (geolocation.getPosition());
+    const position = /** @type {ol.Coordinate} */ (geolocation.getPosition());
     positionPoint.setCoordinates(position);
     map.getView().setCenter(position);
     map.getView().setZoom(17);

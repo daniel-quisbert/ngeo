@@ -109,13 +109,13 @@ gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
  * @private
  */
 gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
-  let active = treeCtrl.getState() === 'on';
+  const active = treeCtrl.getState() === 'on';
   if (treeCtrl.node.type === 'WMTS') {
     layer.setVisible(active);
   } else if (!treeCtrl.node.mixed && treeCtrl.depth === 1) {
     // First level non mixed group
     goog.asserts.assertInstanceof(layer, ol.layer.Image);
-    let names = [];
+    const names = [];
     treeCtrl.traverseDepthFirst(function(treeCtrl) {
       if (treeCtrl.node.children === undefined && treeCtrl.getState() === 'on') {
         names.push(treeCtrl.node.layers);
@@ -154,21 +154,21 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  */
 gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
     dataLayerGroup, opt_position) {
-  let groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
   let layer = null;
-  let isFirstLevelGroup = treeCtrl.parent.isRoot;
+  const isFirstLevelGroup = treeCtrl.parent.isRoot;
 
   if (isFirstLevelGroup) { // First level group
     layer = this.createLayerFromGroup_(treeCtrl, !!groupNode.mixed);
     // Insert the layer at the right place
-    let position = opt_position | 0;
+    const position = opt_position | 0;
     dataLayerGroup.getLayers().insertAt(position, layer);
 
   } else { // Other Groups, create a group layer only in mixed groups
-    let inAMixedGroup = !this.isOneParentNotMixed_(treeCtrl);
+    const inAMixedGroup = !this.isOneParentNotMixed_(treeCtrl);
     if (inAMixedGroup) {
       layer = this.createLayerFromGroup_(treeCtrl, true);
-      let layerGroup = /** @type {ol.layer.Group} */ (
+      const layerGroup = /** @type {ol.layer.Group} */ (
               gmf.SyncLayertreeMap.getLayer(treeCtrl.parent));
       layerGroup.getLayers().insertAt(0, layer);
     }
@@ -188,12 +188,12 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
 gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
     mixed) {
   let layer;
-  let groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
+  const groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
   if (mixed) { // Will be one ol.layer per each node.
     layer = this.layerHelper_.createBasicGroup();
   } else { // Will be one ol.layer for multiple WMS nodes.
-    let timeParam = this.getTimeParam_(treeCtrl);
-    let ogcServer = this.ogcServersObject_[groupNode.ogcServer || ''];
+    const timeParam = this.getTimeParam_(treeCtrl);
+    const ogcServer = this.ogcServersObject_[groupNode.ogcServer || ''];
     goog.asserts.assert(ogcServer);
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
@@ -222,15 +222,15 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
-  let gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   let layer;
   // Make layer.
   if (gmfLayer.type === 'WMTS') {
     layer = this.createWMTSLayer_(/** @type gmfThemes.GmfLayerWMTS */ (gmfLayer));
   } else {
-    let gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
-    let timeParam = this.getTimeParam_(treeCtrl);
-    let ogcServer = this.ogcServersObject_[/** @type string */ (gmfLayerWMS.ogcServer)];
+    const gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
+    const timeParam = this.getTimeParam_(treeCtrl);
+    const ogcServer = this.ogcServersObject_[/** @type string */ (gmfLayerWMS.ogcServer)];
     goog.asserts.assert(ogcServer);
     goog.asserts.assert(ogcServer.url);
     goog.asserts.assert(ogcServer.type);
@@ -241,13 +241,13 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
   // Update layer information and tree state.
   layer.set('layerNodeName', gmfLayer.name); // Really useful ?
   this.updateLayerReferences_(gmfLayer, layer);
-  let checked = gmfLayer.metadata.isChecked === true;
+  const checked = gmfLayer.metadata.isChecked === true;
   if (checked) {
     treeCtrl.setState('on', false);
   }
   layer.setVisible(checked);
   // Insert layer in the map.
-  let layerGroup = /** @type {ol.layer.Group} */ (
+  const layerGroup = /** @type {ol.layer.Group} */ (
     gmf.SyncLayertreeMap.getLayer(treeCtrl.parent));
   layerGroup.getLayers().insertAt(0, layer);
   return layer;
@@ -263,10 +263,10 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
  * @private
  */
 gmf.SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
-  let leafNode = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  let firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
+  const leafNode = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
   goog.asserts.assert(firstLevelGroup);
-  let layer = /** @type {ol.layer.Image} */ (firstLevelGroup.layer);
+  const layer = /** @type {ol.layer.Image} */ (firstLevelGroup.layer);
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
   // Update layer information and tree state.
   this.updateLayerReferences_(leafNode, layer);
@@ -287,7 +287,7 @@ gmf.SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl
  * @private
  */
 gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
-  let newLayer = new ol.layer.Tile();
+  const newLayer = new ol.layer.Tile();
   goog.asserts.assert(gmfLayerWMTS.url);
   goog.asserts.assert(gmfLayerWMTS.layer);
   this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
@@ -307,20 +307,20 @@ gmf.SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
  */
 gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode,
     layer) {
-  let id = leafNode.id;
-  let querySourceIds = layer.get('querySourceIds') || [];
+  const id = leafNode.id;
+  const querySourceIds = layer.get('querySourceIds') || [];
   querySourceIds.push(id);
   layer.set('querySourceIds', querySourceIds);
 
   if (leafNode.editable) {
-    let editableIds = layer.get('editableIds') || [];
+    const editableIds = layer.get('editableIds') || [];
     editableIds.push(id);
     layer.set('editableIds', editableIds);
   }
 
-  let disclaimer = leafNode.metadata.disclaimer;
+  const disclaimer = leafNode.metadata.disclaimer;
   if (disclaimer) {
-    let disclaimers = layer.get('disclaimers') || [];
+    const disclaimers = layer.get('disclaimers') || [];
     disclaimers.push(leafNode.metadata.disclaimer);
     layer.set('disclaimers', disclaimers);
   }
@@ -337,7 +337,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode,
 gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   let wmsTime;
   let timeParam;
-  let node = treeCtrl.node;
+  const node = treeCtrl.node;
   if (node.time) {
     wmsTime = node.time;
   } else if (node.children) {
@@ -349,7 +349,7 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
     });
   }
   if (wmsTime) {
-    let timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
+    const timeValues = this.gmfWMSTime_.getOptions(wmsTime)['values'];
     timeParam = this.gmfWMSTime_.formatWMSTimeParam(wmsTime, {
       start: timeValues[0] || timeValues,
       end: timeValues[1]

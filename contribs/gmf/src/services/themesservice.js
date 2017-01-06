@@ -133,13 +133,13 @@ ol.inherits(gmf.Themes, ol.events.EventTarget);
  */
 gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
-    let theme = themes[i];
+    const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
-      let group = theme.children[j];
-      let childNodes = [];
+      const group = theme.children[j];
+      const childNodes = [];
       gmf.Themes.getFlatNodes(group, childNodes);
       for (let k = 0, kk = childNodes.length; k < kk; k++) {
-        let layer = childNodes[k];
+        const layer = childNodes[k];
         if (layer.name == name) {
           return group;
         }
@@ -157,9 +157,9 @@ gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
  */
 gmf.Themes.findGroupByName = function(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
-    let theme = themes[i];
+    const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
-      let group = theme.children[j];
+      const group = theme.children[j];
       if (group.name == name) {
         return group;
       }
@@ -204,7 +204,7 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
  */
 gmf.Themes.getFlatNodes = function(node, nodes) {
   let i;
-  let children = node.children;
+  const children = node.children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
       gmf.Themes.getFlatNodes(children[i], nodes);
@@ -224,16 +224,16 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   if (this.bgLayerPromise_) {
     return this.bgLayerPromise_;
   }
-  let $q = this.$q_;
-  let layerHelper = this.layerHelper_;
+  const $q = this.$q_;
+  const layerHelper = this.layerHelper_;
 
   /**
    * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} item A group or a leaf.
    * @param {Array.<number>} array Array of ids;
    */
-  let getIds = function(item, array) {
+  const getIds = function(item, array) {
     array.push(item.id);
-    let children = item.children || [];
+    const children = item.children || [];
     children.forEach(function(child) {
       getIds(child, array);
     });
@@ -244,11 +244,11 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @param {ol.layer.Base} layer The layer.
    * @return {ol.layer.Base} the provided layer.
    */
-  let callback = function(item, layer) {
+  const callback = function(item, layer) {
     layer.set('label', item.name);
     layer.set('metadata', item.metadata);
     layer.set('dimensions', item.dimensions);
-    let ids = [];
+    const ids = [];
     getIds(item, ids);
     layer.set('querySourceIds', ids);
     layer.set('editableIds', []);
@@ -260,16 +260,16 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} gmfLayer The item.
    * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
-  let layerLayerCreationFn = function(ogcServers, gmfLayer) {
+  const layerLayerCreationFn = function(ogcServers, gmfLayer) {
     // Overwrite conflicting server dimensions with application ones
-    for (let dimkey in gmfLayer.dimensions) {
+    for (const dimkey in gmfLayer.dimensions) {
       if (appDimensions[dimkey] !== undefined) {
         gmfLayer.dimensions[dimkey] = appDimensions[dimkey];
       }
     }
 
     if (gmfLayer.type === 'WMTS') {
-      let gmfLayerWMTS = /** @type gmfThemes.GmfLayerWMTS */ (gmfLayer);
+      const gmfLayerWMTS = /** @type gmfThemes.GmfLayerWMTS */ (gmfLayer);
       goog.asserts.assert(gmfLayerWMTS.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
           gmfLayerWMTS.url,
@@ -281,9 +281,9 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
         return $q.resolve(undefined);
       });
     } else if (gmfLayer.type === 'WMS') {
-      let gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
+      const gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
       goog.asserts.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
-      let server = ogcServers[gmfLayerWMS.ogcServer];
+      const server = ogcServers[gmfLayerWMS.ogcServer];
       goog.asserts.assert(server, 'The OGC server was not found');
       goog.asserts.assert(server.url, 'The server URL is required');
       return callback(gmfLayer, layerHelper.createBasicWMSLayer(
@@ -302,12 +302,12 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    * @param {gmfThemes.GmfGroup} item The item.
    * @return {angular.$q.Promise.<ol.layer.Group>} the created layer.
    */
-  let layerGroupCreationFn = function(ogcServers, item) {
+  const layerGroupCreationFn = function(ogcServers, item) {
     // We assume no child is a layer group.
-    let orderedChildren = item.children.map(function(x) {
+    const orderedChildren = item.children.map(function(x) {
       return x;
     }).reverse(); // the order of insertion in OL3 is the contrary of the theme
-    let promises = orderedChildren.map(layerLayerCreationFn.bind(null, ogcServers));
+    const promises = orderedChildren.map(layerLayerCreationFn.bind(null, ogcServers));
     return $q.all(promises).then(function(layers) {
       let collection;
       if (layers) {
@@ -316,7 +316,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
         });
         collection = new ol.Collection(layers);
       }
-      let group = layerHelper.createBasicGroup(collection);
+      const group = layerHelper.createBasicGroup(collection);
       callback(item, group);
       return group;
     });
@@ -327,9 +327,9 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
    *     response.
    * @return {angular.$q.Promise.<Array.<ol.layer.Base>>} Promise.
    */
-  let promiseSuccessFn = function(data) {
-    let promises = data.background_layers.map(function(item) {
-      let itemType = item.type;
+  const promiseSuccessFn = function(data) {
+    const promises = data.background_layers.map(function(item) {
+      const itemType = item.type;
       if (itemType === 'WMTS' || itemType === 'WMS') {
         return layerLayerCreationFn(data.ogcServers, item);
       } else if (item.children) {
@@ -343,7 +343,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
   }.bind(this);
 
   this.bgLayerPromise_ = this.promise_.then(promiseSuccessFn).then(function(values) {
-    let layers = [];
+    const layers = [];
 
     // (1) add a blank layer
     if (this.addBlankBackgroundLayer_) {
@@ -458,7 +458,7 @@ gmf.Themes.prototype.hasEditableLayers = function() {
  */
 gmf.Themes.prototype.hasEditableLayers_ = function(data) {
   return data.themes.some(function(theme) {
-    let hasEditableLayers = theme.children.some(this.hasNodeEditableLayers_.bind(this));
+    const hasEditableLayers = theme.children.some(this.hasNodeEditableLayers_.bind(this));
     return hasEditableLayers;
   }.bind(this));
 };
@@ -474,7 +474,7 @@ gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
   }
 
   let hasEditableLayers = false;
-  let children = node.children;
+  const children = node.children;
   if (children && children.length) {
     hasEditableLayers = children.some(this.hasNodeEditableLayers_.bind(this));
   }
@@ -510,7 +510,7 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     withCredentials: true
   }).then(function(response) {
     if (response.data.errors.length != 0) {
-      let message = 'The themes contain some errors:\n' +
+      const message = 'The themes contain some errors:\n' +
         response.data.errors.join('\n');
       console.error(message);
       if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {

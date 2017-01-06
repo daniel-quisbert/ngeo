@@ -37,9 +37,9 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
    * overlay used to render the drawn features.
    * @type {ol.Collection.<ol.Feature>}
    */
-  let features = new ol.Collection();
+  const features = new ol.Collection();
 
-  let overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(new ol.style.Style({
     fill: new ol.style.Fill({
@@ -73,7 +73,7 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
     })
   });
 
-  let map = this.map;
+  const map = this.map;
 
   // initialize the feature overlay manager with the map
   ngeoFeatureOverlayMgr.init(map);
@@ -88,7 +88,7 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
         features: features
       }));
 
-  let drawPolygon = this.drawPolygon;
+  const drawPolygon = this.drawPolygon;
 
   drawPolygon.setActive(false);
   ngeoDecorateInteraction(drawPolygon);
@@ -104,7 +104,7 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
         features: features
       }));
 
-  let drawPoint = this.drawPoint;
+  const drawPoint = this.drawPoint;
   drawPoint.setActive(false);
   ngeoDecorateInteraction(drawPoint);
   map.addInteraction(drawPoint);
@@ -119,7 +119,7 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
         features: features
       }));
 
-  let drawLine = this.drawLine;
+  const drawLine = this.drawLine;
   drawLine.setActive(false);
   ngeoDecorateInteraction(drawLine);
   map.addInteraction(drawLine);

@@ -31,7 +31,7 @@ gmf.ExportFeatures;
  */
 gmf.exportFeaturesFactory_ = function($document, gmfServiceUrls) {
   goog.asserts.assert(gmfServiceUrls.exportgpxkml);
-  let exportgpxkmlUrl = gmfServiceUrls.exportgpxkml;
+  const exportgpxkmlUrl = gmfServiceUrls.exportgpxkml;
 
   return (
       /**
@@ -40,22 +40,22 @@ gmf.exportFeaturesFactory_ = function($document, gmfServiceUrls) {
        * @param {string} filename File name for the exported document.
        */
       function exportFeatures(doc, format, filename) {
-        let formatInput = $('<input>').attr({
+        const formatInput = $('<input>').attr({
           type: 'hidden',
           name: 'format',
           value: format
         });
-        let nameInput = $('<input>').attr({
+        const nameInput = $('<input>').attr({
           type: 'hidden',
           name: 'name',
           value: filename
         });
-        let docInput = $('<input>').attr({
+        const docInput = $('<input>').attr({
           type: 'hidden',
           name: 'doc',
           value: doc
         });
-        let form = $('<form>').attr({
+        const form = $('<form>').attr({
           method: 'POST',
           action: exportgpxkmlUrl
         });

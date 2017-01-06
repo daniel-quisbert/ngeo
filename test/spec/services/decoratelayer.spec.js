@@ -13,7 +13,7 @@ describe('ngeo.DecorateLayer', function() {
   });
 
   it('can change the visibility', function() {
-    let layer = new ol.layer.Tile({
+    const layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       visible: false
     });
@@ -25,7 +25,7 @@ describe('ngeo.DecorateLayer', function() {
   });
 
   it('can change the opacity', function() {
-    let layer = new ol.layer.Tile({
+    const layer = new ol.layer.Tile({
       source: new ol.source.OSM(),
       opacity: 0.5
     });

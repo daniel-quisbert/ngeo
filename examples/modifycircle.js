@@ -15,7 +15,7 @@ goog.require('ol.Feature');
 
 
 /** @type {!angular.Module} **/
-let module = angular.module('app', ['ngeo']);
+const module = angular.module('app', ['ngeo']);
 
 
 /**
@@ -40,9 +40,9 @@ app.MainController = function() {
     })
   });
 
-  let map = this.map;
+  const map = this.map;
 
-  let circle = new ol.geom.Circle([-10691093, 4966327], 465000);
+  const circle = new ol.geom.Circle([-10691093, 4966327], 465000);
 
   /**
    * @type {ol.Collection.<ol.Feature>}
@@ -50,7 +50,7 @@ app.MainController = function() {
    */
   this.features = new ol.Collection();
 
-  let circleFeature = new ol.Feature({
+  const circleFeature = new ol.Feature({
     geometry: ol.geom.Polygon.fromCircle(circle),
     color: '#000000',
     label: 'Circle 1',
@@ -61,10 +61,10 @@ app.MainController = function() {
   circleFeature.set(ngeo.FeatureProperties.IS_CIRCLE, true);
   this.features.push(circleFeature);
 
-  let vectorSource = new ol.source.Vector({
+  const vectorSource = new ol.source.Vector({
     features: this.features
   });
-  let vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: vectorSource
   });
 
@@ -81,7 +81,7 @@ app.MainController = function() {
       features: this.features
     }));
 
-  let interaction = this.interaction;
+  const interaction = this.interaction;
   interaction.setActive(true);
   map.addInteraction(interaction);
 

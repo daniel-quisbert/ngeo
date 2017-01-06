@@ -27,7 +27,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
       /**
        * @type {ngeox.ImportDndOptions}
        */
-      let options = scope['options'];
+      const options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -52,7 +52,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
       }).on('drop', function(evt) {
 
         // A file, an <a> html tag or a plain text url can be dropped
-        let files = evt.originalEvent.dataTransfer.files;
+        const files = evt.originalEvent.dataTransfer.files;
 
         if (files && files.length > 0) {
           ngeoFile.read(files[0]).then(function(fileContent) {
@@ -62,7 +62,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
         } else if (evt.originalEvent.dataTransfer.types) {
           // No files so may be it's HTML link or a URL which has been
           // dropped
-          let text = evt.originalEvent.dataTransfer.getData('text/plain');
+          const text = evt.originalEvent.dataTransfer.getData('text/plain');
 
           if (options.isValidUrl(text)) {
             ngeoFile.load(text).then(function(fileContent) {
@@ -79,10 +79,10 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
       });
 
       // Display the drop zone if the content dragged is dropable.
-      let onDragEnter = function(evt) {
+      const onDragEnter = function(evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        let types = evt.originalEvent.dataTransfer.types || [];
+        const types = evt.originalEvent.dataTransfer.types || [];
         for (let i = 0, len = types.length; i < len; ++i) {
           if (/(files|text\/plain)/i.test(types[i])) {
             elt.css('display', 'table');
@@ -94,7 +94,7 @@ exports = function($window, $document, gettextCatalog, ngeoFile, ngeoImportDndTe
 
       // Block drag of all elements by default to avoid
       // unwanted display of dropzone.
-      let onDragStart = function() {
+      const onDragStart = function() {
         return false;
       };
       $document.on('dragstart', onDragStart);
@@ -119,7 +119,7 @@ exports.module.value('ngeoImportDndTemplateUrl',
      * @return {boolean} Template URL.
      */
     function(element, attrs) {
-      let templateUrl = attrs['ngeoImportDndTemplateUrl'];
+      const templateUrl = attrs['ngeoImportDndTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseModuleTemplateUrl + '/import/partials/import-dnd.html';
     });

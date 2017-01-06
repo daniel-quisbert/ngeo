@@ -58,37 +58,37 @@ ngeo.PrintUtils.DOTS_PER_INCH_ = 72;
  */
 ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize,
     getScale, opt_rotation) {
-  let self = this;
+  const self = this;
 
   return (
       /**
        * @param {ol.render.Event} evt Postcompose event.
        */
       function(evt) {
-        let context = evt.context;
-        let frameState = evt.frameState;
+        const context = evt.context;
+        const frameState = evt.frameState;
 
-        let resolution = frameState.viewState.resolution;
+        const resolution = frameState.viewState.resolution;
 
-        let viewportWidth = frameState.size[0] * frameState.pixelRatio;
-        let viewportHeight = frameState.size[1] * frameState.pixelRatio;
+        const viewportWidth = frameState.size[0] * frameState.pixelRatio;
+        const viewportHeight = frameState.size[1] * frameState.pixelRatio;
 
-        let center = [viewportWidth / 2, viewportHeight / 2];
+        const center = [viewportWidth / 2, viewportHeight / 2];
 
-        let size = getSize();
-        let height = size[1] * ol.has.DEVICE_PIXEL_RATIO;
-        let width = size[0] * ol.has.DEVICE_PIXEL_RATIO;
-        let scale = getScale(frameState);
+        const size = getSize();
+        const height = size[1] * ol.has.DEVICE_PIXEL_RATIO;
+        const width = size[0] * ol.has.DEVICE_PIXEL_RATIO;
+        const scale = getScale(frameState);
 
-        let ppi = ngeo.PrintUtils.DOTS_PER_INCH_;
-        let ipm = ngeo.PrintUtils.INCHES_PER_METER_;
+        const ppi = ngeo.PrintUtils.DOTS_PER_INCH_;
+        const ipm = ngeo.PrintUtils.INCHES_PER_METER_;
 
-        let extentHalfWidth =
+        const extentHalfWidth =
             (((width / ppi) / ipm) * scale / resolution) / 2;
         self.extentHalfHorizontalDistance_ =
             (((size[0] / ppi) / ipm) * scale) / 2;
 
-        let extentHalfHeight =
+        const extentHalfHeight =
             (((height / ppi) / ipm) * scale / resolution) / 2;
         self.extentHalfVerticalDistance_ =
             (((size[1] / ppi) / ipm) * scale) / 2;
@@ -107,7 +107,7 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize,
           self.drawPrintZone_(context, center, extentHalfWidth,
               extentHalfHeight);
         } else {
-          let rotation = ol.math.toRadians(opt_rotation());
+          const rotation = ol.math.toRadians(opt_rotation());
           self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
               extentHalfHeight, rotation);
         }
@@ -128,10 +128,10 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize,
  */
 ngeo.PrintUtils.prototype.drawPrintZone_ = function(context, center,
     extentHalfWidth, extentHalfHeight) {
-  let minx = center[0] - extentHalfWidth;
-  let miny = center[1] - extentHalfHeight;
-  let maxx = center[0] + extentHalfWidth;
-  let maxy = center[1] + extentHalfHeight;
+  const minx = center[0] - extentHalfWidth;
+  const miny = center[1] - extentHalfHeight;
+  const maxx = center[0] + extentHalfWidth;
+  const maxy = center[1] + extentHalfHeight;
 
   context.moveTo(minx, miny);
   context.lineTo(minx, maxy);
@@ -153,21 +153,21 @@ ngeo.PrintUtils.prototype.drawPrintZone_ = function(context, center,
 ngeo.PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
     extentHalfWidth, extentHalfHeight, rotation) {
   // diagonal = distance p1 to center.
-  let diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
+  const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
       Math.pow(extentHalfHeight, 2));
   // gamma = angle between horizontal and diagonal (with rotation).
-  let gamma = Math.atan(extentHalfHeight / extentHalfWidth) - rotation;
+  const gamma = Math.atan(extentHalfHeight / extentHalfWidth) - rotation;
   // omega = angle between diagonal and vertical (with rotation).
-  let omega = Math.atan(extentHalfWidth / extentHalfHeight) - rotation;
+  const omega = Math.atan(extentHalfWidth / extentHalfHeight) - rotation;
   // Calculation of each corner.
-  let x1 = center[0] - Math.cos(gamma) * diagonal;
-  let y1 = center[1] + Math.sin(gamma) * diagonal;
-  let x2 = center[0] + Math.sin(omega) * diagonal;
-  let y2 = center[1] + Math.cos(omega) * diagonal;
-  let x3 = center[0] + Math.cos(gamma) * diagonal;
-  let y3 = center[1] - Math.sin(gamma) * diagonal;
-  let x4 = center[0] - Math.sin(omega) * diagonal;
-  let y4 = center[1] - Math.cos(omega) * diagonal;
+  const x1 = center[0] - Math.cos(gamma) * diagonal;
+  const y1 = center[1] + Math.sin(gamma) * diagonal;
+  const x2 = center[0] + Math.sin(omega) * diagonal;
+  const y2 = center[1] + Math.cos(omega) * diagonal;
+  const x3 = center[0] + Math.cos(gamma) * diagonal;
+  const y3 = center[1] - Math.sin(gamma) * diagonal;
+  const x4 = center[0] - Math.sin(omega) * diagonal;
+  const y4 = center[1] - Math.cos(omega) * diagonal;
 
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
@@ -195,15 +195,15 @@ ngeo.PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
 ngeo.PrintUtils.prototype.getOptimalScale = function(
     mapSize, mapResolution, printMapSize, printMapScales) {
 
-  let mapWidth = mapSize[0] * mapResolution;
-  let mapHeight = mapSize[1] * mapResolution;
+  const mapWidth = mapSize[0] * mapResolution;
+  const mapHeight = mapSize[1] * mapResolution;
 
-  let scaleWidth = mapWidth * ngeo.PrintUtils.INCHES_PER_METER_ *
+  const scaleWidth = mapWidth * ngeo.PrintUtils.INCHES_PER_METER_ *
       ngeo.PrintUtils.DOTS_PER_INCH_ / printMapSize[0];
-  let scaleHeight = mapHeight * ngeo.PrintUtils.INCHES_PER_METER_ *
+  const scaleHeight = mapHeight * ngeo.PrintUtils.INCHES_PER_METER_ *
       ngeo.PrintUtils.DOTS_PER_INCH_ / printMapSize[1];
 
-  let scale = Math.min(scaleWidth, scaleHeight);
+  const scale = Math.min(scaleWidth, scaleHeight);
 
   let optimal = -1;
   for (let i = 0, ii = printMapScales.length; i < ii; ++i) {
@@ -227,15 +227,15 @@ ngeo.PrintUtils.prototype.getOptimalScale = function(
 ngeo.PrintUtils.prototype.getOptimalResolution = function(
     mapSize, printMapSize, printMapScale) {
 
-  let dotsPerMeter =
+  const dotsPerMeter =
       ngeo.PrintUtils.DOTS_PER_INCH_ * ngeo.PrintUtils.INCHES_PER_METER_;
 
-  let resolutionX = (printMapSize[0] * printMapScale) /
+  const resolutionX = (printMapSize[0] * printMapScale) /
       (dotsPerMeter * mapSize[0]);
-  let resolutionY = (printMapSize[1] * printMapScale) /
+  const resolutionY = (printMapSize[1] * printMapScale) /
       (dotsPerMeter * mapSize[1]);
 
-  let optimalResolution = Math.max(resolutionX, resolutionY);
+  const optimalResolution = Math.max(resolutionX, resolutionY);
 
   return optimalResolution;
 };

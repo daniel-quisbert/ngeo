@@ -36,7 +36,7 @@ describe('gmf.Authentication', function() {
   });
 
   it('emits READY after login status check', function() {
-    let spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     let event;
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.READY, function(evt) {
@@ -56,7 +56,7 @@ describe('gmf.Authentication', function() {
   });
 
   it('logins successful', function() {
-    let spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     let event;
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.LOGIN, function(evt) {
@@ -76,7 +76,7 @@ describe('gmf.Authentication', function() {
   });
 
   it('trys to login with wrong credentials', function() {
-    let spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.LOGIN, spy);
 
@@ -89,7 +89,7 @@ describe('gmf.Authentication', function() {
   });
 
   it('logs out', function() {
-    let spy = jasmine.createSpy();
+    const spy = jasmine.createSpy();
     ol.events.listenOnce(
       gmfAuthentication, gmf.AuthenticationEventType.LOGOUT, spy);
 

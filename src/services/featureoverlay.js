@@ -86,7 +86,7 @@ ngeo.FeatureOverlayMgr = function() {
 ngeo.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
-  let featureUid = ol.getUid(feature).toString();
+  const featureUid = ol.getUid(feature).toString();
   this.featureUidToGroupIndex_[featureUid] = groupIndex;
   this.groups_[groupIndex].features[featureUid] = feature;
   this.source_.addFeature(feature);
@@ -101,7 +101,7 @@ ngeo.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
 ngeo.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
-  let featureUid = ol.getUid(feature).toString();
+  const featureUid = ol.getUid(feature).toString();
   delete this.featureUidToGroupIndex_[featureUid];
   delete this.groups_[groupIndex].features[featureUid];
   this.source_.removeFeature(feature);
@@ -115,8 +115,8 @@ ngeo.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
 ngeo.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
-  let group = this.groups_[groupIndex];
-  for (let featureUid in group.features) {
+  const group = this.groups_[groupIndex];
+  for (const featureUid in group.features) {
     this.removeFeature(group.features[featureUid], groupIndex);
   }
   goog.asserts.assert(ol.obj.isEmpty(group.features));
@@ -137,7 +137,7 @@ ngeo.FeatureOverlayMgr.prototype.getLayer = function() {
  * @export
  */
 ngeo.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
-  let groupIndex = this.groups_.length;
+  const groupIndex = this.groups_.length;
   this.groups_.push({
     styleFunction: ol.style.Style.defaultFunction,
     features: {}
@@ -176,10 +176,10 @@ ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
  * @private
  */
 ngeo.FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
-  let featureUid = ol.getUid(feature).toString();
+  const featureUid = ol.getUid(feature).toString();
   goog.asserts.assert(featureUid in this.featureUidToGroupIndex_);
-  let groupIndex = this.featureUidToGroupIndex_[featureUid];
-  let group = this.groups_[groupIndex];
+  const groupIndex = this.featureUidToGroupIndex_[featureUid];
+  const group = this.groups_[groupIndex];
   return group.styleFunction(feature, resolution);
 };
 
@@ -286,7 +286,7 @@ ngeo.FeatureOverlay.prototype.setStyle = function(style) {
  * @private
  */
 ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
-  let feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {ol.Feature} */ (evt.element);
   this.addFeature(feature);
 };
 
@@ -296,7 +296,7 @@ ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
  * @private
  */
 ngeo.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
-  let feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {ol.Feature} */ (evt.element);
   this.removeFeature(feature);
 };
 

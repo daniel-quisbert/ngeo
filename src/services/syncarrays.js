@@ -47,7 +47,7 @@ ngeo.syncArrays = function(arr1, arr2, reverse, scope, filter) {
 
   // Update arr2 when elements are added to, or removed from, arr1.
 
-  let dereg1 = scope.$watchCollection(function() {
+  const dereg1 = scope.$watchCollection(function() {
     return arr1;
   }, function() {
     let i, ii, j;
@@ -70,7 +70,7 @@ ngeo.syncArrays = function(arr1, arr2, reverse, scope, filter) {
 
   // Update arr1 when the order of elements changes in arr2.
 
-  let dereg2 = scope.$watchCollection(function() {
+  const dereg2 = scope.$watchCollection(function() {
     return arr2;
   }, function() {
     let i, ii, j;

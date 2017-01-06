@@ -62,86 +62,86 @@ ngeo.profile = function(options) {
    * Whether the simplified profile should be shown.
    * @type {boolean}
    */
-  let light = options.light !== undefined ? options.light : false;
+  const light = options.light !== undefined ? options.light : false;
 
 
   /**
    * The values for margins around the chart defined in pixels.
    */
-  let margin = light ? {top: 0, right: 0, bottom: 0, left: 0} :
+  const margin = light ? {top: 0, right: 0, bottom: 0, left: 0} :
       {top: 10, right: 20, bottom: 30, left: 40};
 
   /**
    * Hover callback function.
    * @type {function(Object, number, string, Object.<string, number>, string)}
    */
-  let hoverCallback = options.hoverCallback !== undefined ?
+  const hoverCallback = options.hoverCallback !== undefined ?
       options.hoverCallback : ol.nullFunction;
 
   /**
    * Out callback function.
    * @type {function()}
    */
-  let outCallback = options.outCallback !== undefined ?
+  const outCallback = options.outCallback !== undefined ?
       options.outCallback : ol.nullFunction;
 
   /**
    * Distance data extractor used to get the dist values.
    */
-  let distanceExtractor = options.distanceExtractor;
+  const distanceExtractor = options.distanceExtractor;
 
   /**
    * Line configuration object.
    */
-  let linesConfiguration = options.linesConfiguration;
+  const linesConfiguration = options.linesConfiguration;
 
   /**
    * Number of differents configurations for the line.
    */
-  let numberOfLines = Object.keys(linesConfiguration).length;
+  const numberOfLines = Object.keys(linesConfiguration).length;
 
   /**
    * Method to get the coordinate in pixels from a distance.
    */
-  let bisectDistance = d3.bisector(function(d) {
+  const bisectDistance = d3.bisector(function(d) {
     return distanceExtractor(d);
   }).left;
 
   /**
    * POI data extractor.
    */
-  let poiExtractor = options.poiExtractor;
+  const poiExtractor = options.poiExtractor;
 
   /**
    * Optional SVG inline style.
    */
-  let styleDefs = options.styleDefs;
+  const styleDefs = options.styleDefs;
 
   /**
    * @type {number}
    */
-  let poiLabelAngle = options.poiLabelAngle !== undefined ?
+  const poiLabelAngle = options.poiLabelAngle !== undefined ?
       options.poiLabelAngle : -60;
 
   /**
    * @type {Object.<string, string>}
    */
-  let i18n = options.i18n || {};
+  const i18n = options.i18n || {};
 
   /**
    * @type {string}
    */
-  let xAxisLabel = (i18n.xAxis || 'Distance');
+  const xAxisLabel = (i18n.xAxis || 'Distance');
 
   /**
    * @type {string}
    */
-  let yAxisLabel = (i18n.yAxis || 'Elevation');
+  const yAxisLabel = (i18n.yAxis || 'Elevation');
 
   /**
    * @type {ngeox.profile.ProfileFormatter}
    */
-  let formatter = {
+  const formatter = {
     /**
      * @param {number} dist Distance.
      * @param {string} units Units.
@@ -183,7 +183,7 @@ ngeo.profile = function(options) {
   /**
    * @type {boolean}
    */
-  let lightXAxis = options.lightXAxis !== undefined ? options.lightXAxis : false;
+  const lightXAxis = options.lightXAxis !== undefined ? options.lightXAxis : false;
 
   // Objects shared with the showPois function
   /**
@@ -204,7 +204,7 @@ ngeo.profile = function(options) {
   /**
    * Scale modifier to allow customizing the x and y scales.
    */
-  let scaleModifier = options.scaleModifier;
+  const scaleModifier = options.scaleModifier;
 
   let g;
 
@@ -234,7 +234,7 @@ ngeo.profile = function(options) {
   let xDomain;
 
 
-  let profile = function(selection) {
+  const profile = function(selection) {
     selection.each(function(data) {
       d3.select(this).selectAll('svg').remove();
       if (data === undefined) {
@@ -247,8 +247,8 @@ ngeo.profile = function(options) {
       height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
       y = d3.scale.linear().range([height, 0]);
 
-      let xAxis = d3.svg.axis().scale(x).orient('bottom');
-      let yAxis = d3.svg.axis()
+      const xAxis = d3.svg.axis().scale(x).orient('bottom');
+      const yAxis = d3.svg.axis()
           .scale(y)
           .orient('left');
 
@@ -260,7 +260,7 @@ ngeo.profile = function(options) {
             })
             .y0(height)
             .y1(function(d) {
-              let firstLineName =  Object.keys(linesConfiguration)[0];
+              const firstLineName =  Object.keys(linesConfiguration)[0];
               return y(linesConfiguration[firstLineName].zExtractor(d));
             });
       }
@@ -269,13 +269,13 @@ ngeo.profile = function(options) {
       svg = d3.select(this).selectAll('svg').data([data]);
 
       // Otherwise, create the skeletal chart.
-      let svgEnter = svg.enter().append('svg');
+      const svgEnter = svg.enter().append('svg');
       if (styleDefs !== undefined) {
         svgEnter.append('defs').append('style')
           .attr('type', 'text/css')
           .text(styleDefs);
       }
-      let gEnter = svgEnter.append('g');
+      const gEnter = svgEnter.append('g');
       clearPois();
 
       gEnter.style('font', '11px Arial');
@@ -318,7 +318,7 @@ ngeo.profile = function(options) {
 
       gEnter.append('g').attr('class', 'pois');
 
-      let xHover = gEnter.append('g').attr('class', 'x grid-hover');
+      const xHover = gEnter.append('g').attr('class', 'x grid-hover');
       xHover.append('svg:line').attr('stroke-dasharray', '5,5');
       xHover.append('text');
 
@@ -345,7 +345,7 @@ ngeo.profile = function(options) {
 
       // Return an array with the min and max value of the min/max values of
       // each lines.
-      let yDomain = function() {
+      const yDomain = function() {
         let elevationsValues = [];
         let extent, name;
         // Get min/max values (extent) of each lines.
@@ -368,7 +368,7 @@ ngeo.profile = function(options) {
         scaleModifier(x, y, width, height);
       } else {
         // By default, add a small padding so that it looks nicer
-        let padding = (yDomain[1] - yDomain[0]) * 0.1;
+        const padding = (yDomain[1] - yDomain[0]) * 0.1;
         y.domain([yDomain[0] - padding, yDomain[1] + padding]);
       }
 
@@ -467,8 +467,8 @@ ngeo.profile = function(options) {
           .on('mousemove', mousemove);
 
       function mousemove() {
-        let mouseX = d3.mouse(this)[0];
-        let x0 = x.invert(mouseX);
+        const mouseX = d3.mouse(this)[0];
+        const x0 = x.invert(mouseX);
 
         profile.highlight(x0);
       }
@@ -495,17 +495,17 @@ ngeo.profile = function(options) {
    * @param {number} distance Distance.
    */
   profile.highlight = function(distance) {
-    let data = svg.datum();
-    let i = bisectDistance(data, distance);
+    const data = svg.datum();
+    const i = bisectDistance(data, distance);
     if (i >= data.length) {
       return;
     }
 
-    let point = data[i];
-    let dist = distanceExtractor(point);
+    const point = data[i];
+    const dist = distanceExtractor(point);
     let elevation;
-    let elevations = [];
-    let elevationsRef = {};
+    const elevations = [];
+    const elevationsRef = {};
     let lineName;
 
     for (lineName in linesConfiguration) {
@@ -529,7 +529,7 @@ ngeo.profile = function(options) {
         .attr('x2', x(dist))
         .attr('y2', y(Math.max.apply(null, elevations)));
 
-    let right = dist > xDomain[1] / 2;
+    const right = dist > xDomain[1] / 2;
     let xtranslate = x(dist);
     xtranslate += right ? -10 : 10;
 
@@ -539,7 +539,7 @@ ngeo.profile = function(options) {
         .attr('transform', 'translate(' + xtranslate + ',' +
             (height - 10) + ')');
 
-    let yUnits = 'm';
+    const yUnits = 'm';
     // Display altitude on guides only if there is one line.
     if (numberOfLines === 1) {
       g.select('.y.grid-hover text')
@@ -557,27 +557,27 @@ ngeo.profile = function(options) {
     pois = pois !== undefined ? pois : [];
     goog.asserts.assert(pois.length === 0 || poiExtractor !== undefined);
 
-    let pe = poiExtractor;
-    let g = svg.select('g');
-    let profileData = svg.datum();
-    let ps = g.select('.pois');
+    const pe = poiExtractor;
+    const g = svg.select('g');
+    const profileData = svg.datum();
+    const ps = g.select('.pois');
 
-    let p = ps.selectAll('.poi').data(pois, function(d) {
-      let i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
-      let point = profileData[i];
+    const p = ps.selectAll('.poi').data(pois, function(d) {
+      const i = bisectDistance(profileData, Math.round(pe.dist(d) * 10) / 10, 1);
+      const point = profileData[i];
       if (point) {
         let lineName;
-        let elevations = [];
+        const elevations = [];
         for (lineName in linesConfiguration) {
           elevations.push(linesConfiguration[lineName].zExtractor(point));
         }
-        let z = Math.max.apply(null, elevations);
+        const z = Math.max.apply(null, elevations);
         pe.z(d, z);
       }
       return pe.id(d);
     });
 
-    let poiEnterG = p.enter()
+    const poiEnterG = p.enter()
       .append('g')
       .attr('class', 'poi');
 

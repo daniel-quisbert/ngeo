@@ -60,8 +60,8 @@ ngeo.search.CreateGeoJSONBloodhound;
  */
 ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProjection,
     opt_dataProjection, opt_options, opt_remoteOptions) {
-  let geojsonFormat = new ol.format.GeoJSON();
-  let bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
+  const geojsonFormat = new ol.format.GeoJSON();
+  const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
     remote: {
       url: url,
       prepare: function(query, settings) {
@@ -92,8 +92,8 @@ ngeo.search.createGeoJSONBloodhound = function(url, opt_filter, opt_featureProje
   });
 
   // the options objects are cloned to avoid updating the passed object
-  let options = ol.obj.assign({}, opt_options || {});
-  let remoteOptions = ol.obj.assign({}, opt_remoteOptions || {});
+  const options = ol.obj.assign({}, opt_options || {});
+  const remoteOptions = ol.obj.assign({}, opt_remoteOptions || {});
 
   if (options.remote) {
     // move the remote options to opt_remoteOptions

@@ -20,11 +20,11 @@ describe('ngeo.Location', function() {
 
   describe('#getUriString', function() {
     it('returns the URI', function() {
-      let uri = ngeoLocation.getUriString();
+      const uri = ngeoLocation.getUriString();
       expect(uri).toBe('http://domain.com/some/path?some=param');
     });
     it('returns the URI with additional params', function() {
-      let uri = ngeoLocation.getUriString({'another': 'param'});
+      const uri = ngeoLocation.getUriString({'another': 'param'});
       expect(uri).toBe('http://domain.com/some/path?some=param&another=param');
     });
   });
@@ -40,7 +40,7 @@ describe('ngeo.Location', function() {
 
   describe('#getParam', function() {
     it('returns the param value', function() {
-      let value = ngeoLocation.getParam('some');
+      const value = ngeoLocation.getParam('some');
       expect(value).toBe('param');
     });
   });
@@ -48,24 +48,24 @@ describe('ngeo.Location', function() {
   describe('#getParamAsInt', function() {
     it('returns the param value as integer', function() {
       ngeoLocation.updateParams({'key2': '2'});
-      let value = ngeoLocation.getParamAsInt('key2');
+      const value = ngeoLocation.getParamAsInt('key2');
       expect(value).toBe(2);
     });
 
     it('returns undefined if no integer', function() {
-      let value = ngeoLocation.getParamAsInt('key1');
+      const value = ngeoLocation.getParamAsInt('key1');
       expect(value).toBe(undefined);
     });
 
     it('returns undefined if no integer', function() {
-      let value = ngeoLocation.getParamAsInt('wrong-key');
+      const value = ngeoLocation.getParamAsInt('wrong-key');
       expect(value).toBe(undefined);
     });
   });
 
   describe('#getParamKeys', function() {
     it('returns the param keys', function() {
-      let keys = ngeoLocation.getParamKeys();
+      const keys = ngeoLocation.getParamKeys();
       expect(keys).toEqual(['some']);
     });
   });
@@ -73,13 +73,13 @@ describe('ngeo.Location', function() {
   describe('#updateParams', function() {
     it('updates an existing param key', function() {
       ngeoLocation.updateParams({'key1': 'new value'});
-      let value = ngeoLocation.getParam('key1');
+      const value = ngeoLocation.getParam('key1');
       expect(value).toBe('new value');
     });
 
     it('adds a new param key', function() {
       ngeoLocation.updateParams({'key3': 'value3'});
-      let value = ngeoLocation.getParam('key3');
+      const value = ngeoLocation.getParam('key3');
       expect(value).toBe('value3');
     });
   });
@@ -87,7 +87,7 @@ describe('ngeo.Location', function() {
   describe('#deleteParam', function() {
     it('delete the params', function() {
       ngeoLocation.deleteParam('some');
-      let uri = ngeoLocation.getUriString();
+      const uri = ngeoLocation.getUriString();
       expect(uri).toBe('http://domain.com/some/path');
     });
   });
@@ -117,43 +117,43 @@ describe('ngeo.Location', function() {
 
     describe('#getFragmentParam', function() {
       it('returns the param value', function() {
-        let value = ngeoLocation.getFragmentParam('key1');
+        const value = ngeoLocation.getFragmentParam('key1');
         expect(value).toBe('value1');
       });
 
       it('returns undefined for missing keys', function() {
-        let value = ngeoLocation.getFragmentParam('no-existing-key');
+        const value = ngeoLocation.getFragmentParam('no-existing-key');
         expect(value).toBe(undefined);
       });
     });
 
     describe('#getFragmentParamAsInt', function() {
       it('returns the param value as integer', function() {
-        let value = ngeoLocation.getFragmentParamAsInt('key2');
+        const value = ngeoLocation.getFragmentParamAsInt('key2');
         expect(value).toBe(2);
       });
 
       it('returns undefined if no integer', function() {
-        let value = ngeoLocation.getFragmentParamAsInt('key1');
+        const value = ngeoLocation.getFragmentParamAsInt('key1');
         expect(value).toBe(undefined);
       });
 
       it('returns undefined if no integer', function() {
-        let value = ngeoLocation.getFragmentParamAsInt('wrong-key');
+        const value = ngeoLocation.getFragmentParamAsInt('wrong-key');
         expect(value).toBe(undefined);
       });
     });
 
     describe('#getFragmentParamKeys', function() {
       it('returns the param keys', function() {
-        let keys = ngeoLocation.getFragmentParamKeys();
+        const keys = ngeoLocation.getFragmentParamKeys();
         expect(keys).toEqual(['key1', 'key2']);
       });
     });
 
     describe('#getFragmentParamKeysWithPrefix', function() {
       it('returns the param keys', function() {
-        let keys = ngeoLocation.getFragmentParamKeysWithPrefix('key');
+        const keys = ngeoLocation.getFragmentParamKeysWithPrefix('key');
         expect(keys).toEqual(['key1', 'key2']);
       });
     });
@@ -161,19 +161,19 @@ describe('ngeo.Location', function() {
     describe('#updateFragmentParams', function() {
       it('updates an existing param key', function() {
         ngeoLocation.updateFragmentParams({'key1': 'new value'});
-        let value = ngeoLocation.getFragmentParam('key1');
+        const value = ngeoLocation.getFragmentParam('key1');
         expect(value).toBe('new value');
       });
 
       it('updates an existing param key with special chars', function() {
         ngeoLocation.updateFragmentParams({'key1': '6+,7a+'});
-        let value = ngeoLocation.getFragmentParam('key1');
+        const value = ngeoLocation.getFragmentParam('key1');
         expect(value).toBe('6+,7a+');
       });
 
       it('adds a new param key', function() {
         ngeoLocation.updateFragmentParams({'key3': 'value3'});
-        let value = ngeoLocation.getFragmentParam('key3');
+        const value = ngeoLocation.getFragmentParam('key3');
         expect(value).toBe('value3');
       });
     });
@@ -181,7 +181,7 @@ describe('ngeo.Location', function() {
     describe('#deleteFragmentParam', function() {
       it('delete the params', function() {
         ngeoLocation.deleteFragmentParam('key1');
-        let value = ngeoLocation.getFragmentParam('key1');
+        const value = ngeoLocation.getFragmentParam('key1');
         expect(value).toBe(undefined);
       });
     });

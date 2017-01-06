@@ -30,7 +30,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       /**
        * @type {ngeox.ImportOnlineOptions}
        */
-      let options = scope['options'];
+      const options = scope['options'];
       if (!options || (typeof options.handleFileContent !== 'function')) {
         elt.remove();
         return;
@@ -38,7 +38,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
 
       scope['handleFileContent'] = options.handleFileContent;
 
-      let initUserMsg = function() {
+      const initUserMsg = function() {
         scope['userMessage'] = gettext('Connect');
         scope['progress'] = 0;
         scope['loading'] = false;
@@ -49,13 +49,13 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
        * @param {Array<{name: string, url: string}>} nameUrls .
        * @return {function(string, function())} The matching function.
        */
-      let substringMatcher = function(nameUrls) {
+      const substringMatcher = function(nameUrls) {
         return function(q, cb) {
           let matches = [];
           if (!q) {
             matches = nameUrls;
           } else {
-            let regex = new RegExp(q, 'i');
+            const regex = new RegExp(q, 'i');
             nameUrls.forEach(function(nameUrl) {
               if (regex.test(nameUrl['name'])) {
                 matches.push(nameUrl);
@@ -77,7 +77,7 @@ exports = function($q, $timeout, ngeoFile, gettext, gettextCatalog, ngeoImportOn
       }
 
       // Create the typeAhead input for the list of urls available
-      let taElt = elt.find('input[name=url]').typeahead({
+      const taElt = elt.find('input[name=url]').typeahead({
         hint: true,
         highlight: true,
         minLength: 0
@@ -166,7 +166,7 @@ exports.module.value('ngeoImportOnlineTemplateUrl',
      * @return {boolean} Template URL.
      */
     function(element, attrs) {
-      let templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
+      const templateUrl = attrs['ngeoImportOnlineTemplateUrl'];
       return templateUrl !== undefined ? templateUrl :
           ngeo.baseModuleTemplateUrl + '/import/partials/import-online.html';
     });

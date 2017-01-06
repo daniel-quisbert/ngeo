@@ -15,10 +15,10 @@ describe('ngeo.SyncArrays', function() {
 
     beforeEach(function() {
       inject(function($injector) {
-        let ngeoSyncArrays = $injector.get('ngeoSyncArrays');
+        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
-        let filter = function(n) {
+        const filter = function(n) {
           return n < 10;
         };
         dereg = ngeoSyncArrays(arr1, arr2, false, $rootScope, filter);
@@ -40,7 +40,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('updates arr1 when the order changes in arr2', function() {
-      let second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([0, 3, 2, 1]);
@@ -49,7 +49,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('stops synchronizing when dereg is called', function() {
-      let second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([0, 3, 2, 1]);
@@ -66,10 +66,10 @@ describe('ngeo.SyncArrays', function() {
 
     beforeEach(function() {
       inject(function($injector) {
-        let ngeoSyncArrays = $injector.get('ngeoSyncArrays');
+        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
-        let filter = function(n) {
+        const filter = function(n) {
           return n < 10;
         };
         dereg = ngeoSyncArrays(arr1, arr2, true, $rootScope, filter);
@@ -91,7 +91,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('updates arr1 when the order changes in arr2', function() {
-      let second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([3, 0, 1, 2]);
@@ -100,7 +100,7 @@ describe('ngeo.SyncArrays', function() {
     });
 
     it('stops synchronizing when dereg is called', function() {
-      let second = arr2[1];
+      const second = arr2[1];
       arr2[1] = arr2[arr2.length - 1];
       arr2[arr2.length - 1] = second;
       expect(arr2).toEqual([3, 0, 1, 2]);

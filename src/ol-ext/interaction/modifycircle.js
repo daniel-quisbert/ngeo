@@ -137,10 +137,10 @@ ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
 ngeo.interaction.ModifyCircle.prototype.addFeature_ = function(feature) {
   if (feature.getGeometry().getType() === ol.geom.GeometryType.POLYGON &&
       !!feature.get(ngeo.FeatureProperties.IS_CIRCLE)) {
-    let geometry = /** @type {ol.geom.Polygon}*/ (feature.getGeometry());
+    const geometry = /** @type {ol.geom.Polygon}*/ (feature.getGeometry());
     this.writeCircleGeometry_(feature, geometry);
 
-    let map = this.getMap();
+    const map = this.getMap();
     if (map) {
       this.handlePointerAtPixel_(this.lastPixel_, map);
     }
@@ -181,8 +181,8 @@ ngeo.interaction.ModifyCircle.prototype.removeFeature_ = function(feature) {
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.removeFeatureSegmentData_ = function(feature) {
-  let rBush = this.rBush_;
-  let /** @type {Array.<ol.ModifySegmentDataType>} */ nodesToRemove = [];
+  const rBush = this.rBush_;
+  const /** @type {Array.<ol.ModifySegmentDataType>} */ nodesToRemove = [];
   rBush.forEach(
       /**
        * @param {ol.ModifySegmentDataType} node RTree node.
@@ -212,7 +212,7 @@ ngeo.interaction.ModifyCircle.prototype.setMap = function(map) {
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
-  let feature = evt.element;
+  const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
       'feature should be an ol.Feature');
   this.addFeature_(feature);
@@ -224,7 +224,7 @@ ngeo.interaction.ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handleFeatureRemove_ = function(evt) {
-  let feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {ol.Feature} */ (evt.element);
   this.removeFeature_(feature);
 };
 
@@ -235,7 +235,7 @@ ngeo.interaction.ModifyCircle.prototype.handleFeatureRemove_ = function(evt) {
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.writeCircleGeometry_ = function(feature, geometry) {
-  let rings = geometry.getCoordinates();
+  const rings = geometry.getCoordinates();
   let coordinates, i, ii, j, jj, segment, segmentData;
   for (j = 0, jj = rings.length; j < jj; ++j) {
     coordinates = rings[j];
@@ -266,7 +266,7 @@ ngeo.interaction.ModifyCircle.prototype.createOrUpdateVertexFeature_ = function(
     this.vertexFeature_ = vertexFeature;
     this.overlay_.getSource().addFeature(vertexFeature);
   } else {
-    let geometry = /** @type {ol.geom.Point} */ (vertexFeature.getGeometry());
+    const geometry = /** @type {ol.geom.Point} */ (vertexFeature.getGeometry());
     geometry.setCoordinates(coordinates);
   }
   return vertexFeature;
@@ -294,19 +294,19 @@ ngeo.interaction.ModifyCircle.handleDownEvent_ = function(evt) {
   this.handlePointerAtPixel_(evt.pixel, evt.map);
   this.dragSegments_ = [];
   this.modified_ = false;
-  let vertexFeature = this.vertexFeature_;
+  const vertexFeature = this.vertexFeature_;
   if (vertexFeature) {
-    let geometry = /** @type {ol.geom.Point} */ (vertexFeature.getGeometry());
-    let vertex = geometry.getCoordinates();
-    let vertexExtent = ol.extent.boundingExtent([vertex]);
-    let segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
-    let componentSegments = {};
+    const geometry = /** @type {ol.geom.Point} */ (vertexFeature.getGeometry());
+    const vertex = geometry.getCoordinates();
+    const vertexExtent = ol.extent.boundingExtent([vertex]);
+    const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
+    const componentSegments = {};
     segmentDataMatches.sort(ngeo.interaction.ModifyCircle.compareIndexes_);
     for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
-      let segmentDataMatch = segmentDataMatches[i];
-      let segment = segmentDataMatch.segment;
+      const segmentDataMatch = segmentDataMatches[i];
+      const segment = segmentDataMatch.segment;
       let uid = ol.getUid(segmentDataMatch.feature);
-      let depth = segmentDataMatch.depth;
+      const depth = segmentDataMatch.depth;
       if (depth) {
         uid += '-' + depth.join('-'); // separate feature components
       }
@@ -335,23 +335,23 @@ ngeo.interaction.ModifyCircle.handleDownEvent_ = function(evt) {
  */
 ngeo.interaction.ModifyCircle.handleDragEvent_ = function(evt) {
   this.willModifyFeatures_(evt);
-  let vertex = evt.coordinate;
-  let geometry =
+  const vertex = evt.coordinate;
+  const geometry =
       /** @type {ol.geom.Polygon}*/ (this.dragSegments_[0][0].geometry);
-  let center = ol.extent.getCenter(geometry.getExtent());
+  const center = ol.extent.getCenter(geometry.getExtent());
 
-  let line = new ol.geom.LineString([center, vertex]);
+  const line = new ol.geom.LineString([center, vertex]);
 
 
   /**
    * @type {ol.geom.Circle}
    */
-  let circle = new ol.geom.Circle(center, line.getLength());
-  let coordinates = ol.geom.Polygon.fromCircle(circle, 64).getCoordinates();
+  const circle = new ol.geom.Circle(center, line.getLength());
+  const coordinates = ol.geom.Polygon.fromCircle(circle, 64).getCoordinates();
   this.setGeometryCoordinates_(geometry, coordinates);
 
 
-  let azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
+  const azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
   this.features_.getArray()[0].set(ngeo.FeatureProperties.AZIMUT, azimut);
 
   this.createOrUpdateVertexFeature_(vertex);
@@ -419,40 +419,40 @@ ngeo.interaction.ModifyCircle.prototype.handlePointerMove_ = function(evt) {
  * @private
  */
 ngeo.interaction.ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, map) {
-  let pixelCoordinate = map.getCoordinateFromPixel(pixel);
-  let sortByDistance = function(a, b) {
+  const pixelCoordinate = map.getCoordinateFromPixel(pixel);
+  const sortByDistance = function(a, b) {
     return ol.coordinate.squaredDistanceToSegment(pixelCoordinate, a.segment) -
         ol.coordinate.squaredDistanceToSegment(pixelCoordinate, b.segment);
   };
 
-  let lowerLeft = map.getCoordinateFromPixel(
+  const lowerLeft = map.getCoordinateFromPixel(
       [pixel[0] - this.pixelTolerance_, pixel[1] + this.pixelTolerance_]);
-  let upperRight = map.getCoordinateFromPixel(
+  const upperRight = map.getCoordinateFromPixel(
       [pixel[0] + this.pixelTolerance_, pixel[1] - this.pixelTolerance_]);
-  let box = ol.extent.boundingExtent([lowerLeft, upperRight]);
+  const box = ol.extent.boundingExtent([lowerLeft, upperRight]);
 
-  let rBush = this.rBush_;
-  let nodes = rBush.getInExtent(box);
+  const rBush = this.rBush_;
+  const nodes = rBush.getInExtent(box);
   if (nodes.length > 0) {
     nodes.sort(sortByDistance);
-    let node = nodes[0];
-    let closestSegment = node.segment;
+    const node = nodes[0];
+    const closestSegment = node.segment;
     let vertex = (ol.coordinate.closestOnSegment(pixelCoordinate,
         closestSegment));
-    let vertexPixel = map.getPixelFromCoordinate(vertex);
+    const vertexPixel = map.getPixelFromCoordinate(vertex);
     if (Math.sqrt(ol.coordinate.squaredDistance(pixel, vertexPixel)) <=
         this.pixelTolerance_) {
-      let pixel1 = map.getPixelFromCoordinate(closestSegment[0]);
-      let pixel2 = map.getPixelFromCoordinate(closestSegment[1]);
-      let squaredDist1 = ol.coordinate.squaredDistance(vertexPixel, pixel1);
-      let squaredDist2 = ol.coordinate.squaredDistance(vertexPixel, pixel2);
-      let dist = Math.sqrt(Math.min(squaredDist1, squaredDist2));
+      const pixel1 = map.getPixelFromCoordinate(closestSegment[0]);
+      const pixel2 = map.getPixelFromCoordinate(closestSegment[1]);
+      const squaredDist1 = ol.coordinate.squaredDistance(vertexPixel, pixel1);
+      const squaredDist2 = ol.coordinate.squaredDistance(vertexPixel, pixel2);
+      const dist = Math.sqrt(Math.min(squaredDist1, squaredDist2));
       this.snappedToVertex_ = dist <= this.pixelTolerance_;
       if (this.snappedToVertex_) {
         vertex = squaredDist1 > squaredDist2 ?
             closestSegment[1] : closestSegment[0];
         this.createOrUpdateVertexFeature_(vertex);
-        let vertexSegments = {};
+        const vertexSegments = {};
         vertexSegments[ol.getUid(closestSegment)] = true;
         let segment;
         for (let i = 1, ii = nodes.length; i < ii; ++i) {
@@ -493,7 +493,7 @@ ngeo.interaction.ModifyCircle.prototype.setGeometryCoordinates_ = function(geome
  * @return {ol.StyleFunction} Styles.
  */
 ngeo.interaction.ModifyCircle.getDefaultStyleFunction = function() {
-  let style = ol.style.Style.createDefaultEditing();
+  const style = ol.style.Style.createDefaultEditing();
   return function(feature, resolution) {
     return style[ol.geom.GeometryType.POINT];
   };

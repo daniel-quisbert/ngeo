@@ -9,10 +9,10 @@ describe('gmf.displayquerywindowDirective', function() {
 
   beforeEach(inject(function($injector, _$controller_, _$rootScope_) {
     ngeoQueryResult = $injector.get('ngeoQueryResult');
-    let $controller = _$controller_;
+    const $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
-    let data = {
+    const data = {
       featuresStyleFn: function() {
         return new ol.style.Style();
       },

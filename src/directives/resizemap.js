@@ -28,7 +28,7 @@ goog.require('ol.Map');
  * @ngname ngeoResizemap
  */
 ngeo.resizemapDirective = function($window) {
-  let /** @type {number} */ duration = 1000;
+  const /** @type {number} */ duration = 1000;
 
   return {
     restrict: 'A',
@@ -39,17 +39,17 @@ ngeo.resizemapDirective = function($window) {
          * @param {angular.Attributes} attrs Attributes.
          */
         function(scope, element, attrs) {
-          let attr = 'ngeoResizemap';
-          let prop = attrs[attr];
-          let map = scope.$eval(prop);
+          const attr = 'ngeoResizemap';
+          const prop = attrs[attr];
+          const map = scope.$eval(prop);
           goog.asserts.assertInstanceof(map, ol.Map);
 
-          let stateExpr = attrs['ngeoResizemapState'];
+          const stateExpr = attrs['ngeoResizemapState'];
           goog.asserts.assert(stateExpr !== undefined);
 
           let start;
 
-          let animationDelay = new goog.async.AnimationDelay(
+          const animationDelay = new goog.async.AnimationDelay(
               function() {
                 map.updateSize();
                 map.renderSync();

@@ -52,7 +52,7 @@ app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
 app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
       function(resp) {
-        let bgLayers = resp.data;
+        const bgLayers = resp.data;
         this['bgLayers'] = bgLayers;
         this.setLayer(bgLayers[0]);
       }.bind(this));
@@ -73,7 +73,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  */
 app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this['currentBgLayer'] = layerSpec;
-  let layer = this.createLayer_(layerSpec['name']);
+  const layer = this.createLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this['map'], layer);
 };
 
@@ -110,7 +110,7 @@ app.MainController = function($scope) {
   /**
    * @type {ol.Map}
    */
-  let map = new ol.Map({
+  const map = new ol.Map({
     view: new ol.View({
       center: [-10635142.37, 4813698.29],
       zoom: 4
@@ -122,7 +122,7 @@ app.MainController = function($scope) {
    * An overlay layer.
    * @type {ol.layer.Image}
    */
-  let overlay = new ol.layer.Image({
+  const overlay = new ol.layer.Image({
     source: new ol.source.ImageWMS({
       url: 'http://demo.boundlessgeo.com/geoserver/wms',
       params: {'LAYERS': 'topp:states'},

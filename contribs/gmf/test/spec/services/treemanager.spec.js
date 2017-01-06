@@ -21,8 +21,8 @@ describe('gmf.TreeManager', function() {
   });
 
   it('Add some groups', function() {
-    let group0 = themes.themes[0].children[0];
-    let group1 = themes.themes[1].children[0];
+    const group0 = themes.themes[0].children[0];
+    const group1 = themes.themes[1].children[0];
     // Add a group
     gmfTreeManager.setFirstLevelGroups([group0]);
     $timeout.flush();
@@ -45,9 +45,9 @@ describe('gmf.TreeManager', function() {
   });
 
   it('Add a group by name', function() {
-    let spy = jasmine.createSpy();
-    let group0 = themes.themes[0].children[0];
-    let group1 = themes.themes[1].children[0];
+    const spy = jasmine.createSpy();
+    const group0 = themes.themes[0].children[0];
+    const group1 = themes.themes[1].children[0];
     gmfTreeManager.addGroupByName(group0.name);
     gmfTreeManager.addGroupByName(group1.name, true);
 
@@ -63,9 +63,9 @@ describe('gmf.TreeManager', function() {
   });
 
   it('Add a group by layer name', function() {
-    let spy = jasmine.createSpy();
-    let group0 = themes.themes[0].children[0];
-    let group1 = themes.themes[1].children[0];
+    const spy = jasmine.createSpy();
+    const group0 = themes.themes[0].children[0];
+    const group1 = themes.themes[1].children[0];
     gmfTreeManager.addGroupByLayerName(group0.children[0].name);
     gmfTreeManager.addGroupByLayerName(group1.children[0].name, true);
 
@@ -81,8 +81,8 @@ describe('gmf.TreeManager', function() {
   });
 
   it('Remove a group', function() {
-    let group0 = themes.themes[0].children[0];
-    let group1 = themes.themes[1].children[0];
+    const group0 = themes.themes[0].children[0];
+    const group1 = themes.themes[1].children[0];
     gmfTreeManager.setFirstLevelGroups([group0, group1]);
     $timeout.flush();
     gmfTreeManager.removeGroup(group0);

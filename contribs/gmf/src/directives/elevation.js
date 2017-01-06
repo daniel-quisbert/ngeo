@@ -50,7 +50,7 @@ gmf.elevationDirective = function() {
       'map': '=gmfElevationMap'
     },
     link: function(scope, element, attr) {
-      let ctrl = scope['ctrl'];
+      const ctrl = scope['ctrl'];
 
       // Watch active or not.
       scope.$watch(function() {
@@ -194,7 +194,7 @@ gmf.ElevationController.prototype.toggleActive_ = function(active) {
 gmf.ElevationController.prototype.pointerStop_ = function(e) {
   if (this.inViewport_) {
     this.loading = true;
-    let params = {
+    const params = {
       'layers': this.layer
     };
     this.gmfAltitude_.getAltitude(e.coordinate, params).then(

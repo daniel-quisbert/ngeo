@@ -130,7 +130,7 @@ ngeo.interaction.Rotate = function(options) {
    */
   this.centerCoordinate_ = null;
 
-  let style = options.style ? options.style : ol.interaction.Modify.getDefaultStyleFunction();
+  const style = options.style ? options.style : ol.interaction.Modify.getDefaultStyleFunction();
 
   /**
    * Draw overlay where sketch features are drawn.
@@ -205,15 +205,15 @@ ngeo.interaction.Rotate.prototype.setActive = function(active) {
  * @private
  */
 ngeo.interaction.Rotate.prototype.addFeature_ = function(feature) {
-  let geometry = feature.getGeometry();
+  const geometry = feature.getGeometry();
   goog.asserts.assertInstanceof(geometry, ol.geom.Geometry);
 
   feature.set('angle', 0);
 
   // Add the center icon to the overlay
-  let uid = ol.getUid(feature);
-  let point = new ol.geom.Point(this.getCenterCoordinate_(geometry));
-  let centerFeature = new ol.Feature(point);
+  const uid = ol.getUid(feature);
+  const point = new ol.geom.Point(this.getCenterCoordinate_(geometry));
+  const centerFeature = new ol.Feature(point);
   this.centerFeatures_[uid] = centerFeature;
   this.overlay_.getSource().addFeature(centerFeature);
 
@@ -242,7 +242,7 @@ ngeo.interaction.Rotate.prototype.removeFeature_ = function(feature) {
   //this.overlay_.getSource().removeFeature(feature);
 
   if (feature) {
-    let uid = ol.getUid(feature);
+    const uid = ol.getUid(feature);
 
     if (this.centerFeatures_[uid]) {
       this.overlay_.getSource().removeFeature(this.centerFeatures_[uid]);
@@ -266,7 +266,7 @@ ngeo.interaction.Rotate.prototype.setMap = function(map) {
  * @private
  */
 ngeo.interaction.Rotate.prototype.handleFeatureAdd_ = function(evt) {
-  let feature = evt.element;
+  const feature = evt.element;
   goog.asserts.assertInstanceof(feature, ol.Feature,
       'feature should be an ol.Feature');
   this.addFeature_(feature);
@@ -278,7 +278,7 @@ ngeo.interaction.Rotate.prototype.handleFeatureAdd_ = function(evt) {
  * @private
  */
 ngeo.interaction.Rotate.prototype.handleFeatureRemove_ = function(evt) {
-  let feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {ol.Feature} */ (evt.element);
   this.removeFeature_(feature);
 };
 
@@ -289,7 +289,7 @@ ngeo.interaction.Rotate.prototype.handleFeatureRemove_ = function(evt) {
  * @private
  */
 ngeo.interaction.Rotate.prototype.handleDown_ = function(evt) {
-  let map = evt.map;
+  const map = evt.map;
 
   let feature = map.forEachFeatureAtPixel(evt.pixel,
       function(feature, layer) {
@@ -311,7 +311,7 @@ ngeo.interaction.Rotate.prototype.handleDown_ = function(evt) {
   if (feature) {
     this.coordinate_ = evt.coordinate;
     this.feature_ = feature;
-    let geometry = (this.feature_.getGeometry());
+    const geometry = (this.feature_.getGeometry());
     if (geometry !== undefined) {
       this.centerCoordinate_ = this.getCenterCoordinate_(geometry);
     }
@@ -338,7 +338,7 @@ ngeo.interaction.Rotate.prototype.getCenterCoordinate_ = function(
   } else if (geometry instanceof ol.geom.Polygon) {
     center = geometry.getFlatInteriorPoint();
   } else {
-    let extent = geometry.getExtent();
+    const extent = geometry.getExtent();
     center = ol.extent.getCenter(extent);
   }
 
@@ -353,25 +353,26 @@ ngeo.interaction.Rotate.prototype.getCenterCoordinate_ = function(
 ngeo.interaction.Rotate.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
 
-  let geometry = /** @type {ol.geom.SimpleGeometry} */
+  const geometry = /** @type {ol.geom.SimpleGeometry} */
       (this.feature_.getGeometry());
 
-  let oldX = this.coordinate_[0], oldY = this.coordinate_[1];
+  const oldX = this.coordinate_[0];
+  const oldY = this.coordinate_[1];
 
-  let centerX = this.centerCoordinate_[0];
-  let centerY = this.centerCoordinate_[1];
+  const centerX = this.centerCoordinate_[0];
+  const centerY = this.centerCoordinate_[1];
 
-  let dx1 = oldX - centerX;
-  let dy1 = oldY - centerY;
-  let dx0 = evt.coordinate[0] - centerX;
-  let dy0 = evt.coordinate[1] - centerY;
+  const dx1 = oldX - centerX;
+  const dy1 = oldY - centerY;
+  const dx0 = evt.coordinate[0] - centerX;
+  const dy0 = evt.coordinate[1] - centerY;
 
   this.coordinate_[0] = evt.coordinate[0];
   this.coordinate_[1] = evt.coordinate[1];
 
-  let a0 = Math.atan2(dy0, dx0);
-  let a1 = Math.atan2(dy1, dx1);
-  let angle = a1 - a0;
+  const a0 = Math.atan2(dy0, dx0);
+  const a1 = Math.atan2(dy1, dx1);
+  const angle = a1 - a0;
 
   geometry.rotate(-angle, [centerX, centerY]);
 };

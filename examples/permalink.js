@@ -61,15 +61,15 @@ app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
    */
   this.map;
 
-  let map = this.map;
-  let view = map.getView();
+  const map = this.map;
+  const view = map.getView();
 
   let zoom = ngeoLocation.getParam('z');
   zoom = zoom !== undefined ? +zoom : 4;
 
-  let x = ngeoLocation.getParam('x');
-  let y = ngeoLocation.getParam('y');
-  let center = (x !== undefined) && (y !== undefined) ?
+  const x = ngeoLocation.getParam('x');
+  const y = ngeoLocation.getParam('y');
+  const center = (x !== undefined) && (y !== undefined) ?
       [+x, +y] : [0, 0];
 
   view.setCenter(center);
@@ -87,8 +87,8 @@ app.MapDirectiveController = function(ngeoLocation, ngeoDebounce) {
            * @param {ol.ObjectEvent} e Object event.
            */
           function(e) {
-            let center = view.getCenter();
-            let params = {
+            const center = view.getCenter();
+            const params = {
               'z': view.getZoom(),
               'x': Math.round(center[0]),
               'y': Math.round(center[1])
@@ -162,7 +162,7 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
    */
   this.featureSeq_ = 0;
 
-  let vectorSource = this.layer.getSource();
+  const vectorSource = this.layer.getSource();
 
   /**
    * @type {ol.interaction.Draw}
@@ -173,7 +173,7 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
     source: vectorSource
   });
 
-  let interaction = this.interaction;
+  const interaction = this.interaction;
   interaction.setActive(false);
   this.map.addInteraction(interaction);
   ngeoDecorateInteraction(interaction);
@@ -185,26 +185,26 @@ app.DrawDirectiveController = function($scope, ngeoDecorateInteraction, ngeoLoca
 
   // Deal with the encoding and decoding of features in the URL.
 
-  let fhFormat = new ngeo.format.FeatureHash();
+  const fhFormat = new ngeo.format.FeatureHash();
 
   vectorSource.on('addfeature', function(e) {
-    let feature = e.feature;
+    const feature = e.feature;
     feature.setStyle(new ol.style.Style({
       stroke: new ol.style.Stroke({
         color: [255, 0, 0, 1],
         width: 2
       })
     }));
-    let features = vectorSource.getFeatures();
-    let encodedFeatures = fhFormat.writeFeatures(features);
+    const features = vectorSource.getFeatures();
+    const encodedFeatures = fhFormat.writeFeatures(features);
     $scope.$applyAsync(function() {
       ngeoLocation.updateParams({'features': encodedFeatures});
     });
   });
 
-  let encodedFeatures = ngeoLocation.getParam('features');
+  const encodedFeatures = ngeoLocation.getParam('features');
   if (encodedFeatures !== undefined) {
-    let features = fhFormat.readFeatures(encodedFeatures);
+    const features = fhFormat.readFeatures(encodedFeatures);
     this.featureSeq_ = features.length;
     vectorSource.addFeatures(features);
   }
@@ -243,7 +243,7 @@ app.MainController = function() {
   });
 
 
-  let vectorSource = new ol.source.Vector();
+  const vectorSource = new ol.source.Vector();
 
   /**
    * @type {ol.layer.Vector}

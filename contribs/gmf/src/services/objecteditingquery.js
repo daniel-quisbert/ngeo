@@ -63,14 +63,14 @@ gmf.ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
         }
 
         // Get all queryable nodes
-        let allQueryableLayersInfo =
+        const allQueryableLayersInfo =
             gmf.ObjectEditingQuery.getQueryableLayersInfoFromThemes(
               themes,
               ogcServers
             );
 
         // Narrow down to only those that have the 'copyable' metadata set
-        let queryableLayersInfo = [];
+        const queryableLayersInfo = [];
         for (let i = 0, ii = allQueryableLayersInfo.length; i < ii; i++) {
           if (allQueryableLayersInfo[i].layerNode.metadata.copyable) {
             queryableLayersInfo.push(allQueryableLayersInfo[i]);
@@ -101,7 +101,7 @@ gmf.ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
 gmf.ObjectEditingQuery.getQueryableLayersInfoFromThemes = function(
   themes, ogcServers
 ) {
-  let queryableLayersInfo = [];
+  const queryableLayersInfo = [];
   let theme;
   let group;
   let nodes;
@@ -165,26 +165,26 @@ gmf.ObjectEditingQuery.prototype.getFeatureInfo = function(
   map
 ) {
 
-  let view = map.getView();
-  let projCode = view.getProjection().getCode();
-  let resolution = /** @type {number} */(view.getResolution());
-  let infoFormat = ngeo.QueryInfoFormatType.GML;
-  let layerNode = layerInfo.layerNode;
-  let layersParam = layerNode.layers.split(',');
-  let ogcServer = layerInfo.ogcServer;
+  const view = map.getView();
+  const projCode = view.getProjection().getCode();
+  const resolution = /** @type {number} */(view.getResolution());
+  const infoFormat = ngeo.QueryInfoFormatType.GML;
+  const layerNode = layerInfo.layerNode;
+  const layersParam = layerNode.layers.split(',');
+  const ogcServer = layerInfo.ogcServer;
 
-  let format = new ol.format.WMSGetFeatureInfo({
+  const format = new ol.format.WMSGetFeatureInfo({
     layers: layersParam
   });
 
-  let wmsSource = new ol.source.ImageWMS({
+  const wmsSource = new ol.source.ImageWMS({
     url: ogcServer.url,
     params: {
       layers: layersParam
     }
   });
 
-  let url = /** @type {string} */ (
+  const url = /** @type {string} */ (
     wmsSource.getGetFeatureInfoUrl(coordinate, resolution, projCode, {
       'INFO_FORMAT': infoFormat,
       'FEATURE_COUNT': 1,
@@ -194,7 +194,7 @@ gmf.ObjectEditingQuery.prototype.getFeatureInfo = function(
 
   return this.http_.get(url).then(
     function(format, response) {
-      let features = format.readFeatures(response.data);
+      const features = format.readFeatures(response.data);
       return (features && features[0]) ? features[0] : null;
     }.bind(this, format)
   );

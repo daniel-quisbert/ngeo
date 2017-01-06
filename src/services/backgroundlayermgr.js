@@ -109,7 +109,7 @@ ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.get = function(map) {
-  let mapUid = ol.getUid(map).toString();
+  const mapUid = ol.getUid(map).toString();
   return mapUid in this.mapUids_ ? map.getLayers().item(0) : null;
 };
 
@@ -123,8 +123,8 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
-  let mapUid = ol.getUid(map).toString();
-  let previous = this.get(map);
+  const mapUid = ol.getUid(map).toString();
+  const previous = this.get(map);
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
     if (layer !== null) {
@@ -149,7 +149,7 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
-  let baseBgLayer = this.get(map);
+  const baseBgLayer = this.get(map);
   if (baseBgLayer) {
     let layers = [baseBgLayer];
     if (baseBgLayer instanceof ol.layer.Group) {
@@ -161,16 +161,16 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
       goog.asserts.assertInstanceof(layer, ol.layer.Layer);
       if (layer) {
         let hasUpdates = false;
-        let updatedDimensions = {};
-        for (let key in layer.get('dimensions')) {
-          let value = dimensions[key];
+        const updatedDimensions = {};
+        for (const key in layer.get('dimensions')) {
+          const value = dimensions[key];
           if (value !== undefined) {
             updatedDimensions[key] = value;
             hasUpdates = true;
           }
         }
         if (hasUpdates) {
-          let source = layer.getSource();
+          const source = layer.getSource();
           if (source instanceof ol.source.WMTS) {
             source.updateDimensions(updatedDimensions);
             source.refresh();

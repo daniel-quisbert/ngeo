@@ -166,7 +166,7 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
  * @private
  */
 ngeo.CreateregularpolygonfromclickController.prototype.handleDrawEnd_ = function(evt) {
-  let feature = new ol.Feature(evt.feature.getGeometry());
+  const feature = new ol.Feature(evt.feature.getGeometry());
   this.features.push(feature);
 };
 

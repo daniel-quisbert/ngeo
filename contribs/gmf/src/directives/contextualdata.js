@@ -131,7 +131,7 @@ gmf.ContextualdataController = function($compile, $scope, gmfAltitude) {
  *
  */
 gmf.ContextualdataController.prototype.init = function() {
-  let mapDiv = this.map.getTargetElement();
+  const mapDiv = this.map.getTargetElement();
   goog.asserts.assertElement(mapDiv);
 
   goog.events.listen(mapDiv, goog.events.EventType.CONTEXTMENU,
@@ -144,8 +144,8 @@ gmf.ContextualdataController.prototype.init = function() {
  */
 gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(evt) {
   this.$scope_.$apply(function() {
-    let pixel = this.map.getEventPixel(evt);
-    let coordinate = this.map.getCoordinateFromPixel(pixel);
+    const pixel = this.map.getEventPixel(evt);
+    const coordinate = this.map.getCoordinateFromPixel(pixel);
     this.setContent_(coordinate);
     evt.preventDefault();
     this.hidePopover();
@@ -156,24 +156,24 @@ gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(evt) {
 
 
 gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
-  let scope = this.$scope_.$new(true);
+  const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
-  let mapProjection = this.map.getView().getProjection().getCode();
+  const mapProjection = this.map.getView().getProjection().getCode();
   this.projections.forEach(function(proj) {
-    let coord = ol.proj.transform(coordinate, mapProjection, 'EPSG:' + proj);
+    const coord = ol.proj.transform(coordinate, mapProjection, 'EPSG:' + proj);
     scope['coord_' + proj] = coord;
     scope['coord_' + proj + '_eastern'] = coord[0];
     scope['coord_' + proj + '_northern'] = coord[1];
   });
 
-  let getAltitudeSuccess = function(resp) {
+  const getAltitudeSuccess = function(resp) {
     goog.object.extend(scope, resp);
     if (this.callback) {
       goog.object.extend(scope, this.callback.call(this, coordinate, resp));
     }
   }.bind(this);
-  let getAltitudeError = function(resp) {
+  const getAltitudeError = function(resp) {
     console.error('Error on getting altitude.');
   };
   this.gmfAltitude_.getAltitude(coordinate).then(
@@ -188,10 +188,10 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
  */
 gmf.ContextualdataController.prototype.preparePopover_ = function() {
 
-  let container = document.createElement('DIV');
+  const container = document.createElement('DIV');
   container.classList.add('popover', 'bottom', 'gmf-contextualdata');
   angular.element(container).css('position', 'relative');
-  let arrow = document.createElement('DIV');
+  const arrow = document.createElement('DIV');
   arrow.classList.add('arrow');
   container.appendChild(arrow);
   this.content_ = document.createElement('DIV');
@@ -212,12 +212,12 @@ gmf.ContextualdataController.prototype.preparePopover_ = function() {
 };
 
 gmf.ContextualdataController.prototype.showPopover = function() {
-  let element = /** @type {Object} */ (this.overlay_.getElement());
+  const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'block');
 };
 
 gmf.ContextualdataController.prototype.hidePopover = function() {
-  let element = /** @type {Object} */ (this.overlay_.getElement());
+  const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'none');
 };
 

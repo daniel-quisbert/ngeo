@@ -27,7 +27,7 @@ app.MainController = function(ngeoDecorateLayer) {
     source: new ol.source.OSM()
   });
 
-  let layer = this.layer;
+  const layer = this.layer;
   ngeoDecorateLayer(layer);
 
   /**

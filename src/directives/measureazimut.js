@@ -30,10 +30,10 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
      */
     link: function($scope, element, attrs, drawFeatureCtrl) {
 
-      let helpMsg = gettext('Click to start drawing circle');
-      let contMsg = gettext('Click to finish');
+      const helpMsg = gettext('Click to start drawing circle');
+      const contMsg = gettext('Click to finish');
 
-      let measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
+      const measureAzimut = new ngeo.interaction.MeasureAzimut($filter('ngeoUnitPrefix'), {
         style: new ol.style.Style(),
         startMsg: $compile('<div translate>' + helpMsg + '</div>')($scope)[0],
         continueMsg: $compile('<div translate>' + contMsg + '</div>')($scope)[0]
@@ -53,13 +53,13 @@ ngeo.measureazimutDirective = function($compile, gettext, $filter) {
             // geometry is actually a collection (line + circle)
             // For our purpose here, we only need the circle, which gets
             // transformed into a polygon with 64 sides.
-            let geometry = /** @type {ol.geom.GeometryCollection} */
+            const geometry = /** @type {ol.geom.GeometryCollection} */
                 (event.feature.getGeometry());
-            let circle = /** @type {ol.geom.Circle} */ (
+            const circle = /** @type {ol.geom.Circle} */ (
                 geometry.getGeometries()[1]);
-            let polygon = ol.geom.Polygon.fromCircle(circle, 64);
+            const polygon = ol.geom.Polygon.fromCircle(circle, 64);
             event.feature = new ol.Feature(polygon);
-            let azimut = ngeo.interaction.MeasureAzimut.getAzimut(
+            const azimut = ngeo.interaction.MeasureAzimut.getAzimut(
               /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
             );
             event.feature.set('azimut', azimut);

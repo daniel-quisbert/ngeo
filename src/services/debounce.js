@@ -39,9 +39,9 @@ ngeo.debounceServiceFactory = function($timeout) {
         let timeout = null;
         return (
             function() {
-              let context = this;
-              let args = arguments;
-              let later = function() {
+              const context = this;
+              const args = arguments;
+              const later = function() {
                 timeout = null;
                 func.apply(context, args);
               };

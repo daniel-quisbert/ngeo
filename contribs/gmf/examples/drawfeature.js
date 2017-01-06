@@ -45,14 +45,14 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.scope_ = $scope;
 
-  let view = new ol.View({
+  const view = new ol.View({
     center: [0, 0],
     zoom: 3
   });
 
   ngeoFeatureHelper.setProjection(view.getProjection());
 
-  let featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   featureOverlay.setFeatures(ngeoFeatures);
 
   /**
@@ -74,7 +74,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.drawFeatureActive = true;
 
-  let drawFeatureToolActivate = new ngeo.ToolActivate(
+  const drawFeatureToolActivate = new ngeo.ToolActivate(
       this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', drawFeatureToolActivate, true);
@@ -85,7 +85,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.pointerMoveActive = false;
 
-  let pointerMoveToolActivate = new ngeo.ToolActivate(
+  const pointerMoveToolActivate = new ngeo.ToolActivate(
       this, 'pointerMoveActive');
   ngeoToolActivateMgr.registerTool(
       'mapTools', pointerMoveToolActivate, false);
@@ -117,9 +117,9 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
  * @private
  */
 gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
-  let pixel = evt.pixel;
+  const pixel = evt.pixel;
 
-  let feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
+  const feature = this.map.forEachFeatureAtPixel(pixel, function(feature) {
     return feature;
   });
 

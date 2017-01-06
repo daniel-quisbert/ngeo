@@ -57,14 +57,14 @@ app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
     params.VERSION = '1.3.0';
   }
 
-  let source = new ol.source.ImageWMS({
+  const source = new ol.source.ImageWMS({
     params: params,
     url: options.url,
     ratio: options.ratio || 1,
     projection: options.projection
   });
 
-  let layer = new ol.layer.Image({
+  const layer = new ol.layer.Image({
     id: options.id,
     url: options.url,
     type: 'WMS',
@@ -84,11 +84,11 @@ app.GmfImportHelper.prototype.createWmsLayer = function(params, options) {
  * @return {ol.layer.Image} .
  */
 app.GmfImportHelper.prototype.getOlLayerFromGetCapLayer = function(getCapLayer) {
-  let wmsParams = {
+  const wmsParams = {
     'LAYERS': getCapLayer.Name,
     'VERSION': getCapLayer['wmsVersion']
   };
-  let wmsOptions = {
+  const wmsOptions = {
     url: getCapLayer['wmsUrl'],
     label: getCapLayer['Title'],
     //extent: gaMapUtils.intersectWithDefaultExtent(getCapLayer.extent),
@@ -103,14 +103,14 @@ app.GmfImportHelper.prototype.getOlLayerFromGetCapLayer = function(getCapLayer) 
  * @param {Array<ol.Feature>} features The features
  */
 app.GmfImportHelper.prototype.addFeatures = function(map, features) {
-  let source = new ol.source.Vector({
+  const source = new ol.source.Vector({
     features: features
   });
-  let layer = new ol.layer.Vector({
+  const layer = new ol.layer.Vector({
     source: source
   });
   map.addLayer(layer);
-  let size = map.getSize();
+  const size = map.getSize();
   if (size) {
     map.getView().fit(source.getExtent(), size, {
       padding: [30, 30, 30, 30]
@@ -125,10 +125,10 @@ app.GmfImportHelper.prototype.addFeatures = function(map, features) {
  * @return {angular.$q.Promise} The promise
  */
 app.GmfImportHelper.prototype.handleFileContent = function(data, file) {
-  let map = this.map_;
-  let defer = this.$q_.defer();
-  let $scope = this.$scope_;
-  let ngeoFile = this.ngeoFile_;
+  const map = this.map_;
+  const defer = this.$q_.defer();
+  const $scope = this.$scope_;
+  const ngeoFile = this.ngeoFile_;
   let features;
 
   $scope['gpxContent'] = null;

@@ -86,13 +86,13 @@ ngeo.CsvDownload.prototype.generateCsv = function(data, columnDefs) {
     return '';
   }
 
-  let translatedColumnHeaders = columnDefs.map(function(columnHeader) {
+  const translatedColumnHeaders = columnDefs.map(function(columnHeader) {
     return this.gettextCatalog_.getString(columnHeader.name);
   }.bind(this));
 
-  let header = this.getRow_(translatedColumnHeaders);
-  let dataRows = data.map(function(values) {
-    let rowValues = columnDefs.map(function(columnHeader) {
+  const header = this.getRow_(translatedColumnHeaders);
+  const dataRows = data.map(function(values) {
+    const rowValues = columnDefs.map(function(columnHeader) {
       return values[columnHeader.name];
     });
     return this.getRow_(rowValues);
@@ -108,10 +108,10 @@ ngeo.CsvDownload.prototype.generateCsv = function(data, columnDefs) {
  * @private
  */
 ngeo.CsvDownload.prototype.getRow_ = function(values) {
-  let matchAllQuotesRegex = new RegExp(this.quote_, 'g');
-  let doubleQuote = this.quote_ + this.quote_;
+  const matchAllQuotesRegex = new RegExp(this.quote_, 'g');
+  const doubleQuote = this.quote_ + this.quote_;
 
-  let rowValues = values.map(function(value) {
+  const rowValues = values.map(function(value) {
     if (value !== undefined && value !== null) {
       value = '' + value;
       // wrap each value into quotes and escape quotes with double quotes
@@ -134,7 +134,7 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
  * @export
  */
 ngeo.CsvDownload.prototype.startDownload = function(data, columnDefs, fileName) {
-  let fileContent = this.generateCsv(data, columnDefs);
+  const fileContent = this.generateCsv(data, columnDefs);
   this.download_(
       fileContent, fileName, 'attachment/csv;charset=' + this.encoding_);
 };

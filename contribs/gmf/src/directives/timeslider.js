@@ -92,7 +92,7 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
   this.gmfWMSTime_ = gmfWMSTime;
 
   //fetch the initial options for the component
-  let initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
+  const initialOptions_ = this.gmfWMSTime_.getOptions(this.time);
 
   /**
    * Function called after date(s) changed/selected
@@ -170,10 +170,10 @@ gmf.TimeSliderController = function($scope, gmfWMSTime) {
  * @return {Array<number>}  - List of timestamp representing possible values
  */
 gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
-  let wmsTime = this.time;
+  const wmsTime = this.time;
   let timeValueList = null;
-  let minDate = new Date(this.minValue);
-  let maxDate = new Date(this.maxValue);
+  const minDate = new Date(this.minValue);
+  const maxDate = new Date(this.maxValue);
 
   if (wmsTime.values) {
     timeValueList = [];
@@ -181,8 +181,8 @@ gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
       timeValueList.push(new Date(date).getTime());
     });
   } else {
-    let maxNbValues = 1024;
-    let endDate = new Date(minDate.getTime());
+    const maxNbValues = 1024;
+    const endDate = new Date(minDate.getTime());
     endDate.setFullYear(minDate.getFullYear() + maxNbValues * wmsTime.interval[0]);
     endDate.setMonth(minDate.getMonth() + maxNbValues * wmsTime.interval[1],
       minDate.getDate() + maxNbValues * wmsTime.interval[2]);
@@ -193,7 +193,7 @@ gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
       // of values is below a threshold (maxNbValues)
       timeValueList = [];
       for (let i = 0; ; i++) {
-        let nextDate = new Date(minDate.getTime());
+        const nextDate = new Date(minDate.getTime());
         nextDate.setFullYear(minDate.getFullYear() + i * wmsTime.interval[0]);
         nextDate.setMonth(minDate.getMonth() + i * wmsTime.interval[1],
           minDate.getDate() + i * wmsTime.interval[2]);
@@ -240,23 +240,23 @@ gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
       }
     }
 
-    let leftDistance = Math.abs(this.timeValueList[leftIndex] - timestamp);
-    let rightDistance = Math.abs(this.timeValueList[rightIndex] - timestamp);
+    const leftDistance = Math.abs(this.timeValueList[leftIndex] - timestamp);
+    const rightDistance = Math.abs(this.timeValueList[rightIndex] - timestamp);
 
     return this.timeValueList[leftDistance < rightDistance ? leftIndex : rightIndex];
   } else {
     // Time stops are defined by a start date plus an interval
-    let targetDate = new Date(timestamp);
-    let startDate = new Date(this.minValue);
+    const targetDate = new Date(timestamp);
+    const startDate = new Date(this.minValue);
     let bestDate = new Date(this.minValue);
-    let maxDate = new Date(this.maxValue);
+    const maxDate = new Date(this.maxValue);
     let bestDistance = Math.abs(targetDate - bestDate);
 
     for (let i = 1; ; i++) {
       // The start date should always be used as a reference
       // because adding a month twice could differ from adding
       // two months at once
-      let next = new Date(startDate.getTime());
+      const next = new Date(startDate.getTime());
       next.setFullYear(startDate.getFullYear() + i * this.time.interval[0]);
       next.setMonth(startDate.getMonth() + i *  this.time.interval[1],
         startDate.getDate() + i * this.time.interval[2]);
@@ -266,7 +266,7 @@ gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
         break;
       }
 
-      let distance = Math.abs(targetDate - next);
+      const distance = Math.abs(targetDate - next);
       if (distance <= bestDistance) {
         bestDate = next;
         bestDistance = distance;

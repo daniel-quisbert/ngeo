@@ -100,23 +100,23 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   this.measureAzimutContinueMsg = null;
 
   // Translations for the measure tools' tooltips.
-  let measureStartMsgs = {
+  const measureStartMsgs = {
     'en': $sce.trustAsHtml('Click to start drawing.'),
     'fr': $sce.trustAsHtml('Cliquer pour commencer à dessiner.')
   };
-  let measureLengthContinueMsgs = {
+  const measureLengthContinueMsgs = {
     'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
         'Double-click or click last point to finish.'),
     'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
         'Double-cliquer ou cliquer sur dernier point pour finir.')
   };
-  let measureAreaContinueMsgs = {
+  const measureAreaContinueMsgs = {
     'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
         'Double-click or click starting point to finish.'),
     'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
         'Double-cliquer ou cliquer sur point de départ pour finir.')
   };
-  let measureAzimutContinueMsgs = {
+  const measureAzimutContinueMsgs = {
     'en': $sce.trustAsHtml('Click to finish.'),
     'fr': $sce.trustAsHtml('Cliquer pour finir.')
   };
@@ -146,7 +146,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
   }.bind(this));
 
-  let style = new ol.style.Style({
+  const style = new ol.style.Style({
     fill: new ol.style.Fill({
       color: 'rgba(255, 255, 255, 0.2)'
     }),
@@ -166,7 +166,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     })
   });
 
-  let map = this.map;
+  const map = this.map;
 
   /**
    * @type {ngeo.interaction.MeasureLength}
@@ -178,7 +178,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureLengthContinueMsg[0]
   });
 
-  let measureLength = this.measureLength;
+  const measureLength = this.measureLength;
   measureLength.setActive(false);
   ngeoDecorateInteraction(measureLength);
   map.addInteraction(measureLength);
@@ -193,7 +193,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureAreaContinueMsg[0]
   });
 
-  let measureArea = this.measureArea;
+  const measureArea = this.measureArea;
   measureArea.setActive(false);
   ngeoDecorateInteraction(measureArea);
   map.addInteraction(measureArea);
@@ -208,7 +208,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     continueMsg: measureAzimutContinueMsg[0]
   });
 
-  let measureAzimut = this.measureAzimut;
+  const measureAzimut = this.measureAzimut;
   measureAzimut.setActive(false);
   ngeoDecorateInteraction(measureAzimut);
   map.addInteraction(measureAzimut);
@@ -218,7 +218,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
   measureAzimut.on('measureend', function(evt) {
-    let el = evt.target.getTooltipElement();
+    const el = evt.target.getTooltipElement();
     el.innerHTML += '<br>Additional info';
   });
 };

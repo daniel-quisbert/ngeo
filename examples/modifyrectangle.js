@@ -19,7 +19,7 @@ goog.require('ol.style.Stroke');
 
 
 /** @type {!angular.Module} **/
-let module = angular.module('app', ['ngeo']);
+const module = angular.module('app', ['ngeo']);
 
 
 /**
@@ -44,9 +44,9 @@ app.MainController = function() {
     })
   });
 
-  let map = this.map;
+  const map = this.map;
 
-  let rectangle = new ol.geom.Polygon([[
+  const rectangle = new ol.geom.Polygon([[
               [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
   ]]);
 
@@ -61,8 +61,8 @@ app.MainController = function() {
     'isRectangle': true
   }));
 
-  let style = (function() {
-    let styles = {};
+  const style = (function() {
+    const styles = {};
     styles['Polygon'] = [
       new ol.style.Style({
         fill: new ol.style.Fill({
@@ -105,10 +105,10 @@ app.MainController = function() {
     };
   })();
 
-  let vectorSource = new ol.source.Vector({
+  const vectorSource = new ol.source.Vector({
     features: this.features
   });
-  let vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new ol.layer.Vector({
     source: vectorSource
   });
 
@@ -126,7 +126,7 @@ app.MainController = function() {
       style: style
     }));
 
-  let interaction = this.interaction;
+  const interaction = this.interaction;
   map.addInteraction(interaction);
   interaction.setActive(true);
 

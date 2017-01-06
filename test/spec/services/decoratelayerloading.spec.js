@@ -18,10 +18,10 @@ describe('DecorateLayerLoading test suite', function() {
   }));
 
   it('should increment layerLoadingCount recursively', function() {
-    let imageSource = new ol.source.Image({});
-    let layer = new ol.layer.Image({source: imageSource});
-    let lg_1 = new ol.layer.Group();
-    let lg_2 = new ol.layer.Group();
+    const imageSource = new ol.source.Image({});
+    const layer = new ol.layer.Image({source: imageSource});
+    const lg_1 = new ol.layer.Group();
+    const lg_2 = new ol.layer.Group();
 
     decorateLayerLoading(layer, scope);
     decorateLayerLoading(lg_1, scope);
